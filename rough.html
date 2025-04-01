@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/0a92e4354f.js" crossorigin="anonymous"></script>
+    <style>
+        .doctor-card { width: 18rem; margin: auto; }
+        .doctor-img { height: 250px; object-fit: cover; }
+        .modal-img { width: 100%; max-height: 300px; object-fit: cover; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container text-center mt-5">
+    <h1>Our Doctors</h1>
+    <p class="lead">Meet our expert medical professionals.</p>
+
+    <div class="row">
+        <!-- Doctor 1 -->
+        <div class="col-md-4">
+            <div class="card doctor-card">
+                <img src="images (1).jpeg" class="card-img-top doctor-img" alt="Doctor 1">
+                <div class="card-body">
+                    <h5 class="card-title">Dr. Smith</h5>
+                    <p class="card-text">Cardiologist with 10 years of experience.</p>
+                    <button class="btn btn-info view-profile" 
+                            data-name="Dr. Smith"
+                            data-image="images (1).jpeg"
+                            data-speciality="Cardiologist"
+                            data-experience="10 years"
+                            data-description="Well, if you’ve landed on this article, you know that efficiently running an entire hospital isn’t a walk in the park. Although it is essential, it gets overwhelming at times.  
+
+                            Time is of the utmost importance when it comes to healthcare. Imagine the severity if there is even a minor delay or fault while sharing the results and diagnosis.  To simplify operations and efficiently manage patient records, leading hospitals use a hospital management system.  Employing hospital management software helps you reap the maximum benefits from your work.  
+                            
+                            Before discussing in detail how you can leverage an HMS to the fullest, let us understand what an HMS is and why it is needed."
+                            data-bs-toggle="modal" 
+                            data-bs-target="#doctorModal">
+                        View Full Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Doctor 2 -->
+        <div class="col-md-4">
+            <div class="card doctor-card">
+                <img src="images.jpeg" class="card-img-top doctor-img" alt="Doctor 2">
+                <div class="card-body">
+                    <h5 class="card-title">Dr. Johnson</h5>
+                    <p class="card-text">Neurologist with 8 years of experience.</p>
+                    <button class="btn btn-info view-profile" 
+                            data-name="Dr. Johnson"
+                            data-image="images.jpeg"
+                            data-speciality="Neurologist"
+                            data-experience="8 years"
+                            data-description="Dr. Johnson is an expert in neurology, treating brain and nervous system disorders."
+                            data-bs-toggle="modal" 
+                            data-bs-target="#doctorModal">
+                        View Full Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Doctor 3 -->
+        <div class="col-md-4">
+            <div class="card doctor-card">
+                <img src="243xe5.jpg" class="card-img-top doctor-img" alt="Doctor 3">
+                <div class="card-body">
+                    <h5 class="card-title">Dr. Williams</h5>
+                    <p class="card-text">Orthopedic Surgeon with 12 years of experience.</p>
+                    <button class="btn btn-info view-profile" 
+                            data-name="Dr. Williams"
+                            data-image="243xe5.jpg"
+                            data-speciality="Orthopedic Surgeon"
+                            data-experience="12 years"
+                            data-description="Dr. Williams specializes in orthopedic surgery and joint replacements."
+                            data-bs-toggle="modal" 
+                            data-bs-target="#doctorModal">
+                        View Full Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Doctor Profile Modal -->
+<div class="modal fade" id="doctorModal" tabindex="-1" aria-labelledby="doctorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="doctorName">Doctor Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="doctorImage" src="" class="modal-img mb-3" alt="Doctor Image">
+                <h6 id="doctorSpeciality"></h6>
+                <p><strong>Experience:</strong> <span id="doctorExperience"></span></p>
+                <p id="doctorDescription"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success">Book Appointment</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const viewProfileButtons = document.querySelectorAll(".view-profile");
+
+        viewProfileButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                document.getElementById("doctorName").innerText = this.dataset.name;
+                document.getElementById("doctorImage").src = this.dataset.image;
+                document.getElementById("doctorSpeciality").innerText = this.dataset.speciality;
+                document.getElementById("doctorExperience").innerText = this.dataset.experience;
+                document.getElementById("doctorDescription").innerText = this.dataset.description;
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

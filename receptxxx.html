@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f1eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .receipt-container {
+            width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 3px solid #009c1a;
+            position: relative;
+        }
+        .background-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.2;
+            width: 300px;
+            height: auto;
+        }
+        .header {
+            text-align: center;
+            color: green;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .sub-header {
+            font-size: 16px;
+            color: black;
+            text-align: center;
+        }
+        .patient-details, .receipt-details {
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        td {
+            padding: 5px;
+        }
+        .signature {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: right;
+            position: relative;
+            z-index: 1;
+        }
+        .auto-signature {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <img src="logo.webp" alt="University Logo" class="background-logo">
+        <div class="header">MAA KALAWATI HOSPITAL</div>
+        <div class="sub-header">Medical Receipt</div>
+
+        <table>
+            <tr>
+                <td><strong>Name:</strong></td>
+                <td>_____________</td>
+            </tr>
+            <tr>
+                <td><strong>Age:</strong></td>
+                <td>_____________</td>
+            </tr>
+            <tr>
+                <td><strong>Gender:</strong></td>
+                <td>_____________</td>
+            </tr>
+            <tr>
+                <td><strong>Address:</strong></td>
+                <td>_____________</td>
+            </tr>
+            <tr>
+                <td><strong>Contact:</strong></td>
+                <td>_____________</td>
+            </tr>
+            <tr>
+                <td><strong>Date of Enrollment:</strong></td>
+                <td>_____________</td>
+            </tr>
+            <tr>
+                <td><strong>Time of Enrollment:</strong></td>
+                <td>_____________</td>
+            </tr>
+            <tr>
+                <td><strong>Appointment Date:</strong></td>
+                <td>_____________</td>
+            </tr>
+            <tr>
+                <td><strong>Appointment Time:</strong></td>
+                <td>_____________</td>
+            </tr>
+        </table>
+
+        <div class="signature">
+            <strong>Signature:</strong> <span class="auto-signature">Dr. XYZ</span>
+            <br>(Hospital Manager)
+        </div>
+
+        <p style="text-align: center; margin-top: 20px;">Thank you for your business!</p>
+    </div>
+</body>
+</html>

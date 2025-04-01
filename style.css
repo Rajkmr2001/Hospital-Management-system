@@ -1,0 +1,158 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.navbar {
+    background-color: #009c1a !important;
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+    color: white !important;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.center-image {
+    object-fit: contain; /* Ensures the image fits within the container */
+    height: 150px; /* Adjust height as needed */
+    width: 100%; /* Ensures the image spans the width of the card */
+    display: block;
+    margin: 0 auto; /* Centers the image horizontally */
+}
+
+.comment-card {
+    margin-top: 10px;
+}
+.comment-user {
+    font-weight: bold;
+}
+.faq-question {
+    cursor: pointer;
+    transition: background-color 50s;
+}
+.faq-question:hover {
+    background-color: #f8f9fa;
+}
+.faq-answer {
+    display: none;
+    padding-left: 20px;
+}
+.heart {
+    color: grey;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+.liked {
+    color: red;
+}
+
+section {
+    padding: 50px 0;
+}
+
+h1, h3 {
+    color: #009c1a;
+}
+
+p.lead {
+    font-size: 1.25rem;
+    color: #555;
+}
+
+.call-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+}
+.call-tab:hover {
+    background-color: #218838;
+}
+.call-icon {
+    margin-right: 10px;
+    animation: shake 1s infinite;
+}
+@keyframes shake {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+    75% { transform: rotate(-10deg); }
+}
+
+.nurses-page .nurse-card {
+    position: relative;
+    width: 350px;
+    height: 450px;
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 15px;
+    transition: all 0.5s ease;
+    margin: auto;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5); /* Green shadow added */
+}
+
+.nurses-page .nurse-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 255, 0, 0.8); /* Enhanced green shadow on hover */
+}
+
+.nurses-page .nurse-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        0deg,
+        transparent,
+        transparent 30%,
+        rgba(0, 255, 255, 0.3)
+    );
+    transform: rotate(-45deg);
+    transition: all 0.5s ease;
+    opacity: 0;
+}
+
+.nurses-page .nurse-card:hover::before {
+    opacity: 1;
+    transform: rotate(-45deg) translateY(100%);
+}
+
+.nurses-page .nurse-card .card-body {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #0ff;
+}
+
+.nurses-page .nurse-card .card-body h5 {
+    font-size: 1.5rem;
+}
+
+.nurses-page .nurse-card .card-body p {
+    font-size: 1.2rem;
+}
+
+.nurses-page .nurse-card img {
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
