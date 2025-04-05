@@ -1,0 +1,24 @@
+# Ignore node modules
+node_modules/
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore environment files
+.env
+.env.local
+
+# Ignore XAMPP files
+xampp/
+tmp/
+
+# Ignore log files
+*.log
+
+# Ignore uploaded media
+uploads/
