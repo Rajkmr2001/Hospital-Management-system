@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Login - Maa Kalawati Hospital</title>
+    <style>
+        /* General styles */
+        body, h1, input, button {
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #009c1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: #ffcc00;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #e6b800;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Maa Kalawati Hospital</h1>
+        <h2>Patient Login</h2>
+
+        <form action="patient_login.php" method="POST" onsubmit="return validateForm()">
+            <div class="input-group">
+                <label for="mobile">Mobile Number:</label>
+                <input type="text" id="mobile" name="mobile" required>
+                <span id="mobileError" class="error"></span>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <span id="passwordError" class="error"></span>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            let mobile = document.getElementById("mobile").value;
+            let password = document.getElementById("password").value;
+            let mobileError = document.getElementById("mobileError");
+            let passwordError = document.getElementById("passwordError");
+
+            mobileError.textContent = "";
+            passwordError.textContent = "";
+
+            let isValid = true;
+
+            // Validate Mobile Number (must be 10 digits)
+            if (!/^\d{10}$/.test(mobile)) {
+                mobileError.textContent = "Enter a valid 10-digit mobile number.";
+                isValid = false;
+            }
+
+            // Validate Password (must be at least 8 characters)
+            if (password.length < 8) {
+                passwordError.textContent = "Password must be at least 8 characters long.";
+                isValid = false;
+            }
+
+            return isValid;
+        }
+    </script>
+
+</body>
+</html>

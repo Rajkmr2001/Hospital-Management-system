@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Registration</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/0a92e4354f.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #009c1a;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            max-width: 400px;
+            background: white;
+            color: black;
+            padding: 20px;
+            margin: auto;
+            margin-top: 50px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        /* Popup Styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+        .popup button {
+            background-color: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Maa Kalawati Hospital</h2><hr />
+        <h3>Patient Registration</h3>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="mobile">Mobile Number:</label>
+                <input type="text" id="mobile" name="mobile" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn">Register</button>
+            <div class="d-flex justify-content-between mt-2">
+                <button class="btn btn-secondary w-50 me-2" onclick="location.href='index.html'" type="button">Back to Home</button>
+                <button class="btn btn-secondary w-50" onclick="location.href=''" type="button">Login</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Popup Message -->
+    <div id="popup" class="popup">
+        <p id="popupMessage"></p>
+        <button id="popupOk">OK</button>
+    </div>
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent page reload
+    
+            let name = document.getElementById("name").value.trim();
+            let mobile = document.getElementById("mobile").value.trim();
+            let gender = document.getElementById("gender").value;
+            let password = document.getElementById("password").value;
+    
+            // Validate Mobile Number (must be exactly 10 digits)
+            if (!/^\d{10}$/.test(mobile)) {
+                showPopup("❌ Error: Mobile number must be exactly 10 digits.", false);
+                return;
+            }
+    
+            // Validate Password (at least 8 chars, mix of uppercase, lowercase, number, special char)
+            let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordPattern.test(password)) {
+                showPopup("❌ Error: Password must include uppercase, lowercase, number, and special character.", false);
+                return;
+            }
+    
+            // Send data to register.php via AJAX
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "register.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    showPopup(xhr.responseText, true); // Show success message
+                }
+            };
+    
+            xhr.send(`name=${name}&mobile=${mobile}&gender=${gender}&password=${password}`);
+        });
+    
+        // Function to show popup
+        function showPopup(message, shouldRefresh) {
+            document.getElementById("popupMessage").innerText = message;
+            document.getElementById("popup").style.display = "block";
+    
+            // When clicking OK, close popup and refresh if needed
+            document.getElementById("popupOk").onclick = function () {
+                document.getElementById("popup").style.display = "none";
+    
+                if (shouldRefresh) {
+                    location.reload();  // Refresh only for success messages
+                }
+            };
+        }
+
+        // Function to close popup (if needed elsewhere)
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+    </script>
+    
+
+</body>
+</html>

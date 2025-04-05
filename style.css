@@ -6,7 +6,7 @@ body {
 }
 
 .navbar {
-    background-color: #009c1a !important;
+    background-color: #198754 !important;
 }
 
 .navbar-brand, .navbar-nav .nav-link {
@@ -58,7 +58,7 @@ section {
 }
 
 h1, h3 {
-    color: #009c1a;
+    color: #198754;
 }
 
 p.lead {
@@ -109,7 +109,7 @@ p.lead {
 
 .nurses-page .nurse-card:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(0, 255, 0, 0.8); /* Enhanced green shadow on hover */
+    box-shadow: 0 0 25px #198754; /* Enhanced green shadow on hover */
 }
 
 .nurses-page .nurse-card::before {

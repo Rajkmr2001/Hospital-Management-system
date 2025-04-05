@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neurology</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+      }
+      header {
+          background-color: #009c1a;
+          color: white;
+          padding: 20px;
+          text-align: center;
+      }
+      section {
+          padding: 20px;
+      }
+      .team-box, .location-box, .speciality-box, .ask-box {
+          border: 1px solid #ccc;
+          padding: 15px;
+          margin: 10px;
+          text-align: center;
+          border-radius: 8px;
+      }
+      .team-box img, .speciality-box img, .ask-box img {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+      }
+      .button {
+          display: inline-block;
+          padding: 10px 15px;
+          margin: 5px;
+          background-color: #009c1a;
+          color: white;
+          text-decoration: none;
+          border-radius: 5px;
+      }
+      .button:hover {
+          background-color: #007a14;
+      }
+      .grid {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+      }
+      .grid .box {
+          flex: 1 1 calc(25% - 20px);
+          box-sizing: border-box;
+      }
+      @media (max-width: 768px) {
+          .grid .box {
+              flex: 1 1 calc(50% - 20px);
+          }
+      }
+      @media (max-width: 480px) {
+          .grid .box {
+              flex: 1 1 100%;
+          }
+      }
+  </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><i class="fa-solid fa-hospital fa-beat fa-2xl" style="color: #eeff00;"></i>&nbsp;Hospital Management</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html"><i class="fa-solid fa-house-medical fa-lg" style="color: #000000;"></i>&nbsp;Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html"><i class="fa-solid fa-clipboard fa-lg" style="color: #000000;"></i>&nbsp;About Us</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-circle-plus fa-beat-fade fa-lg" style="color: #000000;"></i>&nbsp;Services
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-truck-medical fa-shake fa-lg"></i>&nbsp;Emergency services</a></li>
+                  <li><a class="dropdown-item" href="Pharmacy_Services.html"><i class="fa-solid fa-syringe"></i>&nbsp;Pharmacy</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" id="nurses_panel" href="nurses.html"><i class="fa-solid fa-user-nurse fa-xl" style="color: #000000;"></i>&nbsp;Nurses</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-vial-circle-check fa-lg" style="color: #000000;"></i>&nbsp;Laboratory & Diagnostics</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-weight-scale fa-lg" style="color: #000000;"></i>&nbsp;Weight Scale</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="specialitiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-staff-snake fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Specialities
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="specialitiesDropdown">
+                  <li><a class="dropdown-item" href="Cardiac Sciences.html"><i class="fa-solid fa-heart-pulse fa-lg" style="color: #000000;"></i>&nbsp;Cardiac Sciences</a></li>
+                  
+                  <li><a class="dropdown-item" href="Dental Science.html"><i class="fa-solid fa-teeth fa-lg" style="color: #000000;"></i>&nbsp;Dental Science</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="Neurology.html"><i class="fa-solid fa-brain fa-lg" style="color: #000000;"></i>&nbsp;Neurology</a></li>
+                  <li><a class="dropdown-item" href="Infectious_Diseases.html"><i class="fa-solid fa-virus fa-lg" style="color: #000000;"></i>&nbsp;Infectious Diseases</a></li>
+                  <li><a class="dropdown-item" href="Ophthalmology.html"><i class="fa-solid fa-eye fa-lg" style="color: #000000;"></i>&nbsp;Ophthalmology</a></li>
+                  <li><a class="dropdown-item" href="Gastroenterology.html"><i class="fa-solid fa-lungs fa-lg" style="color: #000000;"></i>&nbsp;Gastroenterology</a></li>
+                  <li><a class="dropdown-item" href="ENT.html"><i class="fa-solid fa-head-side-virus fa-lg" style="color: #000000;"></i>&nbsp;ENT</a></li>
+                  <li><a class="dropdown-item" href="Radiology.html"><i class="fa-solid fa-bandage fa-lg" style="color: #000000;"></i>&nbsp;Radiology</a></li>
+                  <li><a class="dropdown-item" href="Dermatology.html"><i class="fa-solid fa-head-side-mask fa-lg" style="color: #000000;"></i>&nbsp;Dermatology</a></li>
+                 
+                </ul>
+              <li class="nav-item">
+                <a class="nav-link" href="doctors.html" tabindex="-1" aria-disabled="true"><i class="fa-solid fa-user-doctor fa-lg" style="color: #000000;"></i>&nbsp;Doctors</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html"><i class="fa-solid fa-phone fa-lg fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faqs.html"><i class="fa-solid fa-question fa-lg" style="color: #000000;"></i>&nbsp;FAQs</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-light" id="searchbar" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+    <!-- Neurology Services Section -->
+    <section id="neurology-services" class="p-5 text-center bg-light">
+        <div class="container">
+            <h2 class="mb-4">Neurology Services</h2>
+            <p class="lead">Our neurology department offers comprehensive care for patients with neurological disorders. Our services include:</p>
+            <ul class="list-unstyled">
+                <li><strong>Diagnosis and Treatment:</strong> We provide advanced diagnostic services and treatment options for conditions such as epilepsy, stroke, and multiple sclerosis.</li>
+                <li><strong>Neuropsychology:</strong> Our team offers neuropsychological assessments and therapy for cognitive and emotional issues.</li>
+                <li><strong>Rehabilitation:</strong> We provide rehabilitation services to help patients recover and improve their quality of life.</li>
+            </ul>
+        </div>
+    </section>
+    <header>
+      <h1>Neurology Services</h1>
+  </header>
+
+  <section>
+      <h2>About Neurology Services</h2>
+      <p>Dental science is the branch of medicine that is involved in the study, diagnosis, prevention, and treatment of diseases, disorders, and conditions of the oral cavity.</p>
+  </section>
+
+  <section>
+      <h2>Our Team of Experts</h2>
+      <div class="team-box" id="team-box">
+          <img src="Images/new7.jpg" alt="Doctor Image">
+          <h3>Dr. Akansha</h3>
+          <a href="javascript:void(0);" class="button" onclick="toggleProfile()">View Full Profile</a>
+          <button type="button" id="booknow" class="btn btn-success position-relative" onclick="location.href='book-now.html'">
+            Book Now
+          
+          </button>
+          <div id="doctor-details" style="display: none; margin-top: 15px; text-align: left;">
+              <h4>About Dr. Akansha</h4>
+              <p>Dr. Akansha is a renowned Neurology Services with over 15 years of experience in treating complex Neurology Services cases. He specializes in cosmetic dentistry, orthodontics, and oral surgery.</p>
+              <h4>Experience</h4>
+              <p>15+ years in dental surgery and orthodontics.</p>
+              <h4>Qualifications</h4>
+              <p>BDS, MDS (Orthodontics), Fellowship in Cosmetic Dentistry.</p>
+          </div>
+      </div>
+  </section>
+
+  <section>
+      <h2>Available Locations</h2>
+      <div class="grid">
+          <div class="box location-box">Delhi</div>
+          <div class="box location-box">Mumbai</div>
+          <div class="box location-box">Bangalore</div>
+          <div class="box location-box">Chennai</div>
+          <div class="box location-box">Kolkata</div>
+      </div>
+  </section>
+
+  <section>
+      <h2>Related Specialities</h2>
+      <div class="speciality-box">
+          <img src="Images/Neurology Services.jpeg" alt="Teeth Image">
+          <h3>Neurology Services</h3>
+      </div>
+  </section>
+
+  <section>
+      <h2>Other Specialities</h2>
+      <div class="grid">
+          <div class="box speciality-box">
+              <img src="Images/ent.jpg" alt="ENT">
+              <h3>ENT</h3>
+          </div>
+          <div class="box speciality-box">
+              <img src="Images/Emergency and Trauma.jpg" alt="Emergency">
+              <h3>Emergency and Trauma</h3>
+          </div>
+          <div class="box speciality-box">
+              <img src="Images/Cardiac Sciences.jpg" alt="Cardiac">
+              <h3>Cardiac Sciences</h3>
+          </div>
+          <div class="box speciality-box">
+              <img src="Images/Foetal Medicine.jpeg" alt="Foetal Medicine">
+              <h3>Foetal Medicine</h3>
+          </div>
+          <div class="box speciality-box">
+              <img src="Images/neurology.jpg" alt="Neurology">
+              <h3>Neurology</h3>
+          </div>
+          <div class="box speciality-box">
+              <img src="Images/orthopedics.jpg" alt="Orthopedics">
+              <h3>Orthopedics</h3>
+          </div>
+          
+          <div class="box speciality-box">
+              <img src="Images/Pediatrics.jpg" alt="Pediatrics">
+              <h3>Pediatrics</h3>
+          </div>
+          <div class="box speciality-box">
+              <img src="Images/Psychiatry.jpg" alt="Psychiatry">
+              <h3>Psychiatry</h3>
+          </div>
+          <div class="box speciality-box">
+              <img src="Images/ent.jpg" alt="Dermatology">
+              <h3>Dermatology</h3>
+          </div>
+      </div>
+  </section>
+
+
+
+  <script>
+      function toggleProfile() {
+          const details = document.getElementById('doctor-details');
+          if (details.style.display === 'none' || details.style.display === '') {
+              details.style.display = 'block';
+          } else {
+              details.style.display = 'none';
+          }
+      }
+  </script>
+
+    <!-- Footer -->
+    <footer class="text-center p-3 bg-success text-white">
+      <p>&copy; 2025 Hospital Management System. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

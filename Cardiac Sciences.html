@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardiac Sciences</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://kit.fontawesome.com/0a92e4354f.js" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/0a92e4354f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css"> 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header, footer {
+            background-color: #009c1a;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
+        section {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #009c1a;
+        }
+        .team, .locations, .hospitals {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .box {
+            flex: 1 1 calc(25% - 20px);
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            padding: 15px;
+        }
+        .box img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .box button {
+            background-color: #009c1a;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .box button:hover {
+            background-color: #007a14;
+        }
+        .ratings {
+            color: #ffcc00;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+     
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><i class="fa-solid fa-hospital fa-beat fa-2xl" style="color: #eeff00;"></i>&nbsp;Hospital Management</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html"><i class="fa-solid fa-house-medical fa-lg" style="color: #000000;"></i>&nbsp;Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html"><i class="fa-solid fa-clipboard fa-lg" style="color: #000000;"></i>&nbsp;About Us</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-circle-plus fa-beat-fade fa-lg" style="color: #000000;"></i>&nbsp;services
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-truck-medical fa-shake fa-lg"></i>&nbsp;Emergency services</a></li>
+                  
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-syringe"></i>&nbsp;Pharmacy</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" id="nurses_panel" href="nurses.html"><i class="fa-solid fa-user-nurse fa-xl" style="color: #000000;"></i>&nbsp;Nurses</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-vial-circle-check fa-lg" style="color: #000000;"></i>&nbsp;Laboratory & Diagnostics</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-weight-scale fa-lg" style="color: #000000;"></i>&nbsp;Weight Scale</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="specialitiesDropdownCardiac" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-staff-snake fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Specialities
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="specialitiesDropdownCardiac">
+                  <li><a class="dropdown-item" href="Cardiac Sciences.html"><i class="fa-solid fa-heart-pulse fa-lg" style="color: #000000;"></i>&nbsp;Cardiac Sciences</a></li>
+                  
+                  <li><a class="dropdown-item" href="Dental Science.html"><i class="fa-solid fa-teeth fa-lg" style="color: #000000;"></i>&nbsp;Dental Science</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-brain fa-lg" style="color: #000000;"></i>&nbsp;Neurology</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-virus fa-lg" style="color: #000000;"></i>&nbsp;Infectious Diseases</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-eye fa-lg" style="color: #000000;"></i>&nbsp;Ophthalmology</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-lungs fa-lg" style="color: #000000;"></i>&nbsp;Gastroenterology</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-head-side-virus fa-lg" style="color: #000000;"></i>&nbsp;ENT</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bandage fa-lg" style="color: #000000;"></i>&nbsp;Radiology</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-head-side-mask fa-lg" style="color: #000000;"></i>&nbsp;Dermatology</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="doctors.html" tabindex="-1" aria-disabled="true"><i class="fa-solid fa-user-doctor fa-lg" style="color: #000000;"></i>&nbsp;doctors</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html"><i class="fa-solid fa-phone fa-lg fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faqs.html"><i class="fa-solid fa-question fa-lg" style="color: #000000;"></i>&nbsp;FAQs</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-light" id="searchbar" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    <header>
+        <h1>Cardiac Sciences</h1>
+    </header>
+
+    <div class="container">
+        <!-- About Cardiac Sciences -->
+        <section>
+            <h2>About Cardiac Sciences</h2>
+            <p>Cardiac Sciences is dedicated to providing comprehensive care for heart-related conditions. Our team of experts specializes in advanced diagnostics, treatments, and surgeries to ensure the best outcomes for our patients.</p>
+        </section>
+
+        <!-- Our Team of Experts -->
+        <section>
+            <h2>Our Team of Experts</h2>
+            <div class="team">
+                <div class="box">
+                    <img src="Images/istockphoto-137200.jpg" alt="Doctor 1">
+
+
+                    <h3>Dr. A. Sharma</h3>
+                    <p>Cardiologist</p>
+                    <button>View Full Profile</button>
+                    <button type="button" id="booknow" class="btn btn-success position-relative" onclick="window.location.href='book-now.html'">
+                        Book An Appointment
+                        
+                      </button>
+                </div>
+                <div class="box">
+                    <img src="Images/istockphoto-1191463311-612x612.jpg" alt="Doctor 2">
+
+                    <h3>Dr. B. Verma</h3>
+                    <p>Cardiac Surgeon</p>
+                    <button>View Full Profile</button>
+                    <button type="button" id="booknow" class="btn btn-success position-relative" onclick="window.location.href='book-now.html'">
+                        Book An Appointment
+                        
+                      </button>
+                </div>
+                <div class="box">
+                    <img src="Images/istockphoto-1266812094-612x612.jpg" alt="Doctor 3">
+
+                    <h3>Dr. C. Gupta</h3>
+                    <p>Interventional Cardiologist</p>
+                    <button>View Full Profile</button>
+                    <button type="button" id="booknow" class="btn btn-success position-relative" onclick="window.location.href='book-now.html'">
+                        Book An Appointment
+                        
+                      </button>
+                </div>
+                <div class="box">
+                    <img src="Images/istockphoto-1292012984-612x612.jpg" alt="Doctor 4">
+
+                    <h3>Dr. D. Singh</h3>
+                    <p>Electrophysiologist</p>
+                    <button>View Full Profile</button>
+                    <button type="button" id="booknow" class="btn btn-success position-relative" onclick="window.location.href='book-now.html'">
+                        Book An Appointment
+                        
+                      </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Available Locations -->
+        <section>
+            <h2>Available Locations</h2>
+            <div class="locations">
+                <div class="box">Delhi</div>
+                <div class="box">Mumbai</div>
+                <div class="box">Bangalore</div>
+                <div class="box">Chennai</div>
+                <div class="box">Kolkata</div>
+                <div class="box">Hyderabad</div>
+                <div class="box">Pune</div>
+                <div class="box">Ahmedabad</div>
+            </div>
+        </section>
+
+        <!-- Hospital Images -->
+        <section>
+            <h2>Our Hospitals</h2>
+            <div class="hospitals">
+                <div class="box">
+                    <img src="Images/istockphoto-1141331040-612x612.jpg" alt="Hospital 1">
+
+
+                    <h3>City Hospital</h3>
+                    <p>Delhi</p>
+                    <div class="ratings">★★★★☆</div>
+                    <button>Know More</button>
+                    <button type="button" id="booknow" class="btn btn-success position-relative" onclick="window.location.href='book-now.html'">
+                        Book An Appointment
+                        
+                      </button>
+                </div>
+                <div class="box">
+                    <img src="Images/istockphoto-1298932006-612x612.jpg" alt="Hospital 2">
+
+                    <h3>Metro Hospital</h3>
+                    <p>Mumbai</p>
+                    <div class="ratings">★★★★★</div>
+                    <button>Know More</button>
+                    <button type="button" id="booknow" class="btn btn-success position-relative" onclick="window.location.href='book-now.html'">
+                        Book An Appointment
+                        
+                    </button>
+                </div>
+                <div class="box">
+                    <img src="Images/istockphoto-1806602692-612x612.jpg" alt="Hospital 3">
+
+                    <h3>Heart Care Center</h3>
+                    <p>Bangalore</p>
+                    <div class="ratings">★★★★☆</div>
+                    <button>Know More</button>
+                    <button type="button" id="booknow" class="btn btn-success position-relative" onclick="window.location.href='book-now.html'">
+                        Book An Appointment
+                        
+                      </button>
+                </div>
+                <div class="box">
+                    <img src="Images/pexels-photo-5215009.webp" alt="Hospital 4">
+
+                    <h3>Global Hospital</h3>
+                    <p>Chennai</p>
+                    <div class="ratings">★★★☆☆</div>
+                    <button>Know More</button>
+                    <button type="button" id="booknow" class="btn btn-success position-relative" onclick="window.location.href='book-now.html'">
+                        Book An Appointment
+                        
+                      </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Cardiac Sciences. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
