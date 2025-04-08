@@ -1,19 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neurology</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hospital Management System</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="style.css"> 
+        <style>
+            .card-img-top {
+                object-fit: cover;
+                height: 200px;
+                width: 100%;
+            }
+            .card {
+                box-shadow: 0 8px 16px rgba(0, 156, 26, 0.3), 0 4px 8px rgba(0, 156, 26, 0.2);
+            }
+            @media (max-width: 576px) {
+                .card {
+                    margin-bottom: 20px;
+                }
+                .card-body {
+                    text-align: center;
+                }
+                .navbar-brand {
+                    font-size: 1.2rem;
+                }
+                .navbar-nav .nav-link {
+                    font-size: 0.9rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#"><i class="fa-solid fa-hospital fa-beat fa-2xl" style="color: #eeff00;"></i>&nbsp;Hospital Management</a>
+          <a class="navbar-brand" href="index.html"><i class="fa-solid fa-hospital fa-beat fa-2xl" style="color: #eeff00;"></i>&nbsp;Hospital Management</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -23,19 +47,19 @@
                 <a class="nav-link active" aria-current="page" href="index.html"><i class="fa-solid fa-house-medical fa-lg" style="color: #000000;"></i>&nbsp;Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about.html"><i class="fa-solid fa-clipboard fa-lg" style="color: #000000;"></i>&nbsp;About Us</a>
+                <a class="nav-link" href="About Us.html"><i class="fa-solid fa-clipboard fa-lg" style="color: #000000;"></i>&nbsp;About Us</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-circle-plus fa-beat-fade fa-lg" style="color: #000000;"></i>&nbsp;Services
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-truck-medical fa-shake fa-lg"></i>&nbsp;Emergency services</a></li>
+                  <li><a class="dropdown-item" href="Emergency_Services.html"><i class="fa-solid fa-truck-medical fa-shake fa-lg"></i>&nbsp;Emergency services</a></li>
                   <li><a class="dropdown-item" href="Pharmacy_Services.html"><i class="fa-solid fa-syringe"></i>&nbsp;Pharmacy</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="nurses.html"><i class="fa-solid fa-user-nurse fa-xl" style="color: #000000;"></i>&nbsp;Nurses</a></li>
-                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-vial-circle-check fa-lg" style="color: #000000;"></i>&nbsp;Laboratory & Diagnostics</a></li>
-                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-weight-scale fa-lg" style="color: #000000;"></i>&nbsp;Weight Scale</a></li>
+                  <li><a class="dropdown-item" id="nurses_panel" href="nurses.html"><i class="fa-solid fa-user-nurse fa-xl" style="color: #000000;"></i>&nbsp;Nurses</a></li>
+                  <li><a class="dropdown-item" href="Laboratory_Diagnostics.html"><i class="fa-solid fa-vial-circle-check fa-lg" style="color: #000000;"></i>&nbsp;Laboratory & Diagnostics</a></li>
+                  <li><a class="dropdown-item" href="Weight_Scale.html"><i class="fa-solid fa-weight-scale fa-lg" style="color: #000000;"></i>&nbsp;Weight Scale</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
@@ -43,8 +67,8 @@
                     <i class="fa-solid fa-staff-snake fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Specialities
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="specialitiesDropdown">
-                  <li><a class="dropdown-item" href="Cardiac Sciences.html"><i class="fa-solid fa-heart-pulse fa-lg" style="color: #000000;"></i>&nbsp;Cardiac Sciences</a></li>
-                  <li><a class="dropdown-item" href="Dental Science.html"><i class="fa-solid fa-teeth fa-lg" style="color: #000000;"></i>&nbsp;Dental Science</a></li>
+                  <li><a class="dropdown-item" href="Cardiac_Sciences.html"><i class="fa-solid fa-heart-pulse fa-lg" style="color: #000000;"></i>&nbsp;Cardiac Sciences</a></li>
+                  <li><a class="dropdown-item" href="Dental_Science.html"><i class="fa-solid fa-teeth fa-lg" style="color: #000000;"></i>&nbsp;Dental Science</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="Neurology.html"><i class="fa-solid fa-brain fa-lg" style="color: #000000;"></i>&nbsp;Neurology</a></li>
                   <li><a class="dropdown-item" href="Infectious_Diseases.html"><i class="fa-solid fa-virus fa-lg" style="color: #000000;"></i>&nbsp;Infectious Diseases</a></li>
@@ -56,7 +80,7 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="doctors.html"><i class="fa-solid fa-user-doctor fa-lg" style="color: #000000;"></i>&nbsp;Doctors</a>
+                <a class="nav-link " href="doctors.html" tabindex="-1" aria-disabled="true"><i class="fa-solid fa-user-doctor fa-lg" style="color: #000000;"></i>&nbsp;Doctors</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="contact.html"><i class="fa-solid fa-phone fa-lg fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Contact</a>
@@ -73,43 +97,35 @@
         </div>
       </nav>
 
-    <!-- Neurology Section -->
-    <section id="neurology-services" class="p-5 text-center bg-light">
+    <section class="p-5 text-center bg-light">
         <div class="container">
-            <h2 class="mb-4">Neurology</h2>
-            <p class="lead">Our Neurology department provides comprehensive care for neurological disorders. Explore our services below.</p>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100">
+            <h1>Our Doctors</h1>
+            <p class="lead">Meet our team of highly skilled and experienced doctors dedicated to your health and well-being.</p>
+            <div class="row">
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card mx-auto" style="width: 18rem;">
+                        <img src="Images/istockphoto-137200.jpg" class="card-img-top" alt="Doctor 1">
                         <div class="card-body">
-                            <h5 class="card-title">Stroke Management</h5>
-                            <p class="card-text">We offer advanced stroke management services, including diagnosis, treatment, and rehabilitation.</p>
+                            <h5 class="card-title">Dr. Sitara</h5>
+                            <p class="card-text">Cardiologist with 10 years of experience.</p>
+                            <div class="d-grid gap-2">
+                              <button class="btn btn-info" type="button" onclick="location.href='Doctor_Dr. Sitara.html'">View Full Profile</button>
+                              <button type="button" id="booknow" class="btn btn-success position-relative" onclick="location.href='book-now.html'">
+                                Book An Appointment
+                              </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Epilepsy Treatment</h5>
-                            <p class="card-text">Our specialists provide personalized care for epilepsy patients, ensuring effective management of seizures.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Neurodiagnostics</h5>
-                            <p class="card-text">We utilize state-of-the-art diagnostic tools to identify and treat neurological conditions accurately.</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- Repeat similar structure for other doctors -->
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="text-center p-3 bg-success text-white">
         <p>&copy; 2025 Hospital Management System. All Rights Reserved.</p>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
