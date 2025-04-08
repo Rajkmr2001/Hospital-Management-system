@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weight Scale Services</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar (same as other pages) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><i class="fa-solid fa-hospital fa-beat fa-2xl" style="color: #eeff00;"></i>&nbsp;Hospital Management</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html"><i class="fa-solid fa-house-medical fa-lg" style="color: #000000;"></i>&nbsp;Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html"><i class="fa-solid fa-clipboard fa-lg" style="color: #000000;"></i>&nbsp;About Us</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-circle-plus fa-beat-fade fa-lg" style="color: #000000;"></i>&nbsp;Services
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                  <li><a class="dropdown-item" href="Emergency_Services.html"><i class="fa-solid fa-truck-medical fa-shake fa-lg"></i>&nbsp;Emergency services</a></li>
+                  <li><a class="dropdown-item" href="Pharmacy_Services.html"><i class="fa-solid fa-syringe"></i>&nbsp;Pharmacy</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" id="nurses_panel" href="nurses.html"><i class="fa-solid fa-user-nurse fa-xl" style="color: #000000;"></i>&nbsp;Nurses</a></li>
+                  <li><a class="dropdown-item" href="Laboratory_Diagnostics.html"><i class="fa-solid fa-vial-circle-check fa-lg" style="color: #000000;"></i>&nbsp;Laboratory & Diagnostics</a></li>
+                  <li><a class="dropdown-item" href="Weight_Scale.html"><i class="fa-solid fa-weight-scale fa-lg" style="color: #000000;"></i>&nbsp;Weight Scale</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="specialitiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-staff-snake fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Specialities
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="specialitiesDropdown">
+                  <li><a class="dropdown-item" href="Cardiac Sciences.html"><i class="fa-solid fa-heart-pulse fa-lg" style="color: #000000;"></i>&nbsp;Cardiac Sciences</a></li>
+                  <li><a class="dropdown-item" href="Dental Science.html"><i class="fa-solid fa-teeth fa-lg" style="color: #000000;"></i>&nbsp;Dental Science</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="Neurology.html"><i class="fa-solid fa-brain fa-lg" style="color: #000000;"></i>&nbsp;Neurology</a></li>
+                  <li><a class="dropdown-item" href="Infectious_Diseases.html"><i class="fa-solid fa-virus fa-lg" style="color: #000000;"></i>&nbsp;Infectious Diseases</a></li>
+                  <li><a class="dropdown-item" href="Ophthalmology.html"><i class="fa-solid fa-eye fa-lg" style="color: #000000;"></i>&nbsp;Ophthalmology</a></li>
+                  <li><a class="dropdown-item" href="Gastroenterology.html"><i class="fa-solid fa-lungs fa-lg" style="color: #000000;"></i>&nbsp;Gastroenterology</a></li>
+                  <li><a class="dropdown-item" href="ENT.html"><i class="fa-solid fa-head-side-virus fa-lg" style="color: #000000;"></i>&nbsp;ENT</a></li>
+                  <li><a class="dropdown-item" href="Radiology.html"><i class="fa-solid fa-bandage fa-lg" style="color: #000000;"></i>&nbsp;Radiology</a></li>
+                  <li><a class="dropdown-item" href="Dermatology.html"><i class="fa-solid fa-head-side-mask fa-lg" style="color: #000000;"></i>&nbsp;Dermatology</a></li>
+                </ul>
+              <li class="nav-item">
+                <a class="nav-link " href="doctors.html" tabindex="-1" aria-disabled="true"><i class="fa-solid fa-user-doctor fa-lg" style="color: #000000;"></i>&nbsp;Doctors</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html"><i class="fa-solid fa-phone fa-lg fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faqs.html"><i class="fa-solid fa-question fa-lg" style="color: #000000;"></i>&nbsp;FAQs</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-light" id="searchbar" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+    <!-- Weight Scale Services Section -->
+    <section id="weight-services" class="p-5 text-center bg-light">
+        <div class="container">
+            <h2 class="mb-4">Weight Scale Services</h2>
+            <p class="lead">Comprehensive weight management programs tailored to your health goals and medical needs.</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-solid fa-scale-balanced fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">Body Composition Analysis</h5>
+                            <p class="card-text">Advanced bioelectrical impedance analysis to measure body fat percentage, muscle mass, and water composition.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-solid fa-utensils fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">Nutrition Counseling</h5>
+                            <p class="card-text">Personalized dietary plans from registered dietitians to support healthy weight loss or gain based on medical needs.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-solid fa-person-running fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">Exercise Planning</h5>
+                            <p class="card-text">Customized exercise programs developed by physical therapists to match your fitness level and health conditions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weight Management Highlights -->
+    <section class="p-5 text-center bg-white">
+      <div class="container">
+        <h2 class="mb-4">Our Weight Management Approach</h2>
+        <p class="lead">We combine medical expertise with compassionate support to help you achieve sustainable results.</p>
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow">
+              <div class="card-body">
+                <i class="fa-solid fa-user-md fa-2x text-success mb-3"></i>
+                <h5 class="card-title">Medical Supervision</h5>
+                <p class="card-text">Physician-led programs that address underlying health conditions affecting weight.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow">
+              <div class="card-body">
+                <i class="fa-solid fa-chart-line fa-2x text-success mb-3"></i>
+                <h5 class="card-title">Progress Tracking</h5>
+                <p class="card-text">Regular monitoring of weight, measurements, and health markers to track improvements.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow">
+              <div class="card-body">
+                <i class="fa-solid fa-people-group fa-2x text-success mb-3"></i>
+                <h5 class="card-title">Support Groups</h5>
+                <p class="card-text">Weekly support meetings to share experiences and strategies for long-term success.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow">
+              <div class="card-body">
+                <i class="fa-solid fa-mobile-screen-button fa-2x text-success mb-3"></i>
+                <h5 class="card-title">Digital Tools</h5>
+                <p class="card-text">Access to our weight management app for food logging, activity tracking, and progress monitoring.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Healthy Living Tips -->
+    <section class="p-5 bg-light text-center">
+      <div class="container">
+        <h2 class="mb-4">Healthy Living Tips</h2>
+        <p class="lead">Small changes can lead to big results. Start with these evidence-based recommendations.</p>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card border-success h-100">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fa-solid fa-apple-whole fa-lg text-success"></i> Balanced Nutrition</h5>
+                <p class="card-text">Focus on whole foods: vegetables, fruits, lean proteins, and whole grains. Practice portion control and mindful eating.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-success h-100">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fa-solid fa-glass-water fa-lg text-success"></i> Hydration</h5>
+                <p class="card-text">Drink at least 8 glasses of water daily. Often thirst is mistaken for hunger. Limit sugary beverages.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-success h-100">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fa-solid fa-moon fa-lg text-success"></i> Sleep Quality</h5>
+                <p class="card-text">Aim for 7-9 hours of quality sleep nightly. Poor sleep disrupts hunger hormones and metabolism.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hospital Highlights -->
+    <section class="p-5 bg-info text-white text-center">
+      <div class="container">
+        <h2 class="mb-4">Why Choose Our Weight Management Program?</h2>
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body">
+                <i class="fa-solid fa-heart-circle-check fa-2x mb-3"></i>
+                <h5>Medical Expertise</h5>
+                <p>Our team includes endocrinologists, dietitians, and exercise specialists with weight management certification.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body">
+                <i class="fa-solid fa-clipboard-check fa-2x mb-3"></i>
+                <h5>Evidence-Based</h5>
+                <p>Programs based on the latest clinical research and guidelines for safe, effective weight management.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body">
+                <i class="fa-solid fa-user-gear fa-2x mb-3"></i>
+                <h5>Personalized Plans</h5>
+                <p>Customized approaches considering your medical history, lifestyle, preferences, and goals.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body">
+                <i class="fa-solid fa-hand-holding-heart fa-2x mb-3"></i>
+                <h5>Long-term Support</h5>
+                <p>Ongoing maintenance programs to help you sustain your weight management success.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center p-3 bg-success text-white">
+      <p>&copy; 2025 Hospital Management System. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Services</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar (same as other pages) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><i class="fa-solid fa-hospital fa-beat fa-2xl" style="color: #eeff00;"></i>&nbsp;Hospital Management</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html"><i class="fa-solid fa-house-medical fa-lg" style="color: #000000;"></i>&nbsp;Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html"><i class="fa-solid fa-clipboard fa-lg" style="color: #000000;"></i>&nbsp;About Us</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-circle-plus fa-beat-fade fa-lg" style="color: #000000;"></i>&nbsp;Services
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                  <li><a class="dropdown-item" href="Emergency_Services.html"><i class="fa-solid fa-truck-medical fa-shake fa-lg"></i>&nbsp;Emergency services</a></li>
+                  <li><a class="dropdown-item" href="Pharmacy_Services.html"><i class="fa-solid fa-syringe"></i>&nbsp;Pharmacy</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" id="nurses_panel" href="nurses.html"><i class="fa-solid fa-user-nurse fa-xl" style="color: #000000;"></i>&nbsp;Nurses</a></li>
+                  <li><a class="dropdown-item" href="Laboratory_Diagnostics.html"><i class="fa-solid fa-vial-circle-check fa-lg" style="color: #000000;"></i>&nbsp;Laboratory & Diagnostics</a></li>
+                  <li><a class="dropdown-item" href="Weight_Scale.html"><i class="fa-solid fa-weight-scale fa-lg" style="color: #000000;"></i>&nbsp;Weight Scale</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="specialitiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-staff-snake fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Specialities
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="specialitiesDropdown">
+                  <li><a class="dropdown-item" href="Cardiac Sciences.html"><i class="fa-solid fa-heart-pulse fa-lg" style="color: #000000;"></i>&nbsp;Cardiac Sciences</a></li>
+                  <li><a class="dropdown-item" href="Dental Science.html"><i class="fa-solid fa-teeth fa-lg" style="color: #000000;"></i>&nbsp;Dental Science</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="Neurology.html"><i class="fa-solid fa-brain fa-lg" style="color: #000000;"></i>&nbsp;Neurology</a></li>
+                  <li><a class="dropdown-item" href="Infectious_Diseases.html"><i class="fa-solid fa-virus fa-lg" style="color: #000000;"></i>&nbsp;Infectious Diseases</a></li>
+                  <li><a class="dropdown-item" href="Ophthalmology.html"><i class="fa-solid fa-eye fa-lg" style="color: #000000;"></i>&nbsp;Ophthalmology</a></li>
+                  <li><a class="dropdown-item" href="Gastroenterology.html"><i class="fa-solid fa-lungs fa-lg" style="color: #000000;"></i>&nbsp;Gastroenterology</a></li>
+                  <li><a class="dropdown-item" href="ENT.html"><i class="fa-solid fa-head-side-virus fa-lg" style="color: #000000;"></i>&nbsp;ENT</a></li>
+                  <li><a class="dropdown-item" href="Radiology.html"><i class="fa-solid fa-bandage fa-lg" style="color: #000000;"></i>&nbsp;Radiology</a></li>
+                  <li><a class="dropdown-item" href="Dermatology.html"><i class="fa-solid fa-head-side-mask fa-lg" style="color: #000000;"></i>&nbsp;Dermatology</a></li>
+                </ul>
+              <li class="nav-item">
+                <a class="nav-link " href="doctors.html" tabindex="-1" aria-disabled="true"><i class="fa-solid fa-user-doctor fa-lg" style="color: #000000;"></i>&nbsp;Doctors</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html"><i class="fa-solid fa-phone fa-lg fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faqs.html"><i class="fa-solid fa-question fa-lg" style="color: #000000;"></i>&nbsp;FAQs</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-light" id="searchbar" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+    <!-- Emergency Services Section -->
+    <section id="emergency-services" class="p-5 text-center bg-light">
+        <div class="container">
+            <h2 class="mb-4">Emergency Services</h2>
+            <p class="lead">Our emergency department is staffed 24/7 with experienced professionals ready to handle any medical crisis. We provide immediate care when you need it most.</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-solid fa-truck-medical fa-3x text-danger mb-3"></i>
+                            <h5 class="card-title">Ambulance Services</h5>
+                            <p class="card-text">Our fleet of advanced life support ambulances are equipped with state-of-the-art equipment and staffed by trained paramedics.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-solid fa-user-doctor fa-3x text-danger mb-3"></i>
+                            <h5 class="card-title">Emergency Physicians</h5>
+                            <p class="card-text">Board-certified emergency physicians available around the clock to provide immediate care for all types of medical emergencies.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-solid fa-heart-pulse fa-3x text-danger mb-3"></i>
+                            <h5 class="card-title">Trauma Center</h5>
+                            <p class="card-text">Level II trauma center equipped to handle severe injuries with rapid response protocols and specialized trauma teams.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Highlights -->
+    <section class="p-5 text-center bg-white">
+      <div class="container">
+        <h2 class="mb-4">Our Emergency Department Features</h2>
+        <p class="lead">We've designed our emergency services to provide the fastest, most effective care during critical situations.</p>
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow">
+              <div class="card-body">
+                <i class="fa-solid fa-clock fa-2x text-danger mb-3"></i>
+                <h5 class="card-title">Fast Response Times</h5>
+                <p class="card-text">Average ambulance response time of under 10 minutes in the city and 15 minutes in suburban areas.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow">
+              <div class="card-body">
+                <i class="fa-solid fa-bed-pulse fa-2x text-danger mb-3"></i>
+                <h5 class="card-title">Dedicated ER Beds</h5>
+                <p class="card-text">30+ dedicated emergency beds with continuous monitoring and rapid access to specialists.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow">
+              <div class="card-body">
+                <i class="fa-solid fa-children fa-2x text-danger mb-3"></i>
+                <h5 class="card-title">Pediatric Emergency</h5>
+                <p class="card-text">Specialized pediatric emergency care with child-friendly environment and pediatric specialists.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow">
+              <div class="card-body">
+                <i class="fa-solid fa-phone-volume fa-2x text-danger mb-3"></i>
+                <h5 class="card-title">Emergency Hotline</h5>
+                <p class="card-text">24/7 emergency hotline staffed by nurses who can provide immediate advice and dispatch help.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Emergency Preparedness -->
+    <section class="p-5 bg-light text-center">
+      <div class="container">
+        <h2 class="mb-4">Emergency Preparedness Tips</h2>
+        <p class="lead">Being prepared can save lives in emergency situations. Here are some essential tips from our emergency team.</p>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card border-danger h-100">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fa-solid fa-first-aid fa-lg text-danger"></i> First Aid Kit</h5>
+                <p class="card-text">Keep a well-stocked first aid kit at home and in your car. Include bandages, antiseptic, pain relievers, and emergency contact numbers.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-danger h-100">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fa-solid fa-heart-circle-bolt fa-lg text-danger"></i> CPR Knowledge</h5>
+                <p class="card-text">Learn basic CPR. Immediate CPR can double or triple chances of survival after cardiac arrest.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-danger h-100">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fa-solid fa-triangle-exclamation fa-lg text-danger"></i> Emergency Signs</h5>
+                <p class="card-text">Know the warning signs of heart attack, stroke, and other emergencies to act quickly when they occur.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hospital Highlights -->
+    <section class="p-5 bg-danger text-white text-center">
+      <div class="container">
+        <h2 class="mb-4">Why Choose Our Emergency Services?</h2>
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body">
+                <i class="fa-solid fa-ranking-star fa-2x mb-3"></i>
+                <h5>Top-rated Care</h5>
+                <p>Consistently ranked among the top emergency departments in the region for quality and patient satisfaction.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body">
+                <i class="fa-solid fa-microscope fa-2x mb-3"></i>
+                <h5>Advanced Diagnostics</h5>
+                <p>On-site CT, MRI, and lab services available 24/7 for immediate diagnosis and treatment.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body">
+                <i class="fa-solid fa-user-tie fa-2x mb-3"></i>
+                <h5>Specialist Back-up</h5>
+                <p>Direct access to specialists in cardiology, neurology, surgery, and other critical fields.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body">
+                <i class="fa-solid fa-shield-heart fa-2x mb-3"></i>
+                <h5>Patient Safety</h5>
+                <p>Rigorous safety protocols and infection control measures to protect all patients.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center p-3 bg-success text-white">
+      <p>&copy; 2025 Hospital Management System. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

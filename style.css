@@ -156,3 +156,56 @@ p.lead {
     border-radius: 10px;
     margin-bottom: 15px;
 }
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    /* Navbar adjustments */
+    .navbar {
+        padding: 10px 0;
+    }
+    
+    .navbar-collapse {
+        background-color: #198754;
+        padding: 15px;
+        margin-top: 10px;
+    }
+    
+    /* Content centering */
+    section {
+        padding: 30px 15px;
+        text-align: center;
+    }
+    
+    .center-image {
+        height: auto;
+        max-height: 150px;
+    }
+    
+    /* Card adjustments */
+    .card {
+        margin-bottom: 20px;
+    }
+    
+    /* Nurses page specific */
+    .nurses-page .nurse-card {
+        width: 100%;
+        height: auto;
+        margin-bottom: 30px;
+    }
+    
+    .nurses-page .nurse-card img {
+        height: 200px;
+    }
+}
+
+/* Smaller mobile devices */
+@media (max-width: 576px) {
+    .call-tab {
+        font-size: 1rem;
+        padding: 8px;
+    }
+    
+    .card img {
+        height: 150px;
+    }
+}

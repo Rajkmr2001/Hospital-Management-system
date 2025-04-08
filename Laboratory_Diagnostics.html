@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratory & Diagnostics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar (same as other pages) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><i class="fa-solid fa-hospital fa-beat fa-2xl" style="color: #eeff00;"></i>&nbsp;Hospital Management</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html"><i class="fa-solid fa-house-medical fa-lg" style="color: #000000;"></i>&nbsp;Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html"><i class="fa-solid fa-clipboard fa-lg" style="color: #000000;"></i>&nbsp;About Us</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-circle-plus fa-beat-fade fa-lg" style="color: #000000;"></i>&nbsp;Services
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                  <li><a class="dropdown-item" href="Emergency_Services.html"><i class="fa-solid fa-truck-medical fa-shake fa-lg"></i>&nbsp;Emergency services</a></li>
+                  <li><a class="dropdown-item" href="Pharmacy_Services.html"><i class="fa-solid fa-syringe"></i>&nbsp;Pharmacy</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" id="nurses_panel" href="nurses.html"><i class="fa-solid fa-user-nurse fa-xl" style="color: #000000;"></i>&nbsp;Nurses</a></li>
+                  <li><a class="dropdown-item" href="Laboratory_Diagnostics.html"><i class="fa-solid fa-vial-circle-check fa-lg" style="color: #000000;"></i>&nbsp;Laboratory & Diagnostics</a></li>
+                  <li><a class="dropdown-item" href="Weight_Scale.html"><i class="fa-solid fa-weight-scale fa-lg" style="color: #000000;"></i>&nbsp;Weight Scale</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="specialitiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-staff-snake fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Specialities
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="specialitiesDropdown">
+                  <li><a class="dropdown-item" href="Cardiac Sciences.html"><i class="fa-solid fa-heart-pulse fa-lg" style="color: #000000;"></i>&nbsp;Cardiac Sciences</a></li>
+                  <li><a class="dropdown-item" href="Dental Science.html"><i class="fa-solid fa-teeth fa-lg" style="color: #000000;"></i>&nbsp;Dental Science</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="Neurology.html"><i class="fa-solid fa-brain fa-lg" style="color: #000000;"></i>&nbsp;Neurology</a></li>
+                  <li><a class="dropdown-item" href="Infectious_Diseases.html"><i class="fa-solid fa-virus fa-lg" style="color: #000000;"></i>&nbsp;Infectious Diseases</a></li>
+                  <li><a class="dropdown-item" href="Ophthalmology.html"><i class="fa-solid fa-eye fa-lg" style="color: #000000;"></i>&nbsp;Ophthalmology</a></li>
+                  <li><a class="dropdown-item" href="Gastroenterology.html"><i class="fa-solid fa-lungs fa-lg" style="color: #000000;"></i>&nbsp;Gastroenterology</a></li>
+                  <li><a class="dropdown-item" href="ENT.html"><i class="fa-solid fa-head-side-virus fa-lg" style="color: #000000;"></i>&nbsp;ENT</a></li>
+                  <li><a class="dropdown-item" href="Radiology.html"><i class="fa-solid fa-bandage fa-lg" style="color: #000000;"></i>&nbsp;Radiology</a></li>
+                  <li><a class="dropdown-item" href="Dermatology.html"><i class="fa-solid fa-head-side-mask fa-lg" style="color: #000000;"></i>&nbsp;Dermatology</a></li>
+                </ul>
+              <li class="nav-item">
+                <a class="nav-link " href="doctors.html" tabindex="-1" aria-disabled="true"><i class="fa-solid fa-user-doctor fa-lg" style="color: #000000;"></i>&nbsp;Doctors</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html"><i class="fa-solid fa-phone fa-lg fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faqs.html"><i class="fa-solid fa-question fa-lg" style="color: #000000;"></i>&nbsp;FAQs</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-light" id="searchbar" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+    <!-- Laboratory Services Section -->
+    <section id="lab-services" class="p-5 text-center bg-light">
+        <div class="container">
+            <h2 class="mb-4">Laboratory & Diagnostics</h2>
+            <p class="lead">Our state-of-the-art laboratory provides accurate and timely diagnostic services to support your healthcare needs.</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-solid fa-microscope fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Clinical Pathology</h5>
+                            <p class="card-text">Comprehensive blood tests, urinalysis, and other essential diagnostic tests performed with precision and quick turnaround times.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-solid fa-dna fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Molecular Diagnostics</h5>
+                            <p class="card-text">Advanced genetic testing and PCR-based diagnostics for infectious diseases, cancer markers, and genetic disorders.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-solid fa-virus fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Microbiology</h5>
+                            <p class="card-text">Specialized testing for bacterial, viral, and fungal infections with antimicrobial susceptibility testing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Highlights -->
+    <section class="p-5 text-center bg-white">
+      <div class="container">
+        <h2 class="mb-4">Our Laboratory Features</h2>
+        <p class="lead">We combine cutting-edge technology with expert analysis to deliver reliable diagnostic results.</p>
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow">
+              <div class="card-body">
+                <i class="fa-solid fa-flask-vial fa-2x text-primary mb-3"></i>
+                <h5 class="card-title">Accredited Lab</h5>
+                <p class="card-text">Fully accredited laboratory meeting international quality standards for accuracy and reliability.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow">
+              <div class="card-body">
+                <i class="fa-solid fa-bolt-lightning fa-2x text-primary mb-3"></i>
+                <h5 class="card-title">Rapid Results</h5>
+                <p class="card-text">Most routine tests completed within 4-6 hours, with STAT tests available for urgent cases.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow">
+              <div class="card-body">
+                <i class="fa-solid fa-laptop-medical fa-2x text-primary mb-3"></i>
+                <h5 class="card-title">Digital Reports</h5>
+                <p class="card-text">Secure online access to test results through our patient portal, available 24/7.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow">
+              <div class="card-body">
+                <i class="fa-solid fa-user-doctor fa-2x text-primary mb-3"></i>
+                <h5 class="card-title">Expert Consultation</h5>
+                <p class="card-text">Pathologists available to discuss test results and their implications for your health.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Test Preparation -->
+    <section class="p-5 bg-light text-center">
+      <div class="container">
+        <h2 class="mb-4">Test Preparation Guidelines</h2>
+        <p class="lead">Proper preparation ensures accurate test results. Follow these guidelines for common tests.</p>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card border-primary h-100">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fa-solid fa-droplet fa-lg text-primary"></i> Blood Tests</h5>
+                <p class="card-text">Fast for 8-12 hours before tests requiring fasting. Drink water unless instructed otherwise. Avoid strenuous exercise before testing.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-primary h-100">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fa-solid fa-toilet fa-lg text-primary"></i> Urine Tests</h5>
+                <p class="card-text">Collect first morning urine when possible. Clean the genital area before collection. Midstream collection is preferred for most tests.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-primary h-100">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fa-solid fa-poop fa-lg text-primary"></i> Stool Tests</h5>
+                <p class="card-text">Use provided collection containers. Avoid contaminating with urine or toilet water. Refrigerate if not delivered within 2 hours.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hospital Highlights -->
+    <section class="p-5 bg-primary text-white text-center">
+      <div class="container">
+        <h2 class="mb-4">Our Diagnostic Advantage</h2>
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body">
+                <i class="fa-solid fa-certificate fa-2x mb-3"></i>
+                <h5>Quality Certified</h5>
+                <p>Our lab maintains CAP accreditation and participates in proficiency testing programs.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body">
+                <i class="fa-solid fa-robot fa-2x mb-3"></i>
+                <h5>Automated Systems</h5>
+                <p>Advanced automation reduces human error and increases testing efficiency.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body">
+                <i class="fa-solid fa-shield-virus fa-2x mb-3"></i>
+                <h5>Infection Control</h5>
+                <p>Stringent protocols ensure safe handling of all specimens and protection of staff.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body">
+                <i class="fa-solid fa-hand-holding-medical fa-2x mb-3"></i>
+                <h5>Patient-Centered</h5>
+                <p>Comfortable phlebotomy stations with skilled technicians for stress-free draws.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center p-3 bg-success text-white">
+      <p>&copy; 2025 Hospital Management System. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
