@@ -4,181 +4,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Registration</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/0a92e4354f.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#10b981',
+              secondary: '#f3f4f6'
+            },
+            borderRadius: {
+              'button': '8px'
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #009c1a;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            color: white;
-        }
-        .container {
-            max-width: 400px;
-            background: white;
-            color: black;
-            padding: 20px;
-            margin: auto;
-            margin-top: 50px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-        }
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .form-group label {
-            font-weight: bold;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .btn {
-            background-color: #28a745;
-            color: white;
-            padding: 10px;
-            width: 100%;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background-color: #218838;
-        }
-        /* Popup Styling */
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            color: black;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-        }
-        .popup button {
-            background-color: #28a745;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            margin-top: 10px;
-            cursor: pointer;
-        }
+      body { font-family: Arial, sans-serif; }
+      .pacifico { font-family: 'Pacifico', cursive; }
+      .popup {
+        display: none;
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        color: black;
+        padding: 2rem 2.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+        z-index: 1000;
+        min-width: 300px;
+        text-align: center;
+      }
     </style>
 </head>
-<body>
+<body class="bg-primary min-h-screen flex flex-col">
 
-    <div class="container">
-        <h2>Maa Kalawati Hospital</h2><hr />
-        <h3>Patient Registration</h3>
-        <form id="registrationForm">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="mobile">Mobile Number:</label>
-                <input type="text" id="mobile" name="mobile" required>
-            </div>
-            <div class="form-group">
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender" required>
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn">Register</button>
-            <div class="d-flex justify-content-between mt-2">
-                <button class="btn btn-secondary w-50 me-2" onclick="location.href='index.html'" type="button">Back to Home</button>
-                <button class="btn btn-secondary w-50" onclick="location.href=''" type="button">Login</button>
-            </div>
-        </form>
+<!-- Header/Navbar (copied and simplified from index1.html) -->
+<header class="sticky top-0 z-50 bg-white shadow-sm">
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center">
+        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+          <i class="ri-heart-pulse-line text-white ri-lg"></i>
+        </div>
+        <span class="ml-2 text-xl font-semibold text-gray-800">Maa Kalawati Hospital</span>
+      </div>
+      <nav class="hidden md:flex space-x-6">
+        <a href="index1.html" class="text-gray-700 hover:text-primary font-medium">Home</a>
+        <a href="About Us.html" class="text-gray-700 hover:text-primary font-medium">About Us</a>
+        <a href="contact.html" class="text-gray-700 hover:text-primary font-medium">Contact</a>
+      </nav>
     </div>
+  </div>
+</header>
 
-    <!-- Popup Message -->
-    <div id="popup" class="popup">
-        <p id="popupMessage"></p>
-        <button id="popupOk">OK</button>
+<!-- Registration Card -->
+<main class="flex-1 flex items-center justify-center py-12">
+  <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 w-full max-w-md p-8">
+    <h2 class="text-3xl font-bold text-primary mb-2 text-center pacifico">Patient Registration</h2>
+    <p class="text-gray-500 mb-6 text-center">Create your account to book appointments and access services.</p>
+    <form id="registrationForm" class="space-y-5">
+      <div>
+        <label for="name" class="block text-gray-700 font-semibold mb-1">Name</label>
+        <input type="text" id="name" name="name" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none transition">
+      </div>
+      <div>
+        <label for="mobile" class="block text-gray-700 font-semibold mb-1">Mobile Number</label>
+        <input type="text" id="mobile" name="mobile" required maxlength="10"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none transition">
+      </div>
+      <div>
+        <label for="gender" class="block text-gray-700 font-semibold mb-1">Gender</label>
+        <select id="gender" name="gender" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none transition">
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="password" class="block text-gray-700 font-semibold mb-1">Password</label>
+        <input type="password" id="password" name="password" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none transition">
+        <p class="text-xs text-gray-400 mt-1">Min 8 chars, uppercase, lowercase, number, special char</p>
+      </div>
+      <button type="submit"
+        class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2 rounded-button text-lg transition">Register</button>
+      <div class="flex gap-2 mt-2">
+        <button class="w-1/2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 rounded-button transition"
+          onclick="location.href='index1.html'; return false;" type="button">
+          <i class="ri-arrow-left-line mr-1"></i> Home
+        </button>
+        <button class="w-1/2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 rounded-button transition"
+          onclick="location.href='login.html'; return false;" type="button">
+          <i class="ri-login-box-line mr-1"></i> Login
+        </button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<!-- Popup Message -->
+<div id="popup" class="popup">
+  <p id="popupMessage"></p>
+  <button id="popupOk"
+    class="mt-4 bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-button font-semibold transition">OK</button>
+</div>
+
+<!-- Footer (copied and simplified from index1.html) -->
+<footer class="bg-gray-800 text-white pt-8 pb-4 mt-8">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-400 text-sm">&copy; 2025 Maa Kalawati Hospital. All rights reserved.</p>
+      <div class="mt-4 md:mt-0 flex space-x-4">
+        <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+        <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+      </div>
     </div>
-    <script>
-        document.getElementById("registrationForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent page reload
-    
-            let name = document.getElementById("name").value.trim();
-            let mobile = document.getElementById("mobile").value.trim();
-            let gender = document.getElementById("gender").value;
-            let password = document.getElementById("password").value;
-    
-            // Validate Mobile Number (must be exactly 10 digits)
-            if (!/^\d{10}$/.test(mobile)) {
-                showPopup("❌ Error: Mobile number must be exactly 10 digits.", false);
-                return;
-            }
-    
-            // Validate Password (at least 8 chars, mix of uppercase, lowercase, number, special char)
-            let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-            if (!passwordPattern.test(password)) {
-                showPopup("❌ Error: Password must include uppercase, lowercase, number, and special character.", false);
-                return;
-            }
-    
-            // Send data to register.php via AJAX
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", "register.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    showPopup(xhr.responseText, true); // Show success message
-                }
-            };
-    
-            xhr.send(`name=${name}&mobile=${mobile}&gender=${gender}&password=${password}`);
-        });
-    
-        // Function to show popup
-        function showPopup(message, shouldRefresh) {
-            document.getElementById("popupMessage").innerText = message;
-            document.getElementById("popup").style.display = "block";
-    
-            // When clicking OK, close popup and refresh if needed
-            document.getElementById("popupOk").onclick = function () {
-                document.getElementById("popup").style.display = "none";
-    
-                if (shouldRefresh) {
-                    location.reload();  // Refresh only for success messages
-                }
-            };
+  </div>
+</footer>
+
+<script>
+    document.getElementById("registrationForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent page reload
+
+        let name = document.getElementById("name").value.trim();
+        let mobile = document.getElementById("mobile").value.trim();
+        let gender = document.getElementById("gender").value;
+        let password = document.getElementById("password").value;
+
+        // Validate Mobile Number (must be exactly 10 digits)
+        if (!/^\d{10}$/.test(mobile)) {
+            showPopup("❌ Error: Mobile number must be exactly 10 digits.", false);
+            return;
         }
 
-        // Function to close popup (if needed elsewhere)
-        function closePopup() {
+        // Validate Password (at least 8 chars, mix of uppercase, lowercase, number, special char)
+        let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordPattern.test(password)) {
+            showPopup("❌ Error: Password must include uppercase, lowercase, number, and special character.", false);
+            return;
+        }
+
+        // Send data to register.php via AJAX
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "register.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                showPopup(xhr.responseText, true); // Show success message
+            }
+        };
+
+        xhr.send(`name=${name}&mobile=${mobile}&gender=${gender}&password=${password}`);
+    });
+
+    // Function to show popup
+    function showPopup(message, shouldRefresh) {
+        document.getElementById("popupMessage").innerText = message;
+        document.getElementById("popup").style.display = "block";
+
+        // When clicking OK, close popup and refresh if needed
+        document.getElementById("popupOk").onclick = function () {
             document.getElementById("popup").style.display = "none";
-        }
-    </script>
-    
 
+            if (shouldRefresh) {
+                location.reload();  // Refresh only for success messages
+            }
+        };
+    }
+</script>
 </body>
 </html>

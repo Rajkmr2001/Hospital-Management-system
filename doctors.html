@@ -1,215 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Hospital Management System</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-              
-          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-          <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-          <!-- Single Font Awesome import -->
-          <script src="https://kit.fontawesome.com/0a92e4354f.js" crossorigin="anonymous"></script>
-              <link rel="stylesheet" href="style.css"> 
-        <style>
-            .card-img-top {
-                object-fit: cover;
-                height: 200px;
-                width: 100%;
-            }
-            .card {
-                box-shadow: 0 8px 16px rgba(0, 156, 26, 0.3), 0 4px 8px rgba(0, 156, 26, 0.2);
-            }
-            @media (max-width: 576px) {
-                .card {
-                    margin-bottom: 20px;
-                }
-                .card-body {
-                    text-align: center;
-                }
-                .navbar-brand {
-                    font-size: 1.2rem;
-                }
-                .navbar-nav .nav-link {
-                    font-size: 0.9rem;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="index.html"><i class="fa-solid fa-hospital fa-beat fa-2xl" style="color: #eeff00;"></i>&nbsp;Hospital Management</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Doctors | Hospital Management System</title>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#10b981',
+            secondary: '#f3f4f6'
+          },
+          borderRadius: {
+            'none': '0px',
+            'sm': '4px',
+            DEFAULT: '8px',
+            'md': '12px',
+            'lg': '16px',
+            'xl': '20px',
+            '2xl': '24px',
+            '3xl': '32px',
+            'full': '9999px',
+            'button': '8px'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="style1.css">
+  <style>
+    .dot {
+      width: 12px;
+      height: 12px;
+      background: #e5e7eb;
+      border-radius: 9999px;
+      margin: 0 4px;
+      display: inline-block;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dot.active {
+      background: #10b981;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation Bar (from index1.html) -->
+<header class="sticky top-0 z-50 bg-white shadow-sm">
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+          <i class="ri-heart-pulse-line text-white ri-lg"></i>
+        </div>
+        <span class="ml-2 text-xl font-semibold text-gray-800">Hospital Management</span>
+      </div>
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-6">
+        <a href="index1.html" class="text-gray-700 hover:text-primary font-medium">Home</a>
+        <a href="About Us.html" class="text-gray-700 hover:text-primary font-medium">About Us</a>
+        <!-- Services Dropdown -->
+        <div class="dropdown relative group">
+          <button class="text-gray-700 group-hover:text-primary hover:text-primary font-medium flex items-center">
+            Services
+            <i class="ri-arrow-down-s-line ml-1 ri-lg"></i>
           </button>
-          <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html"><i class="fa-solid fa-house-medical fa-lg" style="color: #000000;"></i>&nbsp;Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="About Us.html"><i class="fa-solid fa-clipboard fa-lg" style="color: #000000;"></i>&nbsp;About Us</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-circle-plus fa-beat-fade fa-lg" style="color: #000000;"></i>&nbsp;Services
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-                  <li><a class="dropdown-item" href="Emergency_Services.html"><i class="fa-solid fa-truck-medical fa-shake fa-lg"></i>&nbsp;Emergency services</a></li>
-                  
-                  <li><a class="dropdown-item" href="Pharmacy_Services.html"><i class="fa-solid fa-syringe"></i>&nbsp;Pharmacy</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" id="nurses_panel" href="nurses.html"><i class="fa-solid fa-user-nurse fa-xl" style="color: #000000;"></i>&nbsp;Nurses</a></li>
-                  <li><a class="dropdown-item" href="Laboratory_Diagnostics.html"><i class="fa-solid fa-vial-circle-check fa-lg" style="color: #000000;"></i>&nbsp;Laboratory & Diagnostics</a></li>
-                  <li><a class="dropdown-item" href="Weight_Scale.html"><i class="fa-solid fa-weight-scale fa-lg" style="color: #000000;"></i>&nbsp;Weight Scale</a></li>
-                </ul>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="specialitiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-staff-snake fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Specialities
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="specialitiesDropdown">
-                  <li><a class="dropdown-item" href="Cardiac_Sciences.html"><i class="fa-solid fa-heart-pulse fa-lg" style="color: #000000;"></i>&nbsp;Cardiac Sciences</a></li>
-                  
-                  <li><a class="dropdown-item" href="Dental_Science.html"><i class="fa-solid fa-teeth fa-lg" style="color: #000000;"></i>&nbsp;Dental Science</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="Neurology.html"><i class="fa-solid fa-brain fa-lg" style="color: #000000;"></i>&nbsp;Neurology</a></li>
-                  <li><a class="dropdown-item" href="Infectious_Diseases.html"><i class="fa-solid fa-virus fa-lg" style="color: #000000;"></i>&nbsp;Infectious Diseases</a></li>
-                  <li><a class="dropdown-item" href="Ophthalmology.html"><i class="fa-solid fa-eye fa-lg" style="color: #000000;"></i>&nbsp;Ophthalmology</a></li>
-                  <li><a class="dropdown-item" href="Gastroenterology.html"><i class="fa-solid fa-lungs fa-lg" style="color: #000000;"></i>&nbsp;Gastroenterology</a></li>
-                  <li><a class="dropdown-item" href="ENT.html"><i class="fa-solid fa-head-side-virus fa-lg" style="color: #000000;"></i>&nbsp;ENT</a></li>
-                  <li><a class="dropdown-item" href="Radiology.html"><i class="fa-solid fa-bandage fa-lg" style="color: #000000;"></i>&nbsp;Radiology</a></li>
-                  <li><a class="dropdown-item" href="Dermatology.html"><i class="fa-solid fa-head-side-mask fa-lg" style="color: #000000;"></i>&nbsp;Dermatology</a></li>
-                 
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="doctors.html" tabindex="-1" aria-disabled="true"><i class="fa-solid fa-user-doctor fa-lg" style="color: #000000;"></i>&nbsp;Doctors</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact.html"><i class="fa-solid fa-phone fa-lg fa-shake fa-lg" style="color: #000000;"></i>&nbsp;Contact</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="faqs.html"><i class="fa-solid fa-question fa-lg" style="color: #000000;"></i>&nbsp;FAQs</a>
-              </li>
-            </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-light" id="searchbar" type="submit">Search</button>
-            </form>
+          <div class="dropdown-content mt-2 bg-white shadow-lg rounded hidden group-hover:block group-focus-within:block absolute z-50 min-w-[180px]">
+            <a href="Emergency_Services.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Emergency services</a>
+            <a href="Pharmacy_Services.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Pharmacy</a>
+            <a href="nurses.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Nurses</a>
+            <a href="Laboratory_Diagnostics.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Laboratory & Diagnostics</a>
+            <a href="Weight_Scale.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Weight Scale</a>
           </div>
         </div>
-      </nav>
-
-    <section class="p-5 text-center bg-light">
-        <div class="container">
-            <h1>Our Doctors</h1>
-            <p class="lead">Meet our team of highly skilled and experienced doctors dedicated to your health and well-being.</p>
-            <div class="row">
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card mx-auto" style="width: 18rem;">
-                        <img src="Images/istockphoto-137200.jpg" class="card-img-top" alt="Doctor 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Dr. Sitara</h5>
-                            <p class="card-text">Cardiologist with 10 years of experience.</p>
-                            <div class="d-grid gap-2">
-                              <button class="btn btn-info" type="button" onclick="location.href='Doctor_Dr. Sitara.html'">View Full Profile</button>
-                              <button type="button" id="booknow" class="btn btn-success position-relative" onclick="location.href='book-now.html'">
-                                Book An Appointment
-                              </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card mx-auto" style="width: 18rem;">
-                        <img src="Images/istockphoto-1292012984-612x612.jpg" class="card-img-top" alt="Doctor 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Dr. swyeta</h5>
-                            <p class="card-text">Neurologist with 8 years of experience.</p>
-                            <div class="d-grid gap-2">
-                              <button class="btn btn-info" type="button" onclick="location.href='Doctor_Dr. swyeta.html'">View Full Profile</button>
-                              <button type="button" id="booknow" class="btn btn-success position-relative" onclick="location.href='book-now.html'">
-                                Book An Appointment
-                              </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card mx-auto" style="width: 18rem;">
-                        <img src="Images/pexels-photo-8376277.webp" class="card-img-top" alt="Doctor 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Dr. Williams</h5>
-                            <p class="card-text">Orthopedic Surgeon with 12 years of experience.</p>
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-info" type="button" onclick="location.href='doctor_williams.html'">View Full Profile</button>
-                                <button type="button" id="booknow" class="btn btn-success position-relative" onclick="location.href='book-now.html'">
-                                  Book An Appointment
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card mx-auto" style="width: 18rem;">
-                        <img src="Images/istockphoto-1266812094-612x612.jpg" class="card-img-top" alt="Doctor 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Dr. Nirmala </h5>
-                            <p class="card-text">Cardiologist with 11 years of experience.</p>
-                            <div class="d-grid gap-2">
-                              <button class="btn btn-info" type="button" onclick="location.href='doctor_Nirmala.html'">View Full Profile</button>
-                              <button type="button" id="booknow" class="btn btn-success position-relative" onclick="location.href='book-now.html'">
-                                Book An Appointment
-                              </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card mx-auto" style="width: 18rem;">
-                        <img src="Images/istockphoto-1191463311-612x612.jpg" class="card-img-top" alt="Doctor 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Dr. Aryas Devi</h5>
-                            <p class="card-text">Neurologist with 18 years of experience.</p>
-                            <div class="d-grid gap-2">
-                              <button class="btn btn-info" type="button" onclick="location.href='doctor_aryas.html'">View Full Profile</button>
-                              <button type="button" id="booknow" class="btn btn-success position-relative" onclick="location.href='book-now.html'">
-                                Book An Appointment
-                              </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card mx-auto" style="width: 18rem;">
-                        <img src="Images/istockphoto-1141331040-612x612.jpg" class="card-img-top" alt="Doctor 3">
-                        <div class="card-body">
-                          <h5 class="card-title">Dr. Kusum</h5>
-                          <p class="card-text">Orthopedic Surgeon with 16 years of experience.</p>
-                          <div class="d-grid gap-2">
-                            <button class="btn btn-info" type="button" onclick="location.href='Doctor_Dr. Kusum.html'">View Full Profile</button>
-                            <button type="button" id="booknow" class="btn btn-success position-relative" onclick="location.href='book-now.html'">
-                              Book An Appointment
-                            </button>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Specialities Dropdown -->
+        <div class="dropdown relative group">
+          <button class="text-gray-700 group-hover:text-primary hover:text-primary font-medium flex items-center">
+            Specialities
+            <i class="ri-arrow-down-s-line ml-1 ri-lg"></i>
+          </button>
+          <div class="dropdown-content mt-2 bg-white shadow-lg rounded hidden group-hover:block group-focus-within:block absolute z-50 min-w-[180px]">
+            <a href="Cardiac_Sciences.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Cardiac Sciences</a>
+            <a href="Dental_Science.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Dental Science</a>
+            <a href="Neurology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Neurology</a>
+            <a href="Infectious_Diseases.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Infectious Diseases</a>
+            <a href="Ophthalmology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Ophthalmology</a>
+            <a href="Gastroenterology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Gastroenterology</a>
+            <a href="ENT.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">ENT</a>
+            <a href="Radiology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Radiology</a>
+            <a href="Dermatology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Dermatology</a>
+          </div>
         </div>
-    </section>
+        <a href="doctors.html" class="text-gray-700 hover:text-primary font-medium">Doctors</a>
+        <a href="contact.html" class="text-gray-700 hover:text-primary font-medium">Contact</a>
+        <a href="faqs.html" class="text-gray-700 hover:text-primary font-medium">FAQs</a>
+      </nav>
+      <!-- Search Bar -->
+      <div class="hidden md:flex items-center">
+        <div class="relative">
+          <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
+          <div class="absolute left-3 top-2.5 w-4 h-4 flex items-center justify-center">
+            <i class="ri-search-line text-gray-400"></i>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center">
+        <button id="mobile-menu-button" class="text-gray-700 hover:text-primary">
+          <i class="ri-menu-line ri-2x"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="md:hidden hidden pb-4">
+      <a href="index1.html" class="block py-2 text-gray-700 hover:text-primary font-medium">Home</a>
+      <a href="About Us.html" class="block py-2 text-gray-700 hover:text-primary font-medium">About Us</a>
+      <div class="py-2">
+        <button id="mobile-services-button" class="flex items-center justify-between w-full text-gray-700 hover:text-primary font-medium">
+          Services
+          <i class="ri-arrow-down-s-line"></i>
+        </button>
+        <div id="mobile-services-menu" class="hidden pl-4 mt-2">
+          <a href="Emergency_Services.html" class="block py-2 text-gray-700 hover:text-primary">Emergency services</a>
+          <a href="Pharmacy_Services.html" class="block py-2 text-gray-700 hover:text-primary">Pharmacy</a>
+          <a href="nurses.html" class="block py-2 text-gray-700 hover:text-primary">Nurses</a>
+          <a href="Laboratory_Diagnostics.html" class="block py-2 text-gray-700 hover:text-primary">Laboratory & Diagnostics</a>
+          <a href="Weight_Scale.html" class="block py-2 text-gray-700 hover:text-primary">Weight Scale</a>
+        </div>
+      </div>
+      <div class="py-2">
+        <button id="mobile-specialities-button" class="flex items-center justify-between w-full text-gray-700 hover:text-primary font-medium">
+          Specialities
+          <i class="ri-arrow-down-s-line"></i>
+        </button>
+        <div id="mobile-specialities-menu" class="hidden pl-4 mt-2">
+          <a href="Cardiac_Sciences.html" class="block py-2 text-gray-700 hover:text-primary">Cardiac Sciences</a>
+          <a href="Dental_Science.html" class="block py-2 text-gray-700 hover:text-primary">Dental Science</a>
+          <a href="Neurology.html" class="block py-2 text-gray-700 hover:text-primary">Neurology</a>
+          <a href="Infectious_Diseases.html" class="block py-2 text-gray-700 hover:text-primary">Infectious Diseases</a>
+          <a href="Ophthalmology.html" class="block py-2 text-gray-700 hover:text-primary">Ophthalmology</a>
+          <a href="Gastroenterology.html" class="block py-2 text-gray-700 hover:text-primary">Gastroenterology</a>
+          <a href="ENT.html" class="block py-2 text-gray-700 hover:text-primary">ENT</a>
+          <a href="Radiology.html" class="block py-2 text-gray-700 hover:text-primary">Radiology</a>
+          <a href="Dermatology.html" class="block py-2 text-gray-700 hover:text-primary">Dermatology</a>
+        </div>
+      </div>
+      <a href="doctors.html" class="block py-2 text-gray-700 hover:text-primary font-medium">Doctors</a>
+      <a href="contact.html" class="block py-2 text-gray-700 hover:text-primary font-medium">Contact</a>
+      <a href="faqs.html" class="block py-2 text-gray-700 hover:text-primary font-medium">FAQs</a>
+      <div class="mt-4 relative">
+        <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
+        <div class="absolute left-3 top-2.5 w-4 h-4 flex items-center justify-center">
+          <i class="ri-search-line text-gray-400"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
 
-    <footer class="text-center p-3 bg-success text-white">
-        <p>&copy; 2025 Hospital Management System. All Rights Reserved.</p>
-    </footer>
+<!-- Hero Section -->
+<section class="relative">
+  <div class="bg-gradient-to-r from-white via-white/90 to-transparent h-[300px] md:h-[350px] flex items-center justify-center">
+    <div class="container mx-auto px-4 h-full flex items-center justify-center">
+      <div class="max-w-2xl relative z-10 text-center mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 drop-shadow-lg">Meet Our Doctors</h1>
+        <h2 class="text-xl md:text-2xl text-gray-700 mb-0 drop-shadow">Highly Skilled & Experienced Medical Professionals</h2>
+        <p class="text-2xl md:text-3xl font-bold text-primary mt-4 drop-shadow">Your Health, Our Commitment</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Doctors Grid Section -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Doctors</h2>
+      <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-2xl mx-auto">Meet our team of highly skilled and experienced doctors dedicated to your health and well-being.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+      <!-- Doctor 1 -->
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col items-center p-6">
+        <img src="Images/istockphoto-137200.jpg" alt="Dr. Sitara" class="w-32 h-32 rounded-full object-cover mb-4 shadow">
+        <h3 class="text-xl font-semibold text-gray-900 mb-1">Dr. Sitara</h3>
+        <p class="text-primary font-medium mb-2">Cardiologist</p>
+        <p class="text-gray-600 mb-4 text-center">Cardiologist with 10 years of experience.</p>
+        <div class="flex flex-col gap-2 w-full">
+          <a href="Doctor_Dr. Sitara.html" class="bg-primary/10 text-primary px-4 py-2 rounded-button font-medium hover:bg-primary/20 transition">View Full Profile</a>
+          <a href="book-now.html" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-button font-medium transition">Book An Appointment</a>
+        </div>
+      </div>
+      <!-- Doctor 2 -->
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col items-center p-6">
+        <img src="Images/istockphoto-1292012984-612x612.jpg" alt="Dr. Swyeta" class="w-32 h-32 rounded-full object-cover mb-4 shadow">
+        <h3 class="text-xl font-semibold text-gray-900 mb-1">Dr. Swyeta</h3>
+        <p class="text-primary font-medium mb-2">Neurologist</p>
+        <p class="text-gray-600 mb-4 text-center">Neurologist with 8 years of experience.</p>
+        <div class="flex flex-col gap-2 w-full">
+          <a href="Doctor_Dr. swyeta.html" class="bg-primary/10 text-primary px-4 py-2 rounded-button font-medium hover:bg-primary/20 transition">View Full Profile</a>
+          <a href="book-now.html" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-button font-medium transition">Book An Appointment</a>
+        </div>
+      </div>
+      <!-- Doctor 3 -->
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col items-center p-6">
+        <img src="Images/pexels-photo-8376277.webp" alt="Dr. Williams" class="w-32 h-32 rounded-full object-cover mb-4 shadow">
+        <h3 class="text-xl font-semibold text-gray-900 mb-1">Dr. Williams</h3>
+        <p class="text-primary font-medium mb-2">Orthopedic Surgeon</p>
+        <p class="text-gray-600 mb-4 text-center">Orthopedic Surgeon with 12 years of experience.</p>
+        <div class="flex flex-col gap-2 w-full">
+          <a href="doctor_williams.html" class="bg-primary/10 text-primary px-4 py-2 rounded-button font-medium hover:bg-primary/20 transition">View Full Profile</a>
+          <a href="book-now.html" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-button font-medium transition">Book An Appointment</a>
+        </div>
+      </div>
+      <!-- Doctor 4 -->
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col items-center p-6">
+        <img src="Images/istockphoto-1266812094-612x612.jpg" alt="Dr. Nirmala" class="w-32 h-32 rounded-full object-cover mb-4 shadow">
+        <h3 class="text-xl font-semibold text-gray-900 mb-1">Dr. Nirmala</h3>
+        <p class="text-primary font-medium mb-2">Cardiologist</p>
+        <p class="text-gray-600 mb-4 text-center">Cardiologist with 11 years of experience.</p>
+        <div class="flex flex-col gap-2 w-full">
+          <a href="doctor_Nirmala.html" class="bg-primary/10 text-primary px-4 py-2 rounded-button font-medium hover:bg-primary/20 transition">View Full Profile</a>
+          <a href="book-now.html" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-button font-medium transition">Book An Appointment</a>
+        </div>
+      </div>
+      <!-- Doctor 5 -->
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col items-center p-6">
+        <img src="Images/istockphoto-1191463311-612x612.jpg" alt="Dr. Aryas Devi" class="w-32 h-32 rounded-full object-cover mb-4 shadow">
+        <h3 class="text-xl font-semibold text-gray-900 mb-1">Dr. Aryas Devi</h3>
+        <p class="text-primary font-medium mb-2">Neurologist</p>
+        <p class="text-gray-600 mb-4 text-center">Neurologist with 18 years of experience.</p>
+        <div class="flex flex-col gap-2 w-full">
+          <a href="doctor_aryas.html" class="bg-primary/10 text-primary px-4 py-2 rounded-button font-medium hover:bg-primary/20 transition">View Full Profile</a>
+          <a href="book-now.html" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-button font-medium transition">Book An Appointment</a>
+        </div>
+      </div>
+      <!-- Doctor 6 -->
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col items-center p-6">
+        <img src="Images/istockphoto-1141331040-612x612.jpg" alt="Dr. Kusum" class="w-32 h-32 rounded-full object-cover mb-4 shadow">
+        <h3 class="text-xl font-semibold text-gray-900 mb-1">Dr. Kusum</h3>
+        <p class="text-primary font-medium mb-2">Orthopedic Surgeon</p>
+        <p class="text-gray-600 mb-4 text-center">Orthopedic Surgeon with 16 years of experience.</p>
+        <div class="flex flex-col gap-2 w-full">
+          <a href="Doctor_Dr. Kusum.html" class="bg-primary/10 text-primary px-4 py-2 rounded-button font-medium hover:bg-primary/20 transition">View Full Profile</a>
+          <a href="book-now.html" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-button font-medium transition">Book An Appointment</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer (from index1.html) -->
+<footer class="bg-gray-800 text-white pt-12 pb-6 mt-16">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- About -->
+      <div>
+        <h3 class="text-xl font-semibold mb-4">About Us</h3>
+        <p class="text-gray-300 mb-4">We are a leading healthcare provider committed to delivering exceptional medical services with compassion and care.</p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-300 hover:text-white">
+            <i class="ri-facebook-fill ri-lg"></i>
+          </a>
+          <a href="#" class="text-gray-300 hover:text-white">
+            <i class="ri-twitter-fill ri-lg"></i>
+          </a>
+          <a href="#" class="text-gray-300 hover:text-white">
+            <i class="ri-instagram-fill ri-lg"></i>
+          </a>
+          <a href="#" class="text-gray-300 hover:text-white">
+            <i class="ri-linkedin-fill ri-lg"></i>
+          </a>
+        </div>
+      </div>
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="index1.html" class="text-gray-300 hover:text-white">Home</a></li>
+          <li><a href="About Us.html" class="text-gray-300 hover:text-white">About Us</a></li>
+          <li><a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Services</a></li>
+          <li><a href="doctors.html" class="text-gray-300 hover:text-white">Doctors</a></li>
+          <li><a href="contact.html" class="text-gray-300 hover:text-white">Contact</a></li>
+          <li><a href="faqs.html" class="text-gray-300 hover:text-white">FAQs</a></li>
+        </ul>
+      </div>
+      <!-- Services -->
+      <div>
+        <h3 class="text-xl font-semibold mb-4">Our Services</h3>
+        <ul class="space-y-2">
+          <li><a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Emergency Care</a></li>
+          <li><a href="Laboratory_Diagnostics.html" class="text-gray-300 hover:text-white">Laboratory Services</a></li>
+          <li><a href="Dental_Science.html" class="text-gray-300 hover:text-white">Dental</a></li>
+          <li><a href="Pharmacy_Services.html" class="text-gray-300 hover:text-white">Pharmacy</a></li>
+          <li><a href="Radiology.html" class="text-gray-300 hover:text-white">Radiology</a></li>
+          <li><a href="Cardiac_Sciences.html" class="text-gray-300 hover:text-white">Cardiac Sciences </a></li>
+        </ul>
+      </div>
+      <!-- Contact -->
+      <div>
+        <h3 class="text-xl font-semibold mb-4">Contact Us</h3>
+        <ul class="space-y-3">
+          <li class="flex items-start">
+            <i class="ri-map-pin-line mt-1 mr-3 text-primary"></i>
+            <span>Namkum Ranchi Sindroll, Ranchi Road</span>
+          </li>
+          <li class="flex items-center">
+            <i class="ri-phone-line mr-3 text-primary"></i>
+            <span>+91 9142426139</span>
+          </li>
+          <li class="flex items-center">
+            <i class="ri-mail-line mr-3 text-primary"></i>
+            <span>info@hospitalmanagementsystem.com</span>
+          </li>
+          <li class="flex items-center">
+            <i class="ri-time-line mr-3 text-primary"></i>
+            <span>Mon-Fri: 8:00 AM - 8:00 PM</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr class="border-gray-700 my-8">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-400 text-sm">&copy; 2025 Hospital Management System. All rights reserved.</p>
+      <div class="mt-4 md:mt-0 flex space-x-4">
+        <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+        <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+        <a href="#" class="text-gray-400 hover:text-white text-sm">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Navbar and mobile menu logic (from index1.html)
+  document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Menu Toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', function() {
+      mobileMenu.classList.toggle('hidden');
+    });
+    // Mobile Services Dropdown
+    const mobileServicesButton = document.getElementById('mobile-services-button');
+    const mobileServicesMenu = document.getElementById('mobile-services-menu');
+    mobileServicesButton.addEventListener('click', function() {
+      mobileServicesMenu.classList.toggle('hidden');
+    });
+    // Mobile Specialities Dropdown
+    const mobileSpecialitiesButton = document.getElementById('mobile-specialities-button');
+    const mobileSpecialitiesMenu = document.getElementById('mobile-specialities-menu');
+    mobileSpecialitiesButton.addEventListener('click', function() {
+      mobileSpecialitiesMenu.classList.toggle('hidden');
+    });
+  });
+</script>
 </body>
 </html>

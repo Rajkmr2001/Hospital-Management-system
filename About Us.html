@@ -1,19 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hospital Management System</title>
+  <title>About Us | Hospital Management System</title>
   <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#10b981',
+            secondary: '#f3f4f6'
+          },
+          borderRadius: {
+            'none': '0px',
+            'sm': '4px',
+            DEFAULT: '8px',
+            'md': '12px',
+            'lg': '16px',
+            'xl': '20px',
+            '2xl': '24px',
+            '3xl': '32px',
+            'full': '9999px',
+            'button': '8px'
+          }
+        }
+      }
+    }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
   <link rel="stylesheet" href="style1.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-50">
-        
-<!-- Navigation Bar -->
+
+<!-- Navigation Bar (from index1.html) -->
 <header class="sticky top-0 z-50 bg-white shadow-sm">
   <div class="container mx-auto px-4">
     <div class="flex items-center justify-between h-16">
@@ -35,13 +60,11 @@
             <i class="ri-arrow-down-s-line ml-1 ri-lg"></i>
           </button>
           <div class="dropdown-content mt-2 bg-white shadow-lg rounded hidden group-hover:block group-focus-within:block absolute z-50 min-w-[180px]">
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Emergency Care</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Diagnostics</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Emergency services</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Pharmacy</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Nurses</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Laboratory & Diagnostics</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Weight Scale</a>
+            <a href="Emergency_Services.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Emergency services</a>
+            <a href="Pharmacy_Services.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Pharmacy</a>
+            <a href="nurses.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Nurses</a>
+            <a href="Laboratory_Diagnostics.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Laboratory & Diagnostics</a>
+            <a href="Weight_Scale.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Weight Scale</a>
           </div>
         </div>
         <!-- Specialities Dropdown -->
@@ -51,15 +74,15 @@
             <i class="ri-arrow-down-s-line ml-1 ri-lg"></i>
           </button>
           <div class="dropdown-content mt-2 bg-white shadow-lg rounded hidden group-hover:block group-focus-within:block absolute z-50 min-w-[180px]">
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Cardiology</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Neurology</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Dental Science</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Neurologist</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Ophthalmology</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Gastroenterology</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">ENT</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Radiology</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Dermatology </a>
+            <a href="Cardiac_Sciences.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Cardiac Sciences</a>
+            <a href="Dental_Science.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Dental Science</a>
+            <a href="Neurology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Neurology</a>
+            <a href="Infectious_Diseases.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Infectious Diseases</a>
+            <a href="Ophthalmology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Ophthalmology</a>
+            <a href="Gastroenterology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Gastroenterology</a>
+            <a href="ENT.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">ENT</a>
+            <a href="Radiology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Radiology</a>
+            <a href="Dermatology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Dermatology</a>
           </div>
         </div>
         <a href="doctors.html" class="text-gray-700 hover:text-primary font-medium">Doctors</a>
@@ -92,9 +115,11 @@
           <i class="ri-arrow-down-s-line"></i>
         </button>
         <div id="mobile-services-menu" class="hidden pl-4 mt-2">
-          <a href="#" class="block py-2 text-gray-700 hover:text-primary">Emergency Care</a>
-          <a href="#" class="block py-2 text-gray-700 hover:text-primary">Diagnostics</a>
-          <a href="#" class="block py-2 text-gray-700 hover:text-primary">Surgery</a>
+          <a href="Emergency_Services.html" class="block py-2 text-gray-700 hover:text-primary">Emergency services</a>
+          <a href="Pharmacy_Services.html" class="block py-2 text-gray-700 hover:text-primary">Pharmacy</a>
+          <a href="nurses.html" class="block py-2 text-gray-700 hover:text-primary">Nurses</a>
+          <a href="Laboratory_Diagnostics.html" class="block py-2 text-gray-700 hover:text-primary">Laboratory & Diagnostics</a>
+          <a href="Weight_Scale.html" class="block py-2 text-gray-700 hover:text-primary">Weight Scale</a>
         </div>
       </div>
       <div class="py-2">
@@ -103,9 +128,15 @@
           <i class="ri-arrow-down-s-line"></i>
         </button>
         <div id="mobile-specialities-menu" class="hidden pl-4 mt-2">
-          <a href="#" class="block py-2 text-gray-700 hover:text-primary">Cardiology</a>
-          <a href="#" class="block py-2 text-gray-700 hover:text-primary">Neurology</a>
-          <a href="#" class="block py-2 text-gray-700 hover:text-primary">Pediatrics</a>
+          <a href="Cardiac_Sciences.html" class="block py-2 text-gray-700 hover:text-primary">Cardiac Sciences</a>
+          <a href="Dental_Science.html" class="block py-2 text-gray-700 hover:text-primary">Dental Science</a>
+          <a href="Neurology.html" class="block py-2 text-gray-700 hover:text-primary">Neurology</a>
+          <a href="Infectious_Diseases.html" class="block py-2 text-gray-700 hover:text-primary">Infectious Diseases</a>
+          <a href="Ophthalmology.html" class="block py-2 text-gray-700 hover:text-primary">Ophthalmology</a>
+          <a href="Gastroenterology.html" class="block py-2 text-gray-700 hover:text-primary">Gastroenterology</a>
+          <a href="ENT.html" class="block py-2 text-gray-700 hover:text-primary">ENT</a>
+          <a href="Radiology.html" class="block py-2 text-gray-700 hover:text-primary">Radiology</a>
+          <a href="Dermatology.html" class="block py-2 text-gray-700 hover:text-primary">Dermatology</a>
         </div>
       </div>
       <a href="doctors.html" class="block py-2 text-gray-700 hover:text-primary font-medium">Doctors</a>
@@ -120,19 +151,34 @@
     </div>
   </div>
 </header>
-    <section class="py-10 bg-white">
+
+<!-- Hero Section -->
+<section class="relative">
+  <div class="bg-gradient-to-r from-white via-white/90 to-transparent h-[320px] md:h-[380px] flex items-center justify-center">
+    <div class="container mx-auto px-4 h-full flex items-center justify-center">
+      <div class="max-w-2xl relative z-10 text-center mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 drop-shadow-lg">About Us</h1>
+        <h2 class="text-xl md:text-2xl text-gray-700 mb-0 drop-shadow">Delivering Quality Healthcare with Compassion</h2>
+        <p class="text-2xl md:text-3xl font-bold text-primary mt-4 drop-shadow">Your Health, Our Mission</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Content -->
+<section class="py-10 bg-white">
   <div class="max-w-4xl mx-auto px-4">
-    <h1 class="text-4xl font-bold text-center text-primary mb-4">About Us</h1>
+    <h1 class="text-3xl font-bold text-center text-primary mb-4">Welcome to Our Hospital</h1>
     <p class="text-lg text-center text-gray-700 mb-6">
-      Welcome to our Hospital Management System. We are dedicated to providing the best healthcare services to our patients.
+      We are dedicated to providing the best healthcare services to our patients.
     </p>
     <p class="text-base text-gray-600 mb-8">
       The Maa Kalawati Homoeopathic Medical College & Hospital, Ranchi, is a Private College established in the year 2000. The college is affiliated to Vinoba Bhave University, Hazaribag, located in Jharkhand with an annual intake of 100 seats.
       <br><br>
-      Library: The College library has a rich collection of Homoeopathy books and allied medical subjects. The library has well-stocked journals, magazines, newspapers and periodicals. Facilities that are provided by the college are lecture theatres, seminar hall, sports, conference hall, canteen, well-established classrooms and medical.
+      <span class="font-semibold">Library:</span> The College library has a rich collection of Homoeopathy books and allied medical subjects. The library has well-stocked journals, magazines, newspapers and periodicals. Facilities that are provided by the college are lecture theatres, seminar hall, sports, conference hall, canteen, well-established classrooms and medical.
     </p>
     <div class="mb-8">
-      <div class="relative rounded-lg overflow-hidden shadow-lg">
+      <div class="relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
         <img src="Images/maa_Kalawati.jpg" alt="Maa Kalawati Hospital Image" class="w-full h-80 object-cover">
         <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-6">
           <h5 class="text-2xl font-semibold text-white mb-2">Our Mission</h5>
@@ -153,54 +199,197 @@
   </div>
 </section>
 
-    <footer class="text-center p-3 bg-primary text-white mt-12">
-    <p>&copy; 2025 Hospital Management System. All Rights Reserved.</p>
+<!-- Graph Section: Number of Patients Visited (Feedback Count) -->
+<section class="py-12 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="max-w-2xl mx-auto text-center mb-10">
+      <h2 class="text-2xl font-bold text-gray-900 mb-2">Patient Visits & Feedback</h2>
+      <div class="w-16 h-1 bg-primary mx-auto mb-4"></div>
+      <p class="text-gray-600">See how many patients have visited and left feedback. This graph is updated in real-time based on feedback submitted.</p>
+    </div>
+    <div class="flex flex-col items-center">
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 w-full max-w-xl">
+        <canvas id="feedbackChart" height="120"></canvas>
+        <div class="mt-4 text-center text-gray-700">
+          <span class="font-semibold">Total Feedbacks:</span>
+          <span id="feedbackCount" class="text-primary font-bold"></span>
+        </div>
+        <div class="mt-2 text-xs text-gray-400 text-center">* Feedback count is synced with the feedback system.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer (from index1.html) -->
+<footer class="bg-gray-800 text-white pt-12 pb-6 mt-16">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- About -->
+      <div>
+        <h3 class="text-xl font-semibold mb-4">About Us</h3>
+        <p class="text-gray-300 mb-4">We are a leading healthcare provider committed to delivering exceptional medical services with compassion and care.</p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-300 hover:text-white">
+            <i class="ri-facebook-fill ri-lg"></i>
+          </a>
+          <a href="#" class="text-gray-300 hover:text-white">
+            <i class="ri-twitter-fill ri-lg"></i>
+          </a>
+          <a href="#" class="text-gray-300 hover:text-white">
+            <i class="ri-instagram-fill ri-lg"></i>
+          </a>
+          <a href="#" class="text-gray-300 hover:text-white">
+            <i class="ri-linkedin-fill ri-lg"></i>
+          </a>
+        </div>
+      </div>
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="index1.html" class="text-gray-300 hover:text-white">Home</a></li>
+          <li><a href="About Us.html" class="text-gray-300 hover:text-white">About Us</a></li>
+          <li><a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Services</a></li>
+          <li><a href="doctors.html" class="text-gray-300 hover:text-white">Doctors</a></li>
+          <li><a href="contact.html" class="text-gray-300 hover:text-white">Contact</a></li>
+          <li><a href="faqs.html" class="text-gray-300 hover:text-white">FAQs</a></li>
+        </ul>
+      </div>
+      <!-- Services -->
+      <div>
+        <h3 class="text-xl font-semibold mb-4">Our Services</h3>
+        <ul class="space-y-2">
+          <li><a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Emergency Care</a></li>
+          <li><a href="Laboratory_Diagnostics.html" class="text-gray-300 hover:text-white">Laboratory Services</a></li>
+          <li><a href="Dental_Science.html" class="text-gray-300 hover:text-white">Dental</a></li>
+          <li><a href="Pharmacy_Services.html" class="text-gray-300 hover:text-white">Pharmacy</a></li>
+          <li><a href="Radiology.html" class="text-gray-300 hover:text-white">Radiology</a></li>
+          <li><a href="Cardiac_Sciences.html" class="text-gray-300 hover:text-white">Cardiac Sciences </a></li>
+        </ul>
+      </div>
+      <!-- Contact -->
+      <div>
+        <h3 class="text-xl font-semibold mb-4">Contact Us</h3>
+        <ul class="space-y-3">
+          <li class="flex items-start">
+            <i class="ri-map-pin-line mt-1 mr-3 text-primary"></i>
+            <span>Namkum Ranchi Sindroll, Ranchi Road</span>
+          </li>
+          <li class="flex items-center">
+            <i class="ri-phone-line mr-3 text-primary"></i>
+            <span>+91 9142426139</span>
+          </li>
+          <li class="flex items-center">
+            <i class="ri-mail-line mr-3 text-primary"></i>
+            <span>info@hospitalmanagementsystem.com</span>
+          </li>
+          <li class="flex items-center">
+            <i class="ri-time-line mr-3 text-primary"></i>
+            <span>Mon-Fri: 8:00 AM - 8:00 PM</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr class="border-gray-700 my-8">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-400 text-sm">&copy; 2025 Hospital Management System. All rights reserved.</p>
+      <div class="mt-4 md:mt-0 flex space-x-4">
+        <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+        <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+        <a href="#" class="text-gray-400 hover:text-white text-sm">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
 </footer>
-    <!-- </body> -->
+
 <script>
-  
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#10b981',
-            secondary: '#f3f4f6'
+  // Navbar and mobile menu logic (from index1.html)
+  document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Menu Toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', function() {
+      mobileMenu.classList.toggle('hidden');
+    });
+    // Mobile Services Dropdown
+    const mobileServicesButton = document.getElementById('mobile-services-button');
+    const mobileServicesMenu = document.getElementById('mobile-services-menu');
+    mobileServicesButton.addEventListener('click', function() {
+      mobileServicesMenu.classList.toggle('hidden');
+    });
+    // Mobile Specialities Dropdown
+    const mobileSpecialitiesButton = document.getElementById('mobile-specialities-button');
+    const mobileSpecialitiesMenu = document.getElementById('mobile-specialities-menu');
+    mobileSpecialitiesButton.addEventListener('click', function() {
+      mobileSpecialitiesMenu.classList.toggle('hidden');
+    });
+
+    // Feedback Chart Logic (sync with feedback.html localStorage)
+    function getFeedbackCount() {
+      // Try to get feedback count from localStorage (shared by feedback.html)
+      let comments = [];
+      try {
+        comments = JSON.parse(localStorage.getItem("comments")) || [];
+      } catch (e) {
+        comments = [];
+      }
+      return comments.length;
+    }
+
+    function renderFeedbackChart() {
+      const ctx = document.getElementById('feedbackChart').getContext('2d');
+      const feedbackCount = getFeedbackCount();
+      document.getElementById('feedbackCount').textContent = feedbackCount;
+
+      // Example: Show feedback count per month (for demo, all in current month)
+      const now = new Date();
+      const months = [];
+      const data = [];
+      for (let i = 5; i >= 0; i--) {
+        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        months.push(d.toLocaleString('default', { month: 'short', year: '2-digit' }));
+        // For demo, put all feedbacks in current month
+        data.push(i === 0 ? feedbackCount : Math.floor(Math.random() * 3));
+      }
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: months,
+          datasets: [{
+            label: 'Feedbacks (Patients Visited)',
+            data: data,
+            backgroundColor: '#10b981',
+            borderRadius: 8,
+            borderSkipped: false,
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            title: { display: false }
           },
-          borderRadius: {
-            'none': '0px',
-            'sm': '4px',
-            DEFAULT: '8px',
-            'md': '12px',
-            'lg': '16px',
-            'xl': '20px',
-            '2xl': '24px',
-            '3xl': '32px',
-            'full': '9999px',
-            'button': '8px'
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { stepSize: 1 }
+            }
           }
         }
-      }
+      });
     }
-document.addEventListener('DOMContentLoaded', function() {
-  // Mobile Menu Toggle
-  const mobileMenuButton = document.getElementById('mobile-menu-button');
-  const mobileMenu = document.getElementById('mobile-menu');
-  mobileMenuButton.addEventListener('click', function() {
-    mobileMenu.classList.toggle('hidden');
+
+    if (document.getElementById('feedbackChart')) {
+      renderFeedbackChart();
+      // Optional: Listen for storage changes (if feedback.html is open in another tab)
+      window.addEventListener('storage', function(e) {
+        if (e.key === 'comments') {
+          renderFeedbackChart();
+        }
+      });
+    }
   });
-  // Mobile Services Dropdown
-  const mobileServicesButton = document.getElementById('mobile-services-button');
-  const mobileServicesMenu = document.getElementById('mobile-services-menu');
-  mobileServicesButton.addEventListener('click', function() {
-    mobileServicesMenu.classList.toggle('hidden');
-  });
-  // Mobile Specialities Dropdown
-  const mobileSpecialitiesButton = document.getElementById('mobile-specialities-button');
-  const mobileSpecialitiesMenu = document.getElementById('mobile-specialities-menu');
-  mobileSpecialitiesButton.addEventListener('click', function() {
-    mobileSpecialitiesMenu.classList.toggle('hidden');
-  });
-});
 </script>
 </body>
 </html>
