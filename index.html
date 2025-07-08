@@ -469,6 +469,7 @@
       </div>
     </div>
   </section>
+
   <!-- Footer -->
   <footer class="bg-gray-800 text-white pt-12 pb-6">
     <div class="container mx-auto px-4">
@@ -577,7 +578,7 @@
       // Department and Doctor Relationship
       const departmentSelect = document.getElementById('department');
       const doctorSelect = document.getElementById('doctor');
-      if(departmentSelect && doctorSelect) {
+      if (departmentSelect && doctorSelect) {
         departmentSelect.addEventListener('change', function () {
           const department = this.value;
           // Clear current options
@@ -604,7 +605,7 @@
       }
       // Form Validation
       const appointmentForm = document.getElementById('appointment-form');
-      if(appointmentForm) {
+      if (appointmentForm) {
         appointmentForm.addEventListener('submit', function (e) {
           e.preventDefault();
           // Simple validation
