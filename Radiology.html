@@ -102,6 +102,12 @@
               flex: 1 1 100%;
           }
       }
+      .absolute.left-3.top-2\.5.w-4.h-4.flex.items-center.justify-center {
+  pointer-events: none;
+}
+.search-icon-container {
+  pointer-events: none;
+}
     </style>
 </head>
 <body class="bg-gray-50">
@@ -160,11 +166,12 @@
       <!-- Search Bar -->
       <div class="hidden md:flex items-center">
         <form id="search-form" class="relative">
-          <input type="text" name="q" id="search-input" placeholder="Search..." class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
-          <div class="absolute left-3 top-2.5 w-4 h-4 flex items-center justify-center">
-            <i class="ri-search-line text-gray-400"></i>
-          </div>
-        </form>
+  <input type="text" name="q" id="search-input" placeholder="Search..."
+    class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm text-gray-700 bg-white z-10 relative">
+  <div class="absolute left-3 top-2.5 w-4 h-4 flex items-center justify-center search-icon-container" style="z-index:1; background:transparent;">
+    <i class="ri-search-line text-gray-400"></i>
+  </div>
+</form>
       </div>
       <!-- Mobile Menu Button -->
       <div class="md:hidden flex items-center">
@@ -247,7 +254,6 @@
       </div>
     </div>
   </section>
-<!-- ...existing code... -->
   <!-- About Radiology -->
   <section class="mb-12">
     <h2 class="text-2xl font-semibold text-primary mb-2 text-center">About Radiology</h2>
@@ -256,7 +262,6 @@
       Doctors in this field are called radiologists — they interpret medical images like X-rays, CT scans, and MRIs to help identify what’s going on inside a patient without surgery.
     </p>
   </section>
-<!-- ...existing code... -->
 
   <!-- Our Team of Experts -->
   <section class="mb-12">
@@ -412,6 +417,48 @@
       });
     }
   });
+  
+    // searchbar started ......
+    
+  function highlightAndScroll(query) {
+    // Remove previous highlights
+    document.querySelectorAll('.search-highlight').forEach(el => {
+      el.outerHTML = el.innerText;
+    });
+
+    if (!query) return;
+
+    // Find all text nodes and highlight matches
+    function walk(node) {
+      if (node.nodeType === 3) { // Text node
+        const idx = node.nodeValue.toLowerCase().indexOf(query.toLowerCase());
+        if (idx !== -1) {
+          const span = document.createElement('span');
+          span.className = 'search-highlight bg-yellow-200 text-black rounded px-1';
+          const matchedText = node.splitText(idx);
+          const afterMatch = matchedText.splitText(query.length);
+          span.textContent = matchedText.nodeValue;
+          matchedText.parentNode.replaceChild(span, matchedText);
+          // Scroll to first match
+          span.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return true; // Stop after first match
+        }
+      } else if (node.nodeType === 1 && node.childNodes && !['SCRIPT','STYLE'].includes(node.tagName)) {
+        for (let i = 0; i < node.childNodes.length; i++) {
+          if (walk(node.childNodes[i])) return true;
+        }
+      }
+      return false;
+    }
+    walk(document.body);
+  }
+
+  // Attach to all search bars
+  document.querySelectorAll('input[placeholder="Search..."]').forEach(function(input) {
+  input.addEventListener('input', function() {
+    highlightAndScroll(input.value.trim());
+  });
+});
 </script>
 
 <!-- Footer from index.html -->

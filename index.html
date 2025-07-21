@@ -162,23 +162,25 @@
           <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Book an Appointment</h1>
           <h2 class="text-xl md:text-2xl text-gray-700 mb-6">Special title treatment</h2>
           <p class="text-2xl md:text-3xl font-bold text-primary mb-8">Healthcare for Good Today. Tomorrow. Always</p>
-          <div class="relative inline-block">
-            <button
-              class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-button font-semibold text-lg flex items-center !rounded-button whitespace-nowrap w-full sm:w-auto"
-              onclick="window.location.href='book-now.html'" type="button">
-              Book Now
-              <i class="ri-arrow-right-line ml-2"></i>
-            </button>
-            <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">new</span>
-          </div> &nbsp;
-          <div class="relative inline-block">
-            <button
-              class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-button font-semibold text-lg flex items-center !rounded-button whitespace-nowrap w-full sm:w-auto"
-              onclick="window.location.href='Patient_Registration.html'" type="button">
-              Register Now
-              <i class="ri-arrow-right-line ml-2"></i>
-            </button>
-            <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">new</span>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <div class="relative inline-block w-full sm:w-auto">
+              <button
+                class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-button font-semibold text-lg flex items-center !rounded-button whitespace-nowrap w-full sm:w-auto"
+                onclick="window.location.href='book-now.html'" type="button">
+                Book Now
+                <i class="ri-arrow-right-line ml-2"></i>
+              </button>
+              <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">new</span>
+            </div>
+            <div class="relative inline-block w-full sm:w-auto">
+              <button
+                class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-button font-semibold text-lg flex items-center !rounded-button whitespace-nowrap w-full sm:w-auto"
+                onclick="window.location.href='Patient_Registration.html'" type="button">
+                Register Now
+                <i class="ri-arrow-right-line ml-2"></i>
+              </button>
+              <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">new</span>
+            </div>
           </div>
         </div>
       </div>
@@ -676,6 +678,47 @@
           currentSlide = (currentSlide + 1) % slideCount;
           updateSlider();
         }, 5000);
+      });
+    });
+    // search bar......
+
+    function highlightAndScroll(query) {
+      // Remove previous highlights
+      document.querySelectorAll('.search-highlight').forEach(el => {
+        el.outerHTML = el.innerText;
+      });
+
+      if (!query) return;
+
+      // Find all text nodes and highlight matches
+      function walk(node) {
+        if (node.nodeType === 3) { // Text node
+          const idx = node.nodeValue.toLowerCase().indexOf(query.toLowerCase());
+          if (idx !== -1) {
+            const span = document.createElement('span');
+            span.className = 'search-highlight bg-yellow-200 text-black rounded px-1';
+            const matchedText = node.splitText(idx);
+            const afterMatch = matchedText.splitText(query.length);
+            span.textContent = matchedText.nodeValue;
+            matchedText.parentNode.replaceChild(span, matchedText);
+            // Scroll to first match
+            span.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return true; // Stop after first match
+          }
+        } else if (node.nodeType === 1 && node.childNodes && !['SCRIPT', 'STYLE'].includes(node.tagName)) {
+          for (let i = 0; i < node.childNodes.length; i++) {
+            if (walk(node.childNodes[i])) return true;
+          }
+        }
+        return false;
+      }
+      walk(document.body);
+    }
+
+    // ..............
+    document.querySelectorAll('input[placeholder="Search..."]').forEach(function (input) {
+      input.addEventListener('input', function () {
+        highlightAndScroll(input.value.trim());
       });
     });
   </script>

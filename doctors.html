@@ -362,6 +362,48 @@
       mobileSpecialitiesMenu.classList.toggle('hidden');
     });
   });
+  
+    // searchbar started ......
+    
+  function highlightAndScroll(query) {
+    // Remove previous highlights
+    document.querySelectorAll('.search-highlight').forEach(el => {
+      el.outerHTML = el.innerText;
+    });
+
+    if (!query) return;
+
+    // Find all text nodes and highlight matches
+    function walk(node) {
+      if (node.nodeType === 3) { // Text node
+        const idx = node.nodeValue.toLowerCase().indexOf(query.toLowerCase());
+        if (idx !== -1) {
+          const span = document.createElement('span');
+          span.className = 'search-highlight bg-yellow-200 text-black rounded px-1';
+          const matchedText = node.splitText(idx);
+          const afterMatch = matchedText.splitText(query.length);
+          span.textContent = matchedText.nodeValue;
+          matchedText.parentNode.replaceChild(span, matchedText);
+          // Scroll to first match
+          span.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return true; // Stop after first match
+        }
+      } else if (node.nodeType === 1 && node.childNodes && !['SCRIPT','STYLE'].includes(node.tagName)) {
+        for (let i = 0; i < node.childNodes.length; i++) {
+          if (walk(node.childNodes[i])) return true;
+        }
+      }
+      return false;
+    }
+    walk(document.body);
+  }
+
+  // Attach to all search bars
+document.querySelectorAll('input[placeholder="Search..."]').forEach(function(input) {
+  input.addEventListener('input', function() {
+    highlightAndScroll(input.value.trim());
+  });
+});
 </script>
 </body>
 </html>
