@@ -114,7 +114,8 @@
             let commentData = {
                 number: number,
                 name: name,
-                comment: comment
+                comment: comment,
+                likes: 0 // Add likes property
             };
 
             // Retrieve existing comments from localStorage
@@ -133,17 +134,63 @@
             document.getElementById("commentInput").value = "";
         }
 
-        // Function to display comments from localStorage
-        function displayComments() {
-            let commentSection = document.getElementById("commentSection");
-            commentSection.innerHTML = ""; // Clear previous comments
+        // Function to handle heart (like/dislike) click
+        function toggleLike(index) {
+            let number = document.getElementById("numberInput").value;
+            let name = document.getElementById("nameInput").value;
+            if (!number.trim() || name === "First register before commenting!") {
+                alert("First register before you can like or dislike.");
+                return;
+            }
 
             let comments = JSON.parse(localStorage.getItem("comments")) || [];
 
-            comments.forEach(commentData => {
+            // Initialize likes array if not present
+            if (!Array.isArray(comments[index].likedBy)) {
+                comments[index].likedBy = [];
+            }
+
+            const userIdx = comments[index].likedBy.indexOf(number);
+
+            if (userIdx !== -1) {
+                // User already liked, so remove like
+                comments[index].likedBy.splice(userIdx, 1);
+            } else {
+                // User not liked yet, so add like
+                comments[index].likedBy.push(number);
+            }
+
+            localStorage.setItem("comments", JSON.stringify(comments));
+            displayComments();
+        }
+
+        // Function to display comments from localStorage
+        function displayComments() {
+            let commentSection = document.getElementById("commentSection");
+            commentSection.innerHTML = "";
+
+            let comments = JSON.parse(localStorage.getItem("comments")) || [];
+            let number = document.getElementById("numberInput").value;
+
+            comments.forEach((commentData, idx) => {
+                // Initialize likedBy array if not present
+                if (!Array.isArray(commentData.likedBy)) {
+                    commentData.likedBy = [];
+                }
+                let liked = commentData.likedBy.includes(number);
+                let heartColor = liked ? "text-danger" : "text-white";
+                let likeCount = commentData.likedBy.length;
                 let commentBox = document.createElement("div");
                 commentBox.className = "comment-box";
-                commentBox.innerHTML = `<strong>${commentData.name} :</strong> ${commentData.comment}`;
+                commentBox.innerHTML = `
+                    <strong>${commentData.name} :</strong> ${commentData.comment}
+                    <div class="mt-2">
+                        <button class="btn btn-sm" onclick="toggleLike(${idx})" style="background:transparent;">
+                            <i class="ri-heart-3-fill ${heartColor}" style="font-size:1.3em;"></i>
+                        </button>
+                        <span class="ms-1">${likeCount} like</span>
+                    </div>
+                `;
                 commentSection.appendChild(commentBox);
             });
         }

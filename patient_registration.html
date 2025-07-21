@@ -88,10 +88,14 @@
           <option value="Other">Other</option>
         </select>
       </div>
-      <div>
+      <div style="position:relative;">
         <label for="password" class="block text-gray-700 font-semibold mb-1">Password</label>
         <input type="password" id="password" name="password" required
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none transition">
+        <button type="button" id="togglePassword" 
+          style="position:absolute; right:12px; top:38px; background:none; border:none; cursor:pointer;">
+          <i class="ri-eye-line" id="eyeIcon" style="font-size:1.2em;"></i>
+        </button>
         <p class="text-xs text-gray-400 mt-1">Min 8 chars, uppercase, lowercase, number, special char</p>
       </div>
       <button type="submit"
@@ -180,6 +184,22 @@
             }
         };
     }
+
+    // Toggle password visibility
+    document.getElementById("togglePassword").addEventListener("click", function() {
+        let passwordInput = document.getElementById("password");
+        let eyeIcon = document.getElementById("eyeIcon");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.classList.remove("ri-eye-line");
+            eyeIcon.classList.add("ri-eye-off-line");
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.classList.remove("ri-eye-off-line");
+            eyeIcon.classList.add("ri-eye-line");
+        }
+    });
 </script>
 </body>
 </html>

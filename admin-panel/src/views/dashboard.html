@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Maa Kalawati Hospital</title>
+    <link rel="stylesheet" href="../public/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="patient_list.html">View Patients</a></li>
+                <li><a href="admin_login.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Patient Management</h2>
+            <button onclick="window.location.href='patient_registration.html'">Add New Patient</button>
+        </section>
+        <section>
+            <h2>Statistics</h2>
+            <p>Total Patients: <span id="totalPatients">0</span></p>
+            <p>Active Patients: <span id="activePatients">0</span></p>
+        </section>
+        <section>
+            <h2>Recent Activities</h2>
+            <ul id="activityLog">
+                <li>No recent activities.</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Maa Kalawati Hospital. All rights reserved.</p>
+    </footer>
+    <script src="../public/js/main.js"></script>
+</body>
+</html>

@@ -2,18 +2,37 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hospital Management System</title>
   <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-  <script>tailwind.config = { theme: { extend: { colors: { primary: '#10b981', secondary: '#f3f4f6' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' } } } }</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
-  <link rel="stylesheet" href="style1.css">
-  <style>
-  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: "#10b981", secondary: "#f3f4f6" },
+          borderRadius: {
+            none: "0px",
+            sm: "4px",
+            DEFAULT: "8px",
+            md: "12px",
+            lg: "16px",
+            xl: "20px",
+            "2xl": "24px",
+            "3xl": "32px",
+            full: "9999px",
+            button: "8px",
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style1.css" />
+  <style></style>
 </head>
 
 <body class="bg-gray-50">
@@ -85,9 +104,13 @@
         </nav>
         <!-- Search Bar -->
         <div class="hidden md:flex items-center">
+          <button id="adminPanelBtn" onclick="window.location.href='hospital-admin-panel/admin/dashboard.html'"
+            class="mr-4 px-4 py-2 bg-primary text-white rounded-button hover:bg-primary/90 transition-colors duration-200">
+            Admin Panel
+          </button>
           <div class="relative">
             <input type="text" placeholder="Search..."
-              class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
+              class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm" />
             <div class="absolute left-3 top-2.5 w-4 h-4 flex items-center justify-center">
               <i class="ri-search-line text-gray-400"></i>
             </div>
@@ -141,9 +164,13 @@
         <a href="doctors.html" class="block py-2 text-gray-700 hover:text-primary font-medium">Doctors</a>
         <a href="contact.html" class="block py-2 text-gray-700 hover:text-primary font-medium">Contact</a>
         <a href="faqs.html" class="block py-2 text-gray-700 hover:text-primary font-medium">FAQs</a>
-        <div class="mt-4 relative">
+        <div class="mt-4 relative flex items-center space-x-4">
+          <button onclick="window.location.href='hospital-admin-panel/admin/dashboard.html'"
+            class="px-4 py-2 bg-primary text-white rounded-button hover:bg-primary/90 transition-colors duration-200 whitespace-nowrap">
+            Admin Panel
+          </button>
           <input type="text" placeholder="Search..."
-            class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
+            class="flex-grow pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm" />
           <div class="absolute left-3 top-2.5 w-4 h-4 flex items-center justify-center">
             <i class="ri-search-line text-gray-400"></i>
           </div>
@@ -159,9 +186,15 @@
       <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent"></div>
       <div class="container mx-auto px-4 h-full flex items-center">
         <div class="max-w-lg relative z-10">
-          <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Book an Appointment</h1>
-          <h2 class="text-xl md:text-2xl text-gray-700 mb-6">Special title treatment</h2>
-          <p class="text-2xl md:text-3xl font-bold text-primary mb-8">Healthcare for Good Today. Tomorrow. Always</p>
+          <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Book an Appointment
+          </h1>
+          <h2 class="text-xl md:text-2xl text-gray-700 mb-6">
+            Special title treatment
+          </h2>
+          <p class="text-2xl md:text-3xl font-bold text-primary mb-8">
+            Healthcare for Good Today. Tomorrow. Always
+          </p>
           <div class="flex flex-col sm:flex-row gap-4">
             <div class="relative inline-block w-full sm:w-auto">
               <button
@@ -192,8 +225,10 @@
       <div class="text-center mb-12">
         <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Services</h2>
         <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
-        <p class="text-gray-600 max-w-2xl mx-auto">We provide comprehensive healthcare services to meet all your medical
-          needs with state-of-the-art facilities and experienced professionals.</p>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          We provide comprehensive healthcare services to meet all your medical
+          needs with state-of-the-art facilities and experienced professionals.
+        </p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 p-8">
         <!-- Service 1 -->
@@ -203,10 +238,12 @@
             <i class="ri-heart-pulse-line text-primary ri-2x"></i>
           </div>
           <h3 class="text-2xl font-semibold text-gray-900 mb-4">Emergency Care</h3>
-          <p class="text-gray-600 mb-6 text-lg leading-relaxed">24/7 emergency medical services with rapid response
-            teams and advanced life support capabilities for critical situations.</p>
-          <a href="Emergency_Services.html" class="text-primary font-medium hover:underline flex items-center">
-            Learn More
+          <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+            24/7 emergency medical services with rapid response teams and advanced
+            life support capabilities for critical situations.
+          </p>
+          <a href="Emergency_Services.html" class="text-primary font-medium hover:underline flex items-center">Learn
+            More
             <i class="ri-arrow-right-line ml-1"></i>
           </a>
         </div>
@@ -216,11 +253,15 @@
           <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
             <i class="ri-microscope-line text-primary ri-xl"></i>
           </div>
-          <h3 class="text-2xl font-semibold text-gray-900 mb-4">Laboratory Services</h3>
-          <p class="text-gray-600 mb-6 text-lg leading-relaxed">Comprehensive diagnostic testing with state-of-the-art
-            equipment and experienced technicians for accurate results.</p>
-          <a href="Laboratory_Diagnostics.html" class="text-primary font-medium hover:underline flex items-center">
-            Learn More
+          <h3 class="text-2xl font-semibold text-gray-900 mb-4">
+            Laboratory Services
+          </h3>
+          <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+            Comprehensive diagnostic testing with state-of-the-art equipment and
+            experienced technicians for accurate results.
+          </p>
+          <a href="Laboratory_Diagnostics.html" class="text-primary font-medium hover:underline flex items-center">Learn
+            More
             <i class="ri-arrow-right-line ml-1"></i>
           </a>
         </div>
@@ -231,10 +272,11 @@
             <i class="ri-mental-health-line text-primary ri-xl"></i>
           </div>
           <h3 class="text-2xl font-semibold text-gray-900 mb-4">ENT</h3>
-          <p class="text-gray-600 mb-6 text-lg leading-relaxed">Advanced surgical procedures performed by expert
-            surgeons using minimally invasive techniques for faster recovery.</p>
-          <a href="ENT.html" class="text-primary font-medium hover:underline flex items-center">
-            Learn More
+          <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+            Advanced surgical procedures performed by expert surgeons using
+            minimally invasive techniques for faster recovery.
+          </p>
+          <a href="ENT.html" class="text-primary font-medium hover:underline flex items-center">Learn More
             <i class="ri-arrow-right-line ml-1"></i>
           </a>
         </div>
@@ -245,10 +287,11 @@
             <i class="ri-medicine-bottle-line text-primary ri-xl"></i>
           </div>
           <h3 class="text-2xl font-semibold text-gray-900 mb-4">Pharmacy</h3>
-          <p class="text-gray-600 mb-6 text-lg leading-relaxed">On-site pharmacy with a wide range of medications and
-            professional pharmacists to provide guidance on prescriptions.</p>
-          <a href="Pharmacy_Services.html" class="text-primary font-medium hover:underline flex items-center">
-            Learn More
+          <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+            On-site pharmacy with a wide range of medications and professional
+            pharmacists to provide guidance on prescriptions.
+          </p>
+          <a href="Pharmacy_Services.html" class="text-primary font-medium hover:underline flex items-center">Learn More
             <i class="ri-arrow-right-line ml-1"></i>
           </a>
         </div>
@@ -259,10 +302,11 @@
             <i class="ri-psychotherapy-line text-primary ri-xl"></i>
           </div>
           <h3 class="text-2xl font-semibold text-gray-900 mb-4">Dermotology</h3>
-          <p class="text-gray-600 mb-6 text-lg leading-relaxed">Comprehensive rehabilitation services including physical
-            therapy, occupational therapy, and speech therapy.</p>
-          <a href="Dermatology.html" class="text-primary font-medium hover:underline flex items-center">
-            Learn More
+          <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+            Comprehensive rehabilitation services including physical therapy,
+            occupational therapy, and speech therapy.
+          </p>
+          <a href="Dermatology.html" class="text-primary font-medium hover:underline flex items-center">Learn More
             <i class="ri-arrow-right-line ml-1"></i>
           </a>
         </div>
@@ -273,10 +317,11 @@
             <i class="ri-stethoscope-line text-primary ri-xl"></i>
           </div>
           <h3 class="text-2xl font-semibold text-gray-900 mb-4">Contact Us</h3>
-          <p class="text-gray-600 mb-6 text-lg leading-relaxed">We are here to assist you. Reach out to us through any
-            of the following methods</p>
-          <a href="contact.html" class="text-primary font-medium hover:underline flex items-center">
-            Learn More
+          <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+            We are here to assist you. Reach out to us through any of the
+            following methods
+          </p>
+          <a href="contact.html" class="text-primary font-medium hover:underline flex items-center">Learn More
             <i class="ri-arrow-right-line ml-1"></i>
           </a>
         </div>
@@ -289,21 +334,27 @@
       <div class="text-center mb-12">
         <h2 class="text-3xl font-bold text-gray-900 mb-4">Meet Our Doctors</h2>
         <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
-        <p class="text-gray-600 max-w-2xl mx-auto">Our team of experienced medical professionals is dedicated to
-          providing the highest quality healthcare services.</p>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Our team of experienced medical professionals is dedicated to
+          providing the highest quality healthcare services.
+        </p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <!-- Doctor 1 -->
         <div
           class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
           <div class="h-64 overflow-hidden">
-            <img src="Images/new1.jpg" alt="Dr. James Wilson" class="w-full h-full object-cover object-top">
+            <img src="Images/new1.jpg" alt="Dr. James Wilson" class="w-full h-full object-cover object-top" />
           </div>
           <div class="p-6">
-            <h3 class="text-xl font-semibold text-gray-900 mb-1">Dr. James Wilson</h3>
+            <h3 class="text-xl font-semibold text-gray-900 mb-1">
+              Dr. James Wilson
+            </h3>
             <p class="text-primary font-medium mb-3">Cardiologist</p>
-            <p class="text-gray-600 mb-6 text-lg leading-relaxed">Specializes in heart conditions with over 15 years of
-              experience in interventional cardiology.</p>
+            <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+              Specializes in heart conditions with over 15 years of experience in
+              interventional cardiology.
+            </p>
             <a href="book-now.html"
               class="w-full block text-center bg-primary hover:bg-primary/90 text-white py-2 rounded-button font-medium !rounded-button whitespace-nowrap transition-colors duration-200 sm:w-full">Book
               Appointment</a>
@@ -313,13 +364,17 @@
         <div
           class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
           <div class="h-64 overflow-hidden">
-            <img src="Images/new2.avif" alt="Dr. Emily Chen" class="w-full h-full object-cover object-top">
+            <img src="Images/new2.avif" alt="Dr. Emily Chen" class="w-full h-full object-cover object-top" />
           </div>
           <div class="p-6">
-            <h3 class="text-xl font-semibold text-gray-900 mb-1">Dr. Emily Chen</h3>
+            <h3 class="text-xl font-semibold text-gray-900 mb-1">
+              Dr. Emily Chen
+            </h3>
             <p class="text-primary font-medium mb-3">Neurologist</p>
-            <p class="text-gray-600 mb-6 text-lg leading-relaxed">Expert in neurological disorders with specialized
-              training in stroke treatment and management.</p>
+            <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+              Expert in neurological disorders with specialized training in stroke
+              treatment and management.
+            </p>
             <a href="book-now.html"
               class="w-full block text-center bg-primary hover:bg-primary/90 text-white py-2 rounded-button font-medium !rounded-button whitespace-nowrap transition-colors duration-200 sm:w-full">Book
               Appointment</a>
@@ -329,13 +384,17 @@
         <div
           class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
           <div class="h-64 overflow-hidden">
-            <img src="Images/new3.jpg" alt="Dr. Michael Johnson" class="w-full h-full object-cover object-top">
+            <img src="Images/new3.jpg" alt="Dr. Michael Johnson" class="w-full h-full object-cover object-top" />
           </div>
           <div class="p-6">
-            <h3 class="text-xl font-semibold text-gray-900 mb-1">Dr. Michael Johnson</h3>
+            <h3 class="text-xl font-semibold text-gray-900 mb-1">
+              Dr. Michael Johnson
+            </h3>
             <p class="text-primary font-medium mb-3">Pediatrician</p>
-            <p class="text-gray-600 mb-6 text-lg leading-relaxed">Dedicated to children's health with a special focus on
-              developmental pediatrics and preventive care.</p>
+            <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+              Dedicated to children's health with a special focus on developmental
+              pediatrics and preventive care.
+            </p>
             <a href="book-now.html"
               class="w-full block text-center bg-primary hover:bg-primary/90 text-white py-2 rounded-button font-medium !rounded-button whitespace-nowrap transition-colors duration-200 sm:w-full">Book
               Appointment</a>
@@ -345,13 +404,17 @@
         <div
           class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
           <div class="h-64 overflow-hidden">
-            <img src="Images/new4.jpg" alt="Dr. Sophia Rodriguez" class="w-full h-full object-cover object-top">
+            <img src="Images/new4.jpg" alt="Dr. Sophia Rodriguez" class="w-full h-full object-cover object-top" />
           </div>
           <div class="p-6">
-            <h3 class="text-xl font-semibold text-gray-900 mb-1">Dr. Sophia Rodriguez</h3>
+            <h3 class="text-xl font-semibold text-gray-900 mb-1">
+              Dr. Sophia Rodriguez
+            </h3>
             <p class="text-primary font-medium mb-3">Oncologist</p>
-            <p class="text-gray-600 mb-6 text-lg leading-relaxed">Specializes in cancer treatment with expertise in
-              innovative therapies and compassionate care.</p>
+            <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+              Specializes in cancer treatment with expertise in innovative therapies
+              and compassionate care.
+            </p>
             <a href="book-now.html"
               class="w-full block text-center bg-primary hover:bg-primary/90 text-white py-2 rounded-button font-medium !rounded-button whitespace-nowrap transition-colors duration-200 sm:w-full">Book
               Appointment</a>
@@ -371,8 +434,10 @@
       <div class="text-center mb-12">
         <h2 class="text-3xl font-bold text-gray-900 mb-4">Patient Testimonials</h2>
         <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
-        <p class="text-gray-600 max-w-2xl mx-auto">See what our patients have to say about their experience with our
-          healthcare services.</p>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          See what our patients have to say about their experience with our
+          healthcare services.
+        </p>
       </div>
       <div class="relative max-w-5xl mx-auto">
         <div class="overflow-hidden">
@@ -382,10 +447,12 @@
               <div class="bg-white p-8 rounded-lg shadow-md">
                 <div class="flex items-center mb-6">
                   <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
-                    <img src="Images/new5.jpg" alt="Sarah Thompson" class="w-full h-full object-cover">
+                    <img src="Images/new5.jpg" alt="Sarah Thompson" class="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <h4 class="text-lg font-semibold text-gray-900">Sarah Thompson</h4>
+                    <h4 class="text-lg font-semibold text-gray-900">
+                      Sarah Thompson
+                    </h4>
                     <div class="flex text-yellow-400 mt-1">
                       <i class="ri-star-fill"></i>
                       <i class="ri-star-fill"></i>
@@ -395,9 +462,12 @@
                     </div>
                   </div>
                 </div>
-                <p class="text-gray-600 italic">"The care I received at this hospital was exceptional. Dr. Wilson took
-                  the time to explain my condition thoroughly and answered all my questions. The staff was attentive and
-                  compassionate throughout my stay. I couldn't have asked for better care."</p>
+                <p class="text-gray-600 italic">
+                  "The care I received at this hospital was exceptional. Dr. Wilson
+                  took the time to explain my condition thoroughly and answered all
+                  my questions. The staff was attentive and compassionate throughout
+                  my stay. I couldn't have asked for better care."
+                </p>
               </div>
             </div>
             <!-- Testimonial 2 -->
@@ -405,10 +475,12 @@
               <div class="bg-white p-8 rounded-lg shadow-md">
                 <div class="flex items-center mb-6">
                   <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
-                    <img src="Images/new6.jpg" alt="Robert Johnson" class="w-full h-full object-cover">
+                    <img src="Images/new6.jpg" alt="Robert Johnson" class="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <h4 class="text-lg font-semibold text-gray-900">Robert Johnson</h4>
+                    <h4 class="text-lg font-semibold text-gray-900">
+                      Robert Johnson
+                    </h4>
                     <div class="flex text-yellow-400 mt-1">
                       <i class="ri-star-fill"></i>
                       <i class="ri-star-fill"></i>
@@ -418,9 +490,12 @@
                     </div>
                   </div>
                 </div>
-                <p class="text-gray-600 italic">"After my surgery, I was impressed by how smoothly everything went. The
-                  pre-op preparation was thorough, and the post-op care was outstanding. Dr. Rodriguez and her team made
-                  sure I was comfortable and informed every step of the way. I'm grateful for their expertise."</p>
+                <p class="text-gray-600 italic">
+                  "After my surgery, I was impressed by how smoothly everything went.
+                  The pre-op preparation was thorough, and the post-op care was
+                  outstanding. Dr. Rodriguez and her team made sure I was comfortable
+                  and informed every step of the way. I'm grateful for their expertise."
+                </p>
               </div>
             </div>
             <!-- Testimonial 3 -->
@@ -428,10 +503,12 @@
               <div class="bg-white p-8 rounded-lg shadow-md">
                 <div class="flex items-center mb-6">
                   <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
-                    <img src="Images/new7.jpg" alt="Jennifer Davis" class="w-full h-full object-cover">
+                    <img src="Images/new7.jpg" alt="Jennifer Davis" class="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <h4 class="text-lg font-semibold text-gray-900">Jennifer Davis</h4>
+                    <h4 class="text-lg font-semibold text-gray-900">
+                      Jennifer Davis
+                    </h4>
                     <div class="flex text-yellow-400 mt-1">
                       <i class="ri-star-fill"></i>
                       <i class="ri-star-fill"></i>
@@ -441,9 +518,12 @@
                     </div>
                   </div>
                 </div>
-                <p class="text-gray-600 italic">"The pediatric department is amazing! Dr. Johnson has been our son's
-                  doctor for years, and we couldn't be happier. He always takes the time to address our concerns and
-                  makes our son feel comfortable during visits. The entire staff is friendly and professional."</p>
+                <p class="text-gray-600 italic">
+                  "The pediatric department is amazing! Dr. Johnson has been our son's
+                  doctor for years, and we couldn't be happier. He always takes the time
+                  to address our concerns and makes our son feel comfortable during
+                  visits. The entire staff is friendly and professional."
+                </p>
               </div>
             </div>
           </div>
@@ -479,46 +559,64 @@
         <!-- About -->
         <div>
           <h3 class="text-xl font-semibold mb-4">About Us</h3>
-          <p class="text-gray-300 mb-4">We are a leading healthcare provider committed to delivering exceptional medical
-            services with compassion and care.</p>
+          <p class="text-gray-300 mb-4">
+            We are a leading healthcare provider committed to delivering
+            exceptional medical services with compassion and care.
+          </p>
           <div class="flex space-x-4">
-            <a href="https://www.facebook.com/profile.php?id=100040365782052" class="text-gray-300 hover:text-white">
-              <i class="ri-facebook-fill ri-lg"></i>
-            </a>
-            <a href="#" class="text-gray-300 hover:text-white">
-              <i class="ri-twitter-fill ri-lg"></i>
-            </a>
-            <a href="#" class="text-gray-300 hover:text-white">
-              <i class="ri-instagram-fill ri-lg"></i>
-            </a>
-            <a href="#" class="text-gray-300 hover:text-white">
-              <i class="ri-linkedin-fill ri-lg"></i>
-            </a>
+            <a href="https://www.facebook.com/profile.php?id=100040365782052" class="text-gray-300 hover:text-white"><i
+                class="ri-facebook-fill ri-lg"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="ri-twitter-fill ri-lg"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="ri-instagram-fill ri-lg"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="ri-linkedin-fill ri-lg"></i></a>
           </div>
         </div>
         <!-- Quick Links -->
         <div>
           <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
           <ul class="space-y-2">
-            <li><a href="index.html" class="text-gray-300 hover:text-white">Home</a></li>
-            <li><a href="About Us.html" class="text-gray-300 hover:text-white">About Us</a></li>
-            <li><a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Services</a></li>
-            <li><a href="doctors.html" class="text-gray-300 hover:text-white">Doctors</a></li>
-            <li><a href="contact.html" class="text-gray-300 hover:text-white">Contact</a></li>
-            <li><a href="faqs.html" class="text-gray-300 hover:text-white">FAQs</a></li>
+            <li>
+              <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
+            </li>
+            <li>
+              <a href="About Us.html" class="text-gray-300 hover:text-white">About Us</a>
+            </li>
+            <li>
+              <a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Services</a>
+            </li>
+            <li>
+              <a href="doctors.html" class="text-gray-300 hover:text-white">Doctors</a>
+            </li>
+            <li>
+              <a href="contact.html" class="text-gray-300 hover:text-white">Contact</a>
+            </li>
+            <li>
+              <a href="faqs.html" class="text-gray-300 hover:text-white">FAQs</a>
+            </li>
           </ul>
         </div>
         <!-- Services -->
         <div>
           <h3 class="text-xl font-semibold mb-4">Our Services</h3>
           <ul class="space-y-2">
-            <li><a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Emergency Care</a></li>
-            <li><a href="Laboratory_Diagnostics.html" class="text-gray-300 hover:text-white">Laboratory Services</a>
+            <li>
+              <a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Emergency Care</a>
             </li>
-            <li><a href="Dental_Science.html" class="text-gray-300 hover:text-white">Dental</a></li>
-            <li><a href="Pharmacy_Services.html" class="text-gray-300 hover:text-white">Pharmacy</a></li>
-            <li><a href="Radiology.html" class="text-gray-300 hover:text-white">Radiology</a></li>
-            <li><a href="Cardiac_Sciences.html" class="text-gray-300 hover:text-white">Cardiac Sciences </a></li>
+            <li>
+              <a href="Laboratory_Diagnostics.html" class="text-gray-300 hover:text-white">Laboratory Services</a>
+            </li>
+            <li>
+              <a href="Dental_Science.html" class="text-gray-300 hover:text-white">Dental</a>
+            </li>
+            <li>
+              <a href="Pharmacy_Services.html" class="text-gray-300 hover:text-white">Pharmacy</a>
+            </li>
+            <li>
+              <a href="Radiology.html" class="text-gray-300 hover:text-white">Radiology</a>
+            </li>
+            <li>
+              <a href="Cardiac_Sciences.html" class="text-gray-300 hover:text-white">Cardiac Sciences </a>
+            </li>
           </ul>
         </div>
         <!-- Contact -->
@@ -544,9 +642,11 @@
           </ul>
         </div>
       </div>
-      <hr class="border-gray-700 my-8">
+      <hr class="border-gray-700 my-8" />
       <div class="flex flex-col md:flex-row justify-between items-center">
-        <p class="text-gray-400 text-sm">&copy; 2025 Hospital Management System. All rights reserved.</p>
+        <p class="text-gray-400 text-sm">
+          &copy; 2025 Hospital Management System. All rights reserved.
+        </p>
         <div class="mt-4 md:mt-0 flex space-x-4">
           <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
           <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
@@ -556,86 +656,88 @@
     </div>
   </footer>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener("DOMContentLoaded", function () {
       // Mobile Menu Toggle
-      const mobileMenuButton = document.getElementById('mobile-menu-button');
-      const mobileMenu = document.getElementById('mobile-menu');
-      mobileMenuButton.addEventListener('click', function () {
-        mobileMenu.classList.toggle('hidden');
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      mobileMenuButton.addEventListener("click", function () {
+        mobileMenu.classList.toggle("hidden");
       });
       // Mobile Services Dropdown
-      const mobileServicesButton = document.getElementById('mobile-services-button');
-      const mobileServicesMenu = document.getElementById('mobile-services-menu');
-      mobileServicesButton.addEventListener('click', function () {
-        mobileServicesMenu.classList.toggle('hidden');
+      const mobileServicesButton = document.getElementById("mobile-services-button");
+      const mobileServicesMenu = document.getElementById("mobile-services-menu");
+      mobileServicesButton.addEventListener("click", function () {
+        mobileServicesMenu.classList.toggle("hidden");
       });
       // Mobile Specialities Dropdown
-      const mobileSpecialitiesButton = document.getElementById('mobile-specialities-button');
-      const mobileSpecialitiesMenu = document.getElementById('mobile-specialities-menu');
-      mobileSpecialitiesButton.addEventListener('click', function () {
-        mobileSpecialitiesMenu.classList.toggle('hidden');
+      const mobileSpecialitiesButton = document.getElementById("mobile-specialities-button");
+      const mobileSpecialitiesMenu = document.getElementById("mobile-specialities-menu");
+      mobileSpecialitiesButton.addEventListener("click", function () {
+        mobileSpecialitiesMenu.classList.toggle("hidden");
       });
     });
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener("DOMContentLoaded", function () {
       // Department and Doctor Relationship
-      const departmentSelect = document.getElementById('department');
-      const doctorSelect = document.getElementById('doctor');
+      const departmentSelect = document.getElementById("department");
+      const doctorSelect = document.getElementById("doctor");
       if (departmentSelect && doctorSelect) {
-        departmentSelect.addEventListener('change', function () {
+        departmentSelect.addEventListener("change", function () {
           const department = this.value;
           // Clear current options
           doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
           // Add relevant doctors based on department
-          if (department === 'cardiology') {
-            addOption(doctorSelect, 'dr-wilson', 'Dr. James Wilson');
-          } else if (department === 'neurology') {
-            addOption(doctorSelect, 'dr-chen', 'Dr. Emily Chen');
-          } else if (department === 'pediatrics') {
-            addOption(doctorSelect, 'dr-johnson', 'Dr. Michael Johnson');
-          } else if (department === 'orthopedics') {
-            addOption(doctorSelect, 'dr-patel', 'Dr. Raj Patel');
-          } else if (department === 'dermatology') {
-            addOption(doctorSelect, 'dr-rodriguez', 'Dr. Sophia Rodriguez');
+          if (department === "cardiology") {
+            addOption(doctorSelect, "dr-wilson", "Dr. James Wilson");
+          } else if (department === "neurology") {
+            addOption(doctorSelect, "dr-chen", "Dr. Emily Chen");
+          } else if (department === "pediatrics") {
+            addOption(doctorSelect, "dr-johnson", "Dr. Michael Johnson");
+          } else if (department === "orthopedics") {
+            addOption(doctorSelect, "dr-patel", "Dr. Raj Patel");
+          } else if (department === "dermatology") {
+            addOption(doctorSelect, "dr-rodriguez", "Dr. Sophia Rodriguez");
           }
         });
       }
       function addOption(selectElement, value, text) {
-        const option = document.createElement('option');
+        const option = document.createElement("option");
         option.value = value;
         option.textContent = text;
         selectElement.appendChild(option);
       }
       // Form Validation
-      const appointmentForm = document.getElementById('appointment-form');
+      const appointmentForm = document.getElementById("appointment-form");
       if (appointmentForm) {
-        appointmentForm.addEventListener('submit', function (e) {
+        appointmentForm.addEventListener("submit", function (e) {
           e.preventDefault();
           // Simple validation
           let isValid = true;
-          const requiredFields = this.querySelectorAll('[required]');
-          requiredFields.forEach(field => {
+          const requiredFields = this.querySelectorAll("[required]");
+          requiredFields.forEach((field) => {
             if (!field.value.trim()) {
               isValid = false;
-              field.classList.add('border-red-500');
+              field.classList.add("border-red-500");
             } else {
-              field.classList.remove('border-red-500');
+              field.classList.remove("border-red-500");
             }
           });
           if (isValid) {
-            alert('Appointment scheduled successfully! We will contact you shortly to confirm.');
+            alert(
+              "Appointment scheduled successfully! We will contact you shortly to confirm."
+            );
             this.reset();
           } else {
-            alert('Please fill in all required fields.');
+            alert("Please fill in all required fields.");
           }
         });
       }
     });
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener("DOMContentLoaded", function () {
       // Testimonial Slider
-      const slider = document.getElementById('testimonial-slider');
-      const prevButton = document.getElementById('prev-testimonial');
-      const nextButton = document.getElementById('next-testimonial');
-      const dots = document.querySelectorAll('.dot');
+      const slider = document.getElementById("testimonial-slider");
+      const prevButton = document.getElementById("prev-testimonial");
+      const nextButton = document.getElementById("next-testimonial");
+      const dots = document.querySelectorAll(".dot");
       let currentSlide = 0;
       const slideCount = slider.children.length;
       function updateSlider() {
@@ -643,23 +745,23 @@
         // Update dots
         dots.forEach((dot, index) => {
           if (index === currentSlide) {
-            dot.classList.add('active');
+            dot.classList.add("active");
           } else {
-            dot.classList.remove('active');
+            dot.classList.remove("active");
           }
         });
       }
-      prevButton.addEventListener('click', function () {
+      prevButton.addEventListener("click", function () {
         currentSlide = (currentSlide - 1 + slideCount) % slideCount;
         updateSlider();
       });
-      nextButton.addEventListener('click', function () {
+      nextButton.addEventListener("click", function () {
         currentSlide = (currentSlide + 1) % slideCount;
         updateSlider();
       });
       // Dot navigation
       dots.forEach((dot, index) => {
-        dot.addEventListener('click', function () {
+        dot.addEventListener("click", function () {
           currentSlide = index;
           updateSlider();
         });
@@ -670,10 +772,10 @@
         updateSlider();
       }, 5000);
       // Pause on hover
-      slider.addEventListener('mouseenter', function () {
+      slider.addEventListener("mouseenter", function () {
         clearInterval(interval);
       });
-      slider.addEventListener('mouseleave', function () {
+      slider.addEventListener("mouseleave", function () {
         interval = setInterval(function () {
           currentSlide = (currentSlide + 1) % slideCount;
           updateSlider();
@@ -684,7 +786,7 @@
 
     function highlightAndScroll(query) {
       // Remove previous highlights
-      document.querySelectorAll('.search-highlight').forEach(el => {
+      document.querySelectorAll(".search-highlight").forEach((el) => {
         el.outerHTML = el.innerText;
       });
 
@@ -692,20 +794,27 @@
 
       // Find all text nodes and highlight matches
       function walk(node) {
-        if (node.nodeType === 3) { // Text node
-          const idx = node.nodeValue.toLowerCase().indexOf(query.toLowerCase());
+        if (node.nodeType === 3) {
+          // Text node
+          const idx = node.nodeValue
+            .toLowerCase()
+            .indexOf(query.toLowerCase());
           if (idx !== -1) {
-            const span = document.createElement('span');
-            span.className = 'search-highlight bg-yellow-200 text-black rounded px-1';
+            const span = document.createElement("span");
+            span.className = "search-highlight bg-yellow-200 text-black rounded px-1";
             const matchedText = node.splitText(idx);
             const afterMatch = matchedText.splitText(query.length);
             span.textContent = matchedText.nodeValue;
             matchedText.parentNode.replaceChild(span, matchedText);
             // Scroll to first match
-            span.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            span.scrollIntoView({ behavior: "smooth", block: "center" });
             return true; // Stop after first match
           }
-        } else if (node.nodeType === 1 && node.childNodes && !['SCRIPT', 'STYLE'].includes(node.tagName)) {
+        } else if (
+          node.nodeType === 1 &&
+          node.childNodes &&
+          !["SCRIPT", "STYLE"].includes(node.tagName)
+        ) {
           for (let i = 0; i < node.childNodes.length; i++) {
             if (walk(node.childNodes[i])) return true;
           }
@@ -716,11 +825,13 @@
     }
 
     // ..............
-    document.querySelectorAll('input[placeholder="Search..."]').forEach(function (input) {
-      input.addEventListener('input', function () {
-        highlightAndScroll(input.value.trim());
+    document
+      .querySelectorAll('input[placeholder="Search..."]')
+      .forEach(function (input) {
+        input.addEventListener("input", function () {
+          highlightAndScroll(input.value.trim());
+        });
       });
-    });
   </script>
 </body>
 

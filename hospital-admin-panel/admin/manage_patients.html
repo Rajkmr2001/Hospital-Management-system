@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Patients - Hospital Admin Panel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Patients</h1>
+        <button id="addPatientBtn">Add Patient</button>
+        
+        <table id="patientsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Patient records will be populated here by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add/Edit Patient Modal -->
+    <div id="patientModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Add Patient</h2>
+            <form id="patientForm">
+                <input type="hidden" id="patientId" name="patientId">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+                <button type="submit" id="submitBtn">Add Patient</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPatients();
+
+            document.getElementById('addPatientBtn').addEventListener('click', function() {
+                openModal('Add Patient');
+            });
+
+            document.getElementById('patientForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                submitPatientForm();
+            });
+        });
+
+        function loadPatients() {
+            // AJAX call to get_patients.php to load patient data
+        }
+
+        function openModal(title) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('patientModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('patientModal').style.display = 'none';
+            document.getElementById('patientForm').reset();
+        }
+
+        function submitPatientForm() {
+            // AJAX call to add_patient.php or update_patient.php based on the form state
+        }
+    </script>
+</body>
+</html>

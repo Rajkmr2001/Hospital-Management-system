@@ -17,12 +17,12 @@ if ($conn->connect_error) {
 if (isset($_POST['contact'])) {
     $contact = $_POST['contact'];
 
-    // Prepare and execute query safely
-    $stmt = $conn->prepare("SELECT name FROM patient_data WHERE contact = ?");
-    $stmt->bind_param("s", $contact);
-    $stmt->execute();
-    $stmt->bind_result($name);
-    $stmt->fetch();
+// Prepare and execute query safely
+$stmt = $conn->prepare("SELECT name FROM patient_register WHERE mobile_no = ?");
+$stmt->bind_param("s", $contact);
+$stmt->execute();
+$stmt->bind_result($name);
+$stmt->fetch();
 
     if ($name) {
         echo $name; // Send name back to JavaScript

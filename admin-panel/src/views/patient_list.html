@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient List - Admin Panel</title>
+    <link rel="stylesheet" href="../public/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-2xl font-bold mb-4">Patient List</h1>
+        <table class="min-w-full bg-white border border-gray-300">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b">ID</th>
+                    <th class="py-2 px-4 border-b">Name</th>
+                    <th class="py-2 px-4 border-b">Age</th>
+                    <th class="py-2 px-4 border-b">Medical History</th>
+                    <th class="py-2 px-4 border-b">Contact</th>
+                    <th class="py-2 px-4 border-b">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="patientTableBody">
+                <!-- Patient records will be dynamically inserted here -->
+            </tbody>
+        </table>
+        <div class="mt-4">
+            <a href="dashboard.html" class="bg-primary text-white py-2 px-4 rounded">Back to Dashboard</a>
+        </div>
+    </div>
+    <script src="../public/js/main.js"></script>
+</body>
+</html>

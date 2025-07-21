@@ -1,389 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctors Profile</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/0a92e4354f.js" crossorigin="anonymous"></script>
-    <!-- Tailwind and Remixicon for navbar/footer -->
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: '#10b981',
-              secondary: '#f3f4f6'
-            },
-            borderRadius: {
-              'none': '0px',
-              'sm': '4px',
-              DEFAULT: '8px',
-              'md': '12px',
-              'lg': '16px',
-              'xl': '20px',
-              '2xl': '24px',
-              '3xl': '32px',
-              'full': '9999px',
-              'button': '8px'
-            }
-          }
-        }
-      }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="style1.css">
-    <style>
-        .doctor-card { width: 18rem; margin: auto; }
-        .doctor-img { height: 250px; object-fit: cover; }
-        .modal-img { width: 100%; max-height: 300px; object-fit: cover; border-radius: 10px; }
-    </style>
-</head>
-<body class="bg-gray-50">
 
-<!-- Navbar from index.html -->
-<header class="sticky top-0 z-50 bg-white shadow-sm">
-<div class="container mx-auto px-4">
-<div class="flex items-center justify-between h-16">
-<!-- Logo -->
-<div class="flex items-center">
-<div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-<i class="ri-heart-pulse-line text-white ri-lg"></i>
-</div>
-<span class="ml-2 text-xl font-semibold text-gray-800">Hospital Management</span>
-</div>
-<!-- Desktop Navigation -->
-<nav class="hidden md:flex space-x-6">
-  <a href="index.html" class="text-gray-700 hover:text-primary font-medium">Home</a>
-  <a href="About Us.html" class="text-gray-700 hover:text-primary font-medium">About Us</a>
-  <!-- Services Dropdown -->
-  <div class="dropdown relative group">
-    <button class="text-gray-700 group-hover:text-primary hover:text-primary font-medium flex items-center">
-      Services
-      <i class="ri-arrow-down-s-line ml-1 ri-lg"></i>
-    </button>
-    <div class="dropdown-content mt-2 bg-white shadow-lg rounded hidden group-hover:block group-focus-within:block absolute z-50 min-w-[180px]">
-      <a href="Emergency_Services.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Emergency services</a>
-      <a href="Pharmacy_Services.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Pharmacy</a>
-      <a href="Nurses.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Nurses</a>
-      <a href="Laboratory_Diagnostics.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Laboratory & Diagnostics</a>
-      <a href="Weight_Scale.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Weight Scale</a>
-    </div>
-  </div>
-  <!-- Specialities Dropdown -->
-  <div class="dropdown relative group">
-    <button class="text-gray-700 group-hover:text-primary hover:text-primary font-medium flex items-center">
-      Specialities
-      <i class="ri-arrow-down-s-line ml-1 ri-lg"></i>
-    </button>
-    <div class="dropdown-content mt-2 bg-white shadow-lg rounded hidden group-hover:block group-focus-within:block absolute z-50 min-w-[180px]">
-      <a href="Cardiac_Sciences.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Cardiac Sciences</a>
-      <a href="Dental_Science.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Dental Science</a>
-      <a href="Neurology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Neurology</a>
-      <a href="Infectious_Diseases.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Infectious Diseases</a>
-      <a href="Ophthalmology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Ophthalmology</a>
-      <a href="Gastroenterology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Gastroenterology</a>
-      <a href="ENT.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">ENT</a>
-      <a href="Radiology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Radiology</a>
-      <a href="Dermatology.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-100">Dermatology</a>
-    </div>
-  </div>
-  <a href="doctors.html" class="text-gray-700 hover:text-primary font-medium">Doctors</a>
-  <a href="contact.html" class="text-gray-700 hover:text-primary font-medium">Contact</a>
-  <a href="faqs.html" class="text-gray-700 hover:text-primary font-medium">FAQs</a>
-</nav>
-<!-- Search Bar -->
-<div class="hidden md:flex items-center">
-  <form id="search-form" class="relative">
-    <input type="text" name="q" id="search-input" placeholder="Search..." class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
-    <div class="absolute left-3 top-2.5 w-4 h-4 flex items-center justify-center">
-      <i class="ri-search-line text-gray-400"></i>
-    </div>
-  </form>
-</div>
-<!-- Mobile Menu Button -->
-<div class="md:hidden flex items-center">
-  <button id="mobile-menu-button" class="text-gray-700 hover:text-primary">
-    <i class="ri-menu-line ri-2x"></i>
-  </button>
-</div>
-</div>
-<!-- Mobile Navigation -->
-<div id="mobile-menu" class="md:hidden hidden pb-4">
-  <a href="index.html" class="block py-2 text-gray-700 hover:text-primary font-medium">Home</a>
-  <a href="About Us.html" class="block py-2 text-gray-700 hover:text-primary font-medium">About Us</a>
-  <div class="py-2">
-    <button id="mobile-services-button" class="flex items-center justify-between w-full text-gray-700 hover:text-primary font-medium">
-      Services
-      <i class="ri-arrow-down-s-line"></i>
-    </button>
-    <div id="mobile-services-menu" class="hidden pl-4 mt-2">
-      <a href="Emergency_Services.html" class="block py-2 text-gray-700 hover:text-primary">Emergency services</a>
-      <a href="Pharmacy_Services.html" class="block py-2 text-gray-700 hover:text-primary">Pharmacy</a>
-      <a href="Nurses.html" class="block py-2 text-gray-700 hover:text-primary">Nurses</a>
-      <a href="Laboratory_Diagnostics.html" class="block py-2 text-gray-700 hover:text-primary">Laboratory & Diagnostics</a>
-      <a href="Weight_Scale.html" class="block py-2 text-gray-700 hover:text-primary">Weight Scale</a>
-    </div>
-  </div>
-  <div class="py-2">
-    <button id="mobile-specialities-button" class="flex items-center justify-between w-full text-gray-700 hover:text-primary font-medium">
-      Specialities
-      <i class="ri-arrow-down-s-line"></i>
-    </button>
-    <div id="mobile-specialities-menu" class="hidden pl-4 mt-2">
-      <a href="Cardiac_Sciences.html" class="block py-2 text-gray-700 hover:text-primary">Cardiac Sciences</a>
-      <a href="Dental_Science.html" class="block py-2 text-gray-700 hover:text-primary">Dental Science</a>
-      <a href="Neurology.html" class="block py-2 text-gray-700 hover:text-primary">Neurology</a>
-      <a href="Infectious_Diseases.html" class="block py-2 text-gray-700 hover:text-primary">Infectious Diseases</a>
-      <a href="Ophthalmology.html" class="block py-2 text-gray-700 hover:text-primary">Ophthalmology</a>
-      <a href="Gastroenterology.html" class="block py-2 text-gray-700 hover:text-primary">Gastroenterology</a>
-      <a href="ENT.html" class="block py-2 text-gray-700 hover:text-primary">ENT</a>
-      <a href="Radiology.html" class="block py-2 text-gray-700 hover:text-primary">Radiology</a>
-      <a href="Dermatology.html" class="block py-2 text-gray-700 hover:text-primary">Dermatology</a>
-    </div>
-  </div>
-  <a href="doctors.html" class="block py-2 text-gray-700 hover:text-primary font-medium">Doctors</a>
-  <a href="contact.html" class="block py-2 text-gray-700 hover:text-primary font-medium">Contact</a>
-  <a href="faqs.html" class="block py-2 text-gray-700 hover:text-primary font-medium">FAQs</a>
-  <form id="mobile-search-form" class="mt-4 relative">
-    <input type="text" name="q" id="mobile-search-input" placeholder="Search..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
-    <div class="absolute left-3 top-2.5 w-4 h-4 flex items-center justify-center">
-      <i class="ri-search-line text-gray-400"></i>
-    </div>
-  </form>
-</div>
-</div>
-</header>
-<!-- End Navbar -->
-
-<div class="container text-center mt-5">
-    <h1>Our Doctors</h1>
-    <p class="lead">Meet our expert medical professionals.</p>
-
-    <div class="row">
-        <!-- Doctor 1 -->
-        <div class="col-md-4">
-            <div class="card doctor-card">
-                <img src="images (1).jpeg" class="card-img-top doctor-img" alt="Doctor 1">
-                <div class="card-body">
-                    <h5 class="card-title">Dr. Smith</h5>
-                    <p class="card-text">Cardiologist with 10 years of experience.</p>
-                    <button class="btn btn-info view-profile" 
-                            data-name="Dr. Smith"
-                            data-image="images (1).jpeg"
-                            data-speciality="Cardiologist"
-                            data-experience="10 years"
-                            data-description="Well, if you’ve landed on this article, you know that efficiently running an entire hospital isn’t a walk in the park. Although it is essential, it gets overwhelming at times.  
-
-                            Time is of the utmost importance when it comes to healthcare. Imagine the severity if there is even a minor delay or fault while sharing the results and diagnosis.  To simplify operations and efficiently manage patient records, leading hospitals use a hospital management system.  Employing hospital management software helps you reap the maximum benefits from your work.  
-                            
-                            Before discussing in detail how you can leverage an HMS to the fullest, let us understand what an HMS is and why it is needed."
-                            data-bs-toggle="modal" 
-                            data-bs-target="#doctorModal">
-                        View Full Profile
-                    </button>
-                </div>
-            </div>
+        <div class="mt-4 relative flex items-center space-x-4">
+          <button
+            onclick="window.location.href='hospital-admin-panel/admin/dashboard.html'"
+            class="px-4 py-2 bg-primary text-white rounded-button hover:bg-primary/90 transition-colors duration-200 whitespace-nowrap"
+          >
+            Admin Panel
+          </button>
+          <input
+            type="text"
+            placeholder="Search..."
+            class="flex-grow pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+          />
+          <div
+            class="absolute left-3 top-2.5 w-4 h-4 flex items-center justify-center"
+          >
+            <i class="ri-search-line text-gray-400"></i>
+          </div>
         </div>
-
-        <!-- Doctor 2 -->
-        <div class="col-md-4">
-            <div class="card doctor-card">
-                <img src="images.jpeg" class="card-img-top doctor-img" alt="Doctor 2">
-                <div class="card-body">
-                    <h5 class="card-title">Dr. Johnson</h5>
-                    <p class="card-text">Neurologist with 8 years of experience.</p>
-                    <button class="btn btn-info view-profile" 
-                            data-name="Dr. Johnson xyz"
-                            data-image="images.jpeg"
-                            data-speciality="Neurologist"
-                            data-experience="8 years"
-                            data-description="Dr. Johnson is an expert in neurology, treating brain and nervous system disorders."
-                            data-bs-toggle="modal" 
-                            data-bs-target="#doctorModal">
-                        View Full Profile
-                    </button>
-                </div>
+        <!-- ............................................... -->
+         <!-- desktopview  ...>>>>>>>>>> -->
+        <!-- Search Bar -->
+        <div class="hidden md:flex items-center">
+          <button
+            id="adminPanelBtn"
+            onclick="window.location.href='hospital-admin-panel/admin/dashboard.html'"
+            class="mr-4 px-4 py-2 bg-primary text-white rounded-button hover:bg-primary/90 transition-colors duration-200"
+          >
+            Admin Panel
+          </button>
+          <div class="relative">
+            <input
+              type="text"
+              placeholder="Search..."
+              class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+            />
+            <div
+              class="absolute left-3 top-2.5 w-4 h-4 flex items-center justify-center"
+            >
+              <i class="ri-search-line text-gray-400"></i>
             </div>
+          </div>
         </div>
-
-        <!-- Doctor 3 -->
-        <div class="col-md-4">
-            <div class="card doctor-card">
-                <img src="243xe5.jpg" class="card-img-top doctor-img" alt="Doctor 3">
-                <div class="card-body">
-                    <h5 class="card-title">Dr. Williams</h5>
-                    <p class="card-text">Orthopedic Surgeon with 12 years of experience.</p>
-                    <button class="btn btn-info view-profile" 
-                            data-name="Dr. Williams"
-                            data-image="243xe5.jpg"
-                            data-speciality="Orthopedic Surgeon"
-                            data-experience="12 years"
-                            data-description="Dr. Williams specializes in orthopedic surgery and joint replacements."
-                            data-bs-toggle="modal" 
-                            data-bs-target="#doctorModal">
-                        View Full Profile
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Doctor Profile Modal -->
-<div class="modal fade" id="doctorModal" tabindex="-1" aria-labelledby="doctorModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="doctorName">Doctor Name</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img id="doctorImage" src="" class="modal-img mb-3" alt="Doctor Image">
-                <h6 id="doctorSpeciality"></h6>
-                <p><strong>Experience:</strong> <span id="doctorExperience"></span></p>
-                <p id="doctorDescription"></p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-success">Book Appointment</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Footer from index.html -->
-<footer class="bg-gray-800 text-white pt-12 pb-6 mt-16">
-  <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <!-- About -->
-      <div>
-        <h3 class="text-xl font-semibold mb-4">About Us</h3>
-        <p class="text-gray-300 mb-4">We are a leading healthcare provider committed to delivering exceptional medical services with compassion and care.</p>
-        <div class="flex space-x-4">
-          <a href="#" class="text-gray-300 hover:text-white"><i class="ri-facebook-fill ri-lg"></i></a>
-          <a href="#" class="text-gray-300 hover:text-white"><i class="ri-twitter-fill ri-lg"></i></a>
-          <a href="#" class="text-gray-300 hover:text-white"><i class="ri-instagram-fill ri-lg"></i></a>
-          <a href="#" class="text-gray-300 hover:text-white"><i class="ri-linkedin-fill ri-lg"></i></a>
-        </div>
-      </div>
-      <!-- Quick Links -->
-      <div>
-        <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
-        <ul class="space-y-2">
-          <li><a href="index.html" class="text-gray-300 hover:text-white">Home</a></li>
-          <li><a href="About Us.html" class="text-gray-300 hover:text-white">About Us</a></li>
-          <li><a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Services</a></li>
-          <li><a href="doctors.html" class="text-gray-300 hover:text-white">Doctors</a></li>
-          <li><a href="contact.html" class="text-gray-300 hover:text-white">Contact</a></li>
-          <li><a href="faqs.html" class="text-gray-300 hover:text-white">FAQs</a></li>
-        </ul>
-      </div>
-      <!-- Services -->
-      <div>
-        <h3 class="text-xl font-semibold mb-4">Our Services</h3>
-        <ul class="space-y-2">
-          <li><a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Emergency Care</a></li>
-          <li><a href="Laboratory_Diagnostics.html" class="text-gray-300 hover:text-white">Laboratory Services</a></li>
-          <li><a href="Dental_Science.html" class="text-gray-300 hover:text-white">Dental</a></li>
-          <li><a href="Pharmacy_Services.html" class="text-gray-300 hover:text-white">Pharmacy</a></li>
-          <li><a href="Radiology.html" class="text-gray-300 hover:text-white">Radiology</a></li>
-          <li><a href="Cardiac_Sciences.html" class="text-gray-300 hover:text-white">Cardiac Sciences </a></li>
-        </ul>
-      </div>
-      <!-- Contact -->
-      <div>
-        <h3 class="text-xl font-semibold mb-4">Contact Us</h3>
-        <ul class="space-y-3">
-          <li class="flex items-start">
-            <i class="ri-map-pin-line mt-1 mr-3 text-primary"></i>
-            <span>Namkum Ranchi Sindroll, Ranchi Road</span>
-          </li>
-          <li class="flex items-center">
-            <i class="ri-phone-line mr-3 text-primary"></i>
-            <span>+91 9142426139</span>
-          </li>
-          <li class="flex items-center">
-            <i class="ri-mail-line mr-3 text-primary"></i>
-            <span>rajkmr7070@gmail.com</span>
-          </li>
-          <li class="flex items-center">
-            <i class="ri-time-line mr-3 text-primary"></i>
-            <span>Mon-Fri: 8:00 AM - 8:00 PM</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <hr class="border-gray-700 my-8">
-    <div class="flex flex-col md:flex-row justify-between items-center">
-      <p class="text-gray-400 text-sm">&copy; 2025 Hospital Management System. All rights reserved.</p>
-      <div class="mt-4 md:mt-0 flex space-x-4">
-        <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
-        <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
-        <a href="#" class="text-gray-400 hover:text-white text-sm">Cookie Policy</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script>
-    // Navbar dropdowns and mobile menu
-    document.addEventListener('DOMContentLoaded', function() {
-      // Mobile Menu Toggle
-      const mobileMenuButton = document.getElementById('mobile-menu-button');
-      const mobileMenu = document.getElementById('mobile-menu');
-      mobileMenuButton.addEventListener('click', function() {
-        mobileMenu.classList.toggle('hidden');
-      });
-      // Mobile Services Dropdown
-      const mobileServicesButton = document.getElementById('mobile-services-button');
-      const mobileServicesMenu = document.getElementById('mobile-services-menu');
-      mobileServicesButton.addEventListener('click', function() {
-        mobileServicesMenu.classList.toggle('hidden');
-      });
-      // Mobile Specialities Dropdown
-      const mobileSpecialitiesButton = document.getElementById('mobile-specialities-button');
-      const mobileSpecialitiesMenu = document.getElementById('mobile-specialities-menu');
-      mobileSpecialitiesButton.addEventListener('click', function() {
-        mobileSpecialitiesMenu.classList.toggle('hidden');
-      });
-      // Search bar (desktop)
-      document.getElementById('search-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const query = document.getElementById('search-input').value.trim();
-        if(query) {
-          window.location.href = 'search.html?q=' + encodeURIComponent(query);
-        }
-      });
-      // Search bar (mobile)
-      document.getElementById('mobile-search-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const query = document.getElementById('mobile-search-input').value.trim();
-        if(query) {
-          window.location.href = 'search.html?q=' + encodeURIComponent(query);
-        }
-      });
-    });
-
-    // Doctor modal logic
-    document.addEventListener("DOMContentLoaded", function() {
-        const viewProfileButtons = document.querySelectorAll(".view-profile");
-        viewProfileButtons.forEach(button => {
-            button.addEventListener("click", function() {
-                document.getElementById("doctorName").innerText = this.dataset.name;
-                document.getElementById("doctorImage").src = this.dataset.image;
-                document.getElementById("doctorSpeciality").innerText = this.dataset.speciality;
-                document.getElementById("doctorExperience").innerText = this.dataset.experience;
-                document.getElementById("doctorDescription").innerText = this.dataset.description;
-            });
-        });
-    });
-</script>
-
-</body>
-</html>
+        <!-- Mobile Menu Button -->
