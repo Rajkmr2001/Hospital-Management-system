@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Manage Feedback - Admin Panel</title>
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="styledb.css" />
     <script src="js/main.js" defer></script>
 </head>
 <body>
@@ -21,22 +22,30 @@
         </nav>
     </header>
     <main>
-        <table id="feedbackTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Number</th>
-                    <th>Name</th>
-                    <th>Comment</th>
-                    <th>Likes</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Feedback entries will be populated here -->
-            </tbody>
-        </table>
+        <section>
+            <h2 class="section-title" style="color:#10b981; font-size:1.5rem; margin-bottom:18px;">Feedback List</h2>
+            <div class="table-container">
+                <table id="feedbackTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Number</th>
+                            <th>Name</th>
+                            <th>Comment</th>
+                            <th>Likes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Feedback entries will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
+    <footer>
+        <p>&copy; 2023 Maa Kalawati Hospital. All rights reserved.</p>
+    </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             loadFeedback();
@@ -56,13 +65,17 @@
                             <td>${fb.name}</td>
                             <td>${fb.comment}</td>
                             <td>${fb.likes}</td>
-                            <td><button data-id="${fb.id}" class="deleteBtn">Delete</button></td>
+                            <td>
+                                <button data-id="${fb.id}" class="deleteBtn">
+                                    <i class="ri-delete-bin-6-line" style="vertical-align:middle; margin-right:6px;"></i>Delete
+                                </button>
+                            </td>
                         `;
                         tbody.appendChild(tr);
                     });
                     document.querySelectorAll('.deleteBtn').forEach(btn => {
                         btn.addEventListener('click', async (e) => {
-                            const id = e.target.getAttribute('data-id');
+                            const id = e.target.closest('button').getAttribute('data-id');
                             if (confirm('Are you sure you want to delete this feedback?')) {
                                 const delResponse = await fetch('php/delete_feedback.php', {
                                     method: 'POST',

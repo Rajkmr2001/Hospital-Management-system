@@ -1,19 +1,30 @@
 // This file contains JavaScript functions for handling user interactions in the admin panel.
 
 document.addEventListener('DOMContentLoaded', function() {
-    loadPatients();
+    // Load patients if on manage_patients.html
+    if (document.getElementById('patientTableBody')) {
+        loadPatients();
 
-    document.getElementById('addPatientForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        addPatient();
-    });
+        document.getElementById('addPatientForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            addPatient();
+        });
 
-    document.getElementById('updatePatientForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        updatePatient();
-    });
+        document.getElementById('updatePatientForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            updatePatient();
+        });
+    }
+
+    // Load feedback if on manage_feedback.html
+    if (document.getElementById('feedbackTable')) {
+        loadFeedback();
+    }
+
+    // Additional dashboard JS can be added here if needed
 });
 
+// Patient management functions
 function loadPatients() {
     fetch('php/get_patients.php')
         .then(response => response.json())
@@ -102,4 +113,52 @@ function deletePatient(id) {
             }
         })
         .catch(error => console.error('Error deleting patient:', error));
+    }
+}
+
+// Feedback management functions
+function loadFeedback() {
+    fetch('php/get_feedback.php')
+        .then(response => response.json())
+        .then(feedbacks => {
+            const tbody = document.querySelector('#feedbackTable tbody');
+            tbody.innerHTML = '';
+            feedbacks.forEach(fb => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${fb.id}</td>
+                    <td>${fb.number}</td>
+                    <td>${fb.name}</td>
+                    <td>${fb.comment}</td>
+                    <td>${fb.likes}</td>
+                    <td>
+                        <button data-id="${fb.id}" class="deleteBtn" onclick="deleteFeedback(${fb.id})">
+                            <i class="ri-delete-bin-6-line" style="vertical-align:middle; margin-right:6px;"></i>Delete
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        })
+        .catch(error => console.error('Error loading feedback:', error));
+}
+
+function deleteFeedback(id) {
+    if (confirm('Are you sure you want to delete this feedback?')) {
+        fetch('php/delete_feedback.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `id=${id}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Feedback deleted successfully');
+                loadFeedback();
+            } else {
+                alert('Failed to delete feedback');
+            }
+        })
+        .catch(error => console.error('Error deleting feedback:', error));
+    }
 }

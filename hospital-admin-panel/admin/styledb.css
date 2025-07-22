@@ -1,0 +1,437 @@
+/* Base Reset */
+body, h1, h2, p, ul, li {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: #f3f4f6;
+  color: #222;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  background: linear-gradient(90deg, #10b981 0%, #6ed3cf 100%);
+  color: #fff;
+  padding: 28px 0 18px 0;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.08);
+  text-align: center;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+
+header h1 {
+  font-size: 2.3rem;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  font-family: 'Pacifico', cursive, sans-serif;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  margin-top: 10px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.15rem;
+  transition: color 0.2s;
+  padding: 8px 18px;
+  border-radius: 8px;
+}
+
+nav a:hover {
+  background: #fff;
+  color: #10b981;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.08);
+}
+
+/* Main Content */
+main {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0;
+  background: #fff;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+section {
+  margin-bottom: 36px;
+}
+
+h2 {
+  color: #10b981;
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+  font-weight: 700;
+}
+
+p {
+  color: #444;
+  font-size: 1.08rem;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul li {
+  margin-bottom: 16px;
+}
+
+ul li a {
+  display: inline-block;
+  background: #e3f2fd;
+  color: #10b981;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.04);
+  transition: background 0.2s, color 0.2s;
+  font-size: 1.08rem;
+}
+
+ul li a:hover {
+  background: #10b981;
+  color: #fff;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 22px 0;
+  background: #e3f2fd;
+  color: #10b981;
+  font-size: 1.08rem;
+  margin-top: 48px;
+  border-top: 1px solid #bbdefb;
+  letter-spacing: 0.5px;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+
+/* Admin Login Page Styles */
+.login-container {
+  max-width: 400px;
+  margin: 60px auto 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(16,185,129,0.10);
+  padding: 36px 32px 24px 32px;
+  text-align: center;
+}
+
+.login-container h1 {
+  color: #10b981;
+  font-size: 2rem;
+  margin-bottom: 28px;
+  font-family: 'Pacifico', cursive, sans-serif;
+  letter-spacing: 1px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: #1976d2;
+  margin-bottom: 7px;
+  font-size: 1.08rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #bbdefb;
+  border-radius: 8px;
+  font-size: 1.08rem;
+  background: #f3f4f6;
+  color: #222;
+  transition: border-color 0.2s;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus {
+  border-color: #10b981;
+  outline: none;
+}
+
+button[type="submit"] {
+  width: 100%;
+  background: linear-gradient(90deg, #10b981 0%, #6ed3cf 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.12rem;
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.08);
+  transition: background 0.2s;
+}
+
+button[type="submit"]:hover {
+  background: #10b981;
+}
+
+/* Navigation Tabs */
+nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #e3f2fd;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.08);
+  max-width: 700px;
+  margin: 0 auto 24px auto;
+}
+
+nav ul li {
+  flex: 1 1 0;
+  text-align: center;
+}
+
+nav ul li a {
+  display: block;
+  padding: 16px 0;
+  font-size: 1.12rem;
+  font-weight: 500;
+  color: #10b981;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+  border-right: 1px solid #bbdefb;
+}
+
+nav ul li:last-child a {
+  border-right: none;
+}
+
+nav ul li a.active,
+nav ul li a:hover {
+  background: #10b981;
+  color: #fff;
+  border-radius: 0;
+}
+
+/* Feedback Grid Table */
+.table-container {
+  width: 100vw;
+  margin: 0;
+  background: #fff;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  overflow-x: auto;
+}
+
+#feedbackTable {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #f9fafb;
+  border-radius: 0;
+  overflow: auto;
+  display: block;
+}
+
+#feedbackTable thead tr,
+#feedbackTable tbody tr {
+  display: grid;
+  grid-template-columns: 60px 120px 160px 1fr 80px 120px;
+  align-items: center;
+}
+
+@media (max-width: 1200px) {
+  #feedbackTable thead tr,
+  #feedbackTable tbody tr {
+    grid-template-columns: 40px 80px 120px 1fr 60px 80px;
+  }
+}
+
+@media (max-width: 900px) {
+  #feedbackTable thead tr,
+  #feedbackTable tbody tr {
+    grid-template-columns: 32px 60px 80px 1fr 50px 60px;
+  }
+  #feedbackTable th, #feedbackTable td {
+    font-size: 0.98rem;
+    padding: 10px 6px;
+  }
+}
+
+@media (max-width: 700px) {
+  #feedbackTable thead tr,
+  #feedbackTable tbody tr {
+    grid-template-columns: 24px 50px 70px 1fr 36px 50px;
+    font-size: 0.95rem;
+  }
+  #feedbackTable th, #feedbackTable td {
+    padding: 7px 2px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 500px) {
+  #feedbackTable {
+    min-width: 400px;
+  }
+  #feedbackTable thead tr,
+  #feedbackTable tbody tr {
+    grid-template-columns: 20px 40px 60px 1fr 30px 40px;
+    font-size: 0.92rem;
+  }
+  .table-container {
+    padding: 0;
+  }
+}
+
+/* Keep ID column centered */
+#feedbackTable th:first-child,
+#feedbackTable td:first-child {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+/* Modern style for Manage Feedback button (Delete button) */
+.deleteBtn {
+  background: linear-gradient(90deg, #10b981 0%, #6ed3cf 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.deleteBtn:hover {
+  background: linear-gradient(90deg, #0e9f6e 0%, #5cc4c0 100%);
+  box-shadow: 0 6px 16px rgba(14, 159, 110, 0.6);
+  transform: translateY(-2px);
+}
+
+.deleteBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(14, 159, 110, 0.5);
+}
+
+/* Modern Patient Data Table */
+.table-container {
+    width: 100vw;
+    margin: 0 auto 32px auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(16,185,129,0.07);
+    padding: 24px;
+    overflow-x: auto;
+}
+
+#patientDataTable {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#patientDataTable th, #patientDataTable td {
+    padding: 16px 12px;
+    text-align: left;
+    font-size: 1.08rem;
+    word-break: break-word;
+}
+
+#patientDataTable th {
+    background: #10b981;
+    color: #fff;
+    font-weight: 600;
+    border-bottom: 2px solid #e3f2fd;
+}
+
+#patientDataTable tbody tr:nth-child(even) {
+    background: #e3f2fd;
+}
+
+#patientDataTable tbody tr:hover {
+    background: #d1fae5;
+}
+
+#patientDataTable td {
+    color: #222;
+    border-bottom: 1px solid #e3f2fd;
+}
+
+.deleteBtn {
+    background: linear-gradient(90deg, #ef4444 0%, #f59e42 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(239,68,68,0.08);
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.deleteBtn:hover {
+    background: #ef4444;
+}
+
+@media (max-width: 900px) {
+    #patientDataTable th, #patientDataTable td {
+        padding: 10px 6px;
+        font-size: 0.98rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .table-container {
+        padding: 8px 2px;
+    }
+    #patientDataTable th, #patientDataTable td {
+        padding: 7px 2px;
+        font-size: 0.95rem;
+    }
+    #patientDataTable {
+        min-width: 500px;
+        font-size: 0.95rem;
+    }
+}
+
