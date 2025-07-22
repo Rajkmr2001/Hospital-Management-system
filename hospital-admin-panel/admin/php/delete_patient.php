@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $patient_id = $_POST['patient_id'];
 
     // Prepare the SQL statement to prevent SQL injection
-    $stmt = $conn->prepare("DELETE FROM patients WHERE id = ?");
+    $stmt = $conn->prepare("DELETE FROM patient_data WHERE id = ?");
     $stmt->bind_param("i", $patient_id);
 
     if ($stmt->execute()) {

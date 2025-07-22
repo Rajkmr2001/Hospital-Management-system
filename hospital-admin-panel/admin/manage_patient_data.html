@@ -118,6 +118,7 @@
         <section>
             <h2 style="color:#10b981; font-size:1.5rem; margin-bottom:18px;">Patient Data List</h2>
             <div class="table-container">
+                <button id="addPatientBtn" class="button" style="margin-bottom: 16px;">Add Patient</button>
                 <table id="patientDataTable">
                     <thead>
                         <tr>
@@ -134,19 +135,150 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Add Patient Modal -->
+            <div id="addPatientModal" class="modal" style="display:none;">
+                <div class="modal-content" style="background:#fff; padding:20px; border-radius:12px; max-width:400px; margin:40px auto; box-shadow:0 4px 24px rgba(16,185,129,0.1);">
+                    <h3>Add Patient</h3>
+                    <form id="addPatientForm">
+                        <div class="form-group">
+                            <label for="addPatientName">Name</label>
+                            <input type="text" id="addPatientName" name="name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="addPatientContact">Contact</label>
+                            <input type="text" id="addPatientContact" name="contact" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="addPatientAge">Age</label>
+                            <input type="number" id="addPatientAge" name="age" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="addPatientGender">Gender</label>
+                            <select id="addPatientGender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="button">Add</button>
+                        <button type="button" id="cancelAddPatient" class="button" style="background:#ef4444; margin-left:8px;">Cancel</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Patient Modal -->
+            <div id="editPatientModal" class="modal" style="display:none;">
+                <div class="modal-content" style="background:#fff; padding:20px; border-radius:12px; max-width:400px; margin:40px auto; box-shadow:0 4px 24px rgba(16,185,129,0.1);">
+                    <h3>Edit Patient</h3>
+                    <form id="editPatientForm">
+                        <input type="hidden" id="editPatientId" name="id" />
+                        <div class="form-group">
+                            <label for="editPatientName">Name</label>
+                            <input type="text" id="editPatientName" name="name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="editPatientContact">Contact</label>
+                            <input type="text" id="editPatientContact" name="contact" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="editPatientAge">Age</label>
+                            <input type="number" id="editPatientAge" name="age" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="editPatientGender">Gender</label>
+                            <select id="editPatientGender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="button">Update</button>
+                        <button type="button" id="cancelEditPatient" class="button" style="background:#ef4444; margin-left:8px;">Cancel</button>
+                    </form>
+                </div>
+            </div>
         </section>
     </main>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            loadPatientData();
+            const addPatientBtn = document.getElementById('addPatientBtn');
+            const addPatientModal = document.getElementById('addPatientModal');
+            const cancelAddPatient = document.getElementById('cancelAddPatient');
+            const addPatientForm = document.getElementById('addPatientForm');
+
+            const editPatientModal = document.getElementById('editPatientModal');
+            const cancelEditPatient = document.getElementById('cancelEditPatient');
+            const editPatientForm = document.getElementById('editPatientForm');
+
+            const patientDataTableBody = document.querySelector('#patientDataTable tbody');
+
+            addPatientBtn.addEventListener('click', () => {
+                addPatientModal.style.display = 'block';
+            });
+
+            cancelAddPatient.addEventListener('click', () => {
+                addPatientModal.style.display = 'none';
+                addPatientForm.reset();
+            });
+
+            cancelEditPatient.addEventListener('click', () => {
+                editPatientModal.style.display = 'none';
+                editPatientForm.reset();
+            });
+
+            addPatientForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(addPatientForm);
+                try {
+                    const response = await fetch('php/add_patient.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('Patient added successfully');
+                        addPatientModal.style.display = 'none';
+                        addPatientForm.reset();
+                        loadPatientData();
+                    } else {
+                        alert('Failed to add patient');
+                    }
+                } catch (error) {
+                    alert('Error adding patient: ' + error.message);
+                }
+            });
+
+            editPatientForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(editPatientForm);
+                try {
+                    const response = await fetch('php/update_patient.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('Patient updated successfully');
+                        editPatientModal.style.display = 'none';
+                        editPatientForm.reset();
+                        loadPatientData();
+                    } else {
+                        alert('Failed to update patient');
+                    }
+                } catch (error) {
+                    alert('Error updating patient: ' + error.message);
+                }
+            });
 
             async function loadPatientData() {
                 try {
                     const response = await fetch('php/get_patient_data.php');
                     if (!response.ok) throw new Error('Failed to fetch patient data');
                     const patients = await response.json();
-                    const tbody = document.querySelector('#patientDataTable tbody');
-                    tbody.innerHTML = '';
+                    patientDataTableBody.innerHTML = '';
                     patients.forEach(patient => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
@@ -156,28 +288,51 @@
                             <td>${patient.age}</td>
                             <td>${patient.gender}</td>
                             <td>
-                                <button data-id="${patient.id}" class="deleteBtn">
-                                    <i class="ri-delete-bin-6-line" style="vertical-align:middle; margin-right:6px;"></i>Delete
-                                </button>
+                                <button data-id="${patient.id}" class="editBtn">Edit</button>
+                                <button data-id="${patient.id}" class="deleteBtn">Delete</button>
                             </td>
                         `;
-                        tbody.appendChild(tr);
+                        patientDataTableBody.appendChild(tr);
                     });
+
+                    document.querySelectorAll('.editBtn').forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            const id = e.target.getAttribute('data-id');
+                            try {
+                                const response = await fetch(`php/get_patient.php?id=${id}`);
+                                if (!response.ok) throw new Error('Failed to fetch patient');
+                                const patient = await response.json();
+                                document.getElementById('editPatientId').value = patient.id;
+                                document.getElementById('editPatientName').value = patient.name;
+                                document.getElementById('editPatientContact').value = patient.contact;
+                                document.getElementById('editPatientAge').value = patient.age;
+                                document.getElementById('editPatientGender').value = patient.gender;
+                                editPatientModal.style.display = 'block';
+                            } catch (error) {
+                                alert(error.message);
+                            }
+                        });
+                    });
+
                     document.querySelectorAll('.deleteBtn').forEach(btn => {
                         btn.addEventListener('click', async (e) => {
-                            const id = e.target.closest('button').getAttribute('data-id');
-                            if (confirm('Are you sure you want to delete this patient data?')) {
-                                const delResponse = await fetch('php/delete_patient_data.php', {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                                    body: `id=${id}`
-                                });
-                                const delResult = await delResponse.json();
-                                if (delResult.success) {
-                                    alert('Patient data deleted successfully');
-                                    loadPatientData();
-                                } else {
-                                    alert('Failed to delete patient data');
+                            const id = e.target.getAttribute('data-id');
+                            if (confirm('Are you sure you want to delete this patient?')) {
+                                try {
+                                    const response = await fetch('php/delete_patient.php', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                        body: `id=${id}`
+                                    });
+                                    const result = await response.json();
+                                    if (result.success) {
+                                        alert('Patient deleted successfully');
+                                        loadPatientData();
+                                    } else {
+                                        alert('Failed to delete patient');
+                                    }
+                                } catch (error) {
+                                    alert('Error deleting patient: ' + error.message);
                                 }
                             }
                         });
@@ -186,8 +341,9 @@
                     alert(error.message);
                 }
             }
+
+            loadPatientData();
         });
     </script>
 </body>
-
 </html>

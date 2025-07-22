@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $medical_history = $_POST['medical_history'];
 
     // Prepare an SQL statement to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO patients (name, age, gender, contact, address, medical_history) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO patient_data (name, age, gender, contact, address, medical_history) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sissss", $name, $age, $gender, $contact, $address, $medical_history);
 
     // Execute the statement

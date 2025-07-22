@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Prepare and bind
-    $stmt = $conn->prepare("UPDATE patients SET name=?, age=?, gender=?, address=?, contact=?, medical_history=? WHERE id=?");
+    $stmt = $conn->prepare("UPDATE patient_data SET name=?, age=?, gender=?, address=?, contact=?, medical_history=? WHERE id=?");
     $stmt->bind_param("sissssi", $name, $age, $gender, $address, $contact, $medical_history, $patient_id);
 
     // Execute the statement
