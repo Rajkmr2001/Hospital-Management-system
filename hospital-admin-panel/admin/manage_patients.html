@@ -4,197 +4,267 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Patients - Hospital Admin Panel</title>
-    <link rel="stylesheet" href="css/style.css">
     <script src="js/main.js" defer></script>
     <style>
-                /* Modern Manage Patients Styles */
-        
-        /* Container */
+        body {
+            font-family: 'Inter', 'Arial', sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
         .container {
-          max-width: 1100px;
-          margin: 36px auto;
-          background: #fff;
-          border-radius: 16px;
-          box-shadow: 0 4px 24px rgba(16,185,129,0.07);
-          padding: 40px 32px;
+            max-width: 1100px;
+            margin: 36px auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(16,185,129,0.10);
+            padding: 40px 20px;
         }
-        
-        /* Title */
-        .container h1 {
-          color: #10b981;
-          font-size: 2rem;
-          margin-bottom: 28px;
-          font-family: 'Pacifico', cursive, sans-serif;
-          letter-spacing: 1px;
+        h1 {
+            color: #10b981;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 28px;
+            letter-spacing: 1px;
         }
-        
-        /* Add Patient Button */
         #addPatientBtn {
-          background: linear-gradient(90deg, #10b981 0%, #6ed3cf 100%);
-          color: #fff;
-          font-weight: 600;
-          font-size: 1.08rem;
-          padding: 12px 28px;
-          border: none;
-          border-radius: 8px;
-          cursor: pointer;
-          margin-bottom: 24px;
-          box-shadow: 0 2px 8px rgba(16,185,129,0.08);
-          transition: background 0.2s;
+            background: linear-gradient(90deg, #10b981 0%, #6ed3cf 100%);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 12px 32px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(16,185,129,0.10);
+            transition: background 0.2s, transform 0.2s;
         }
-        
         #addPatientBtn:hover {
-          background: #10b981;
+            background: #10b981;
+            transform: translateY(-2px) scale(1.03);
         }
-        
-        /* Patients Table */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
         #patientsTable {
-          width: 100%;
-          border-collapse: collapse;
-          background: #f9fafb;
-          border-radius: 12px;
-          overflow: hidden;
-          margin-bottom: 32px;
+            width: 100%;
+            border-collapse: collapse;
+            background: #f9fafb;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 32px;
+            min-width: 600px;
         }
-        
         #patientsTable th, #patientsTable td {
-          padding: 16px 12px;
-          text-align: left;
-          font-size: 1.08rem;
+            padding: 16px 12px;
+            text-align: left;
+            font-size: 1.08rem;
+            font-weight: 600;
         }
-        
         #patientsTable th {
-          background: #10b981;
-          color: #fff;
-          font-weight: 600;
-          border-bottom: 2px solid #e3f2fd;
+            background: #10b981;
+            color: #fff;
+            font-weight: 700;
+            border-bottom: 2px solid #e3f2fd;
         }
-        
         #patientsTable tbody tr:nth-child(even) {
-          background: #e3f2fd;
+            background: #e3f2fd;
         }
-        
         #patientsTable tbody tr:hover {
-          background: #d1fae5;
+            background: #d1fae5;
+            transition: background 0.2s;
         }
-        
         #patientsTable td {
-          color: #222;
-          border-bottom: 1px solid #e3f2fd;
+            color: #222;
+            border-bottom: 1px solid #e3f2fd;
+            font-weight: 500;
         }
-        
-        /* Actions Button */
         .actionBtn {
-          background: linear-gradient(90deg, #1976d2 0%, #10b981 100%);
-          color: #fff;
-          border: none;
-          border-radius: 6px;
-          padding: 7px 16px;
-          font-size: 1rem;
-          font-weight: 500;
-          cursor: pointer;
-          box-shadow: 0 2px 8px rgba(16,185,129,0.08);
-          transition: background 0.2s;
-          margin-right: 6px;
+            background: #10b981;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 7px 18px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-right: 8px;
+            box-shadow: 0 2px 8px rgba(16,185,129,0.10);
+            transition: background 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
-        
+        .actionBtn.edit {
+            background: #1976d2;
+        }
+        .actionBtn.delete {
+            background: #ef4444;
+        }
         .actionBtn:hover {
-          background: #1976d2;
+            filter: brightness(1.1);
+            transform: scale(1.05);
         }
-        
-        /* Modal Styles */
         .modal {
-          display: none;
-          position: fixed;
-          z-index: 1000;
-          left: 0; top: 0;
-          width: 100vw; height: 100vh;
-          overflow: auto;
-          background: rgba(16,185,129,0.10);
-          justify-content: center;
-          align-items: center;
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            overflow: auto;
+            background: rgba(16,185,129,0.10);
+            justify-content: center;
+            align-items: center;
         }
-        
         .modal-content {
-          background: #fff;
-          margin: 60px auto;
-          padding: 32px 28px;
-          border-radius: 14px;
-          max-width: 400px;
-          box-shadow: 0 4px 24px rgba(16,185,129,0.15);
-          position: relative;
+            background: #fff;
+            margin: 60px auto;
+            padding: 20px 24px;
+            border-radius: 16px;
+            max-width: 370px;
+            min-width: 220px;
+            width: auto;
+            box-shadow: 0 4px 24px rgba(16,185,129,0.15);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        
-        .close {
-          position: absolute;
-          top: 18px;
-          right: 22px;
-          font-size: 2rem;
-          color: #10b981;
-          cursor: pointer;
-          font-weight: bold;
+        #patientForm {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        
-        #patientForm label {
-          display: block;
-          font-weight: 500;
-          color: #1976d2;
-          margin-bottom: 7px;
-          font-size: 1.08rem;
-        }
-        
         #patientForm input[type="text"],
         #patientForm input[type="number"],
-        #patientForm select {
-          width: 100%;
-          padding: 12px 14px;
-          border: 1.5px solid #bbdefb;
-          border-radius: 8px;
-          font-size: 1.08rem;
-          background: #f3f4f6;
-          color: #222;
-          margin-bottom: 18px;
-          transition: border-color 0.2s;
+        #patientForm select,
+        #patientForm textarea {
+            width: 100%;
+            max-width: 300px;
+            min-width: 100px;
+            box-sizing: border-box;
         }
-        
+        .close {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            font-size: 2rem;
+            color: #10b981;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #patientForm label {
+            display: block;
+            font-weight: 700;
+            color: #1976d2;
+            margin-bottom: 7px;
+            font-size: 1.08rem;
+        }
         #patientForm input:focus,
         #patientForm select:focus {
-          border-color: #10b981;
-          outline: none;
+            border-color: #10b981;
+            outline: none;
         }
-        
         #submitBtn {
-          width: 100%;
-          background: linear-gradient(90deg, #10b981 0%, #6ed3cf 100%);
-          color: #fff;
-          font-weight: 600;
-          font-size: 1.12rem;
-          padding: 12px 0;
-          border: none;
-          border-radius: 8px;
-          cursor: pointer;
-          margin-top: 10px;
-          box-shadow: 0 2px 8px rgba(16,185,129,0.08);
-          transition: background 0.2s;
+            background: linear-gradient(90deg, #10b981 0%, #6ed3cf 100%);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.12rem;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(16,185,129,0.10);
+            transition: background 0.2s, transform 0.2s;
         }
-        
         #submitBtn:hover {
-          background: #10b981;
+            background: #10b981;
+            transform: scale(1.03);
         }
-        
-        /* Responsive */
-        @media (max-width: 700px) {
-          .container {
-            padding: 12px 2px;
-          }
-          #patientsTable th, #patientsTable td {
-            padding: 8px 4px;
-            font-size: 0.95rem;
-          }
-          .modal-content {
-            padding: 18px 6px;
-            max-width: 98vw;
-          }
+        #patientForm textarea {
+            width: 100%;
+            max-width: 300px;
+            min-width: 100px;
+            min-height: 40px;
+            padding: 8px 10px;
+            border: 1.5px solid #bbdefb;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #f3f4f6;
+            color: #222;
+            margin-bottom: 12px;
+            font-weight: 500;
+            transition: border-color 0.2s;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        #patientForm textarea, #patientForm input[type="text"], #patientForm input[type="number"], #patientForm select {
+            font-size: 1.08rem;
+            min-height: 40px;
+        }
+        #patientForm textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        #cancelBtn {
+            background: #ef4444;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        #cancelBtn:hover {
+            background: #d32f2f;
+            transform: scale(1.03);
+        }
+        @media (max-width: 900px) {
+            .container {
+                padding: 12px 2px;
+            }
+            #patientsTable th, #patientsTable td {
+                padding: 10px 6px;
+                font-size: 0.98rem;
+            }
+            .modal-content {
+                padding: 18px 6px;
+                max-width: 98vw;
+            }
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 6px 0;
+            }
+            h1 {
+                font-size: 1.3rem;
+            }
+            #addPatientBtn {
+                width: 100%;
+                font-size: 1rem;
+                padding: 10px 0;
+            }
+            .table-responsive {
+                min-width: 0;
+            }
+            #patientsTable {
+                min-width: 400px;
+                font-size: 0.95rem;
+            }
+            .modal-content {
+                padding: 10px 2px;
+            }
         }
     </style>
 </head>
@@ -202,30 +272,29 @@
     <div class="container">
         <h1>Manage Patients</h1>
         <button id="addPatientBtn">Add Patient</button>
-        
-        <table id="patientsTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Patient records will be populated here by JavaScript -->
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table id="patientsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="patientTableBody">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <!-- Add/Edit Patient Modal -->
     <div id="patientModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2 id="modalTitle">Add Patient</h2>
             <form id="patientForm">
-                <input type="hidden" id="patientId" name="patientId">
+                <input type="hidden" id="patientId" name="patient_id">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
                 <label for="age">Age:</label>
@@ -236,42 +305,28 @@
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
                 </select>
-                <button type="submit" id="submitBtn">Add Patient</button>
+                <label for="contact">Contact Number:</label>
+                <input type="text" id="contact" name="contact" required>
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" required></textarea>
+                <label for="medical_history">Medical History:</label>
+                <textarea id="medical_history" name="medical_history"></textarea>
+                <div class="form-actions">
+                    <button type="submit" id="submitBtn">Add Patient</button>
+                    <button type="button" id="cancelBtn">Cancel</button>
+                </div>
             </form>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            loadPatients();
-
-            document.getElementById('addPatientBtn').addEventListener('click', function() {
-                openModal('Add Patient');
-            });
-
-            document.getElementById('patientForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-                submitPatientForm();
-            });
-        });
-
-        function loadPatients() {
-            // AJAX call to get_patients.php to load patient data
-        }
-
-        function openModal(title) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('patientModal').style.display = 'block';
-        }
-
-        function closeModal() {
-            document.getElementById('patientModal').style.display = 'none';
-            document.getElementById('patientForm').reset();
-        }
-
-        function submitPatientForm() {
-            // AJAX call to add_patient.php or update_patient.php based on the form state
-        }
-    </script>
 </body>
 </html>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var cancelBtn = document.getElementById('cancelBtn');
+    if (cancelBtn) {
+        cancelBtn.onclick = function() {
+            if (typeof closeModal === 'function') closeModal();
+        };
+    }
+});
+</script>

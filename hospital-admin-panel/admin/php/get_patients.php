@@ -3,7 +3,7 @@ include '../../db/config.php';
 
 header('Content-Type: application/json');
 
-$sql = "SELECT * FROM patients";
+$sql = "SELECT * FROM patient_data";
 $result = $conn->query($sql);
 
 $patients = array();

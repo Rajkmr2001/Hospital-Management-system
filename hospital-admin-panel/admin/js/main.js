@@ -1,30 +1,29 @@
 // This file contains JavaScript functions for handling user interactions in the admin panel.
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Load patients if on manage_patients.html
-    if (document.getElementById('patientTableBody')) {
-        loadPatients();
+    loadPatients();
 
-        document.getElementById('addPatientForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            addPatient();
-        });
+    document.getElementById('addPatientBtn').addEventListener('click', function() {
+        openModal('Add Patient');
+    });
 
-        document.getElementById('updatePatientForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            updatePatient();
-        });
-    }
+    document.querySelector('.close').addEventListener('click', closeModal);
 
-    // Load feedback if on manage_feedback.html
-    if (document.getElementById('feedbackTable')) {
-        loadFeedback();
-    }
+    window.onclick = function(event) {
+        var modal = document.getElementById('patientModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    };
 
-    // Additional dashboard JS can be added here if needed
+    document.getElementById('patientForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        submitPatientForm();
+    });
+
+    document.getElementById('cancelBtn').onclick = closeModal;
 });
 
-// Patient management functions
 function loadPatients() {
     fetch('php/get_patients.php')
         .then(response => response.json())
@@ -38,10 +37,9 @@ function loadPatients() {
                     <td>${patient.name}</td>
                     <td>${patient.age}</td>
                     <td>${patient.gender}</td>
-                    <td>${patient.contact}</td>
                     <td>
-                        <button onclick="editPatient(${patient.id})">Edit</button>
-                        <button onclick="deletePatient(${patient.id})">Delete</button>
+                        <button class="actionBtn edit" onclick="editPatient(${patient.id})">Edit</button>
+                        <button class="actionBtn delete" onclick="deletePatient(${patient.id})">Delete</button>
                     </td>
                 `;
                 patientTableBody.appendChild(row);
@@ -50,115 +48,75 @@ function loadPatients() {
         .catch(error => console.error('Error loading patients:', error));
 }
 
-function addPatient() {
-    const formData = new FormData(document.getElementById('addPatientForm'));
-    fetch('php/add_patient.php', {
-        method: 'POST',
+function openModal(title) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('patientModal').style.display = 'flex';
+    document.getElementById('patientForm').reset();
+    document.getElementById('patientId').value = '';
+    document.getElementById('submitBtn').innerText = title.includes('Edit') ? 'Update Patient' : 'Add Patient';
+}
+
+function closeModal() {
+    document.getElementById('patientModal').style.display = 'none';
+    document.getElementById('patientForm').reset();
+}
+
+function submitPatientForm() {
+    const id = document.getElementById('patientId').value;
+    const formData = new FormData(document.getElementById('patientForm'));
+    let url = 'php/add_patient.php';
+    let method = 'POST';
+    if (id) {
+        url = 'php/update_patient.php';
+        formData.append('patient_id', id); // for update
+    }
+    fetch(url, {
+        method: method,
         body: formData
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             loadPatients();
-            document.getElementById('addPatientForm').reset();
+            closeModal();
         } else {
-            alert('Error adding patient: ' + data.message);
+            alert('Error: ' + (data.message || 'Unknown error'));
         }
     })
-    .catch(error => console.error('Error adding patient:', error));
+    .catch(error => console.error('Error submitting form:', error));
 }
 
-function editPatient(id) {
+window.editPatient = function(id) {
     fetch(`php/get_patient.php?id=${id}`)
         .then(response => response.json())
         .then(patient => {
-            document.getElementById('updatePatientId').value = patient.id;
-            document.getElementById('updatePatientName').value = patient.name;
-            document.getElementById('updatePatientAge').value = patient.age;
-            document.getElementById('updatePatientGender').value = patient.gender;
-            document.getElementById('updatePatientContact').value = patient.contact;
+            openModal('Edit Patient');
+            document.getElementById('patientId').value = patient.id;
+            document.getElementById('name').value = patient.name;
+            document.getElementById('age').value = patient.age;
+            document.getElementById('gender').value = patient.gender;
+            document.getElementById('contact').value = patient.contact;
+            document.getElementById('address').value = patient.address;
+            document.getElementById('medical_history').value = patient.medical_history;
         })
         .catch(error => console.error('Error fetching patient:', error));
-}
+};
 
-function updatePatient() {
-    const formData = new FormData(document.getElementById('updatePatientForm'));
-    fetch('php/update_patient.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            loadPatients();
-            document.getElementById('updatePatientForm').reset();
-        } else {
-            alert('Error updating patient: ' + data.message);
-        }
-    })
-    .catch(error => console.error('Error updating patient:', error));
-}
-
-function deletePatient(id) {
+window.deletePatient = function(id) {
     if (confirm('Are you sure you want to delete this patient?')) {
-        fetch(`php/delete_patient.php?id=${id}`, {
-            method: 'DELETE'
+        fetch('php/delete_patient.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `patient_id=${encodeURIComponent(id)}`
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 loadPatients();
             } else {
-                alert('Error deleting patient: ' + data.message);
+                alert('Error deleting patient: ' + (data.message || 'Unknown error'));
             }
         })
         .catch(error => console.error('Error deleting patient:', error));
     }
-}
-
-// Feedback management functions
-function loadFeedback() {
-    fetch('php/get_feedback.php')
-        .then(response => response.json())
-        .then(feedbacks => {
-            const tbody = document.querySelector('#feedbackTable tbody');
-            tbody.innerHTML = '';
-            feedbacks.forEach(fb => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${fb.id}</td>
-                    <td>${fb.number}</td>
-                    <td>${fb.name}</td>
-                    <td>${fb.comment}</td>
-                    <td>${fb.likes}</td>
-                    <td>
-                        <button data-id="${fb.id}" class="deleteBtn" onclick="deleteFeedback(${fb.id})">
-                            <i class="ri-delete-bin-6-line" style="vertical-align:middle; margin-right:6px;"></i>Delete
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        })
-        .catch(error => console.error('Error loading feedback:', error));
-}
-
-function deleteFeedback(id) {
-    if (confirm('Are you sure you want to delete this feedback?')) {
-        fetch('php/delete_feedback.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `id=${id}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Feedback deleted successfully');
-                loadFeedback();
-            } else {
-                alert('Failed to delete feedback');
-            }
-        })
-        .catch(error => console.error('Error deleting feedback:', error));
-    }
-}
+};

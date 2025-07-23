@@ -37,10 +37,25 @@
             background: #fff;
             border-radius: 18px;
         }
+        .like-btn {
+            background: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+        .like-btn .ri-heart-3-fill {
+            font-size: 1.3em;
+            transition: color 0.2s;
+        }
+        .like-btn.liked .ri-heart-3-fill {
+            color: #ef4444;
+        }
+        .like-btn:not(.liked) .ri-heart-3-fill {
+            color: #bbb;
+        }
     </style>
 </head>
 <body>
-
     <!-- Feedback Section -->
     <section class="p-5 min-vh-100 d-flex align-items-center bg-light">
         <div class="container mt-5" style="max-width: 600px;">
@@ -54,7 +69,7 @@
                 <div class="card-body">
                     <h2 class="mb-4 text-success fw-bold" style="font-family: 'Pacifico', cursive;">Feedback</h2>
                     <div class="mb-3">
-                        <input type="text" id="numberInput" class="form-control mb-2" placeholder="Enter your registerd mobile number" oninput="fetchName()">
+                        <input type="text" id="numberInput" class="form-control mb-2" placeholder="Enter your registered mobile number" oninput="fetchName()">
                         <input type="text" id="nameInput" class="form-control mb-2" placeholder="Your name automatically appear" readonly>
                         <textarea id="commentInput" class="form-control" placeholder="Write a comment..." disabled></textarea>
                         <button class="btn btn-success mt-2 w-100" onclick="addComment()" disabled>Add Comment</button>
@@ -65,23 +80,24 @@
             </div>
         </div>
     </section>
-
     <script>
-        // Function to fetch name from the database
+        let userNumber = '';
+        let userName = '';
+
+        // Fetch name from the database
         function fetchName() {
             let number = document.getElementById("numberInput").value;
             let nameField = document.getElementById("nameInput");
             let commentInput = document.getElementById("commentInput");
             let addButton = document.querySelector("button[onclick='addComment()']");
-
+            userNumber = number;
             if (number.trim() === "") {
                 nameField.value = "";
                 commentInput.disabled = true;
                 addButton.disabled = true;
+                userName = '';
                 return;
             }
-
-            // Fetch name from the database using AJAX
             $.ajax({
                 url: "fetch_name.php",
                 method: "POST",
@@ -91,155 +107,100 @@
                         nameField.value = "First register before commenting!";
                         commentInput.disabled = true;
                         addButton.disabled = true;
+                        userName = '';
                     } else {
                         nameField.value = response;
                         commentInput.disabled = false;
                         addButton.disabled = false;
+                        userName = response;
                     }
                 }
             });
         }
 
-        // Function to add a comment
+        // Add feedback to backend
         function addComment() {
             let number = document.getElementById("numberInput").value;
             let name = document.getElementById("nameInput").value;
             let comment = document.getElementById("commentInput").value;
-
             if (number.trim() === "" || name === "First register before commenting!" || comment.trim() === "") {
                 alert("Please enter valid details.");
                 return;
             }
-
-            let commentData = {
-                number: number,
-                name: name,
-                comment: comment,
-                likes: 0 // Add likes property
-            };
-
-            // Retrieve existing comments from localStorage
-            let comments = JSON.parse(localStorage.getItem("comments")) || [];
-
-            // Add new comment to the beginning
-            comments.unshift(commentData);
-
-            // Save updated comments back to localStorage
-            localStorage.setItem("comments", JSON.stringify(comments));
-
-            // Display comments again
-            displayComments();
-
-            // Clear input field
-            document.getElementById("commentInput").value = "";
-        }
-
-        // Function to handle heart (like/dislike) click
-        function toggleLike(index) {
-            let number = document.getElementById("numberInput").value;
-            let name = document.getElementById("nameInput").value;
-            if (!number.trim() || name === "First register before commenting!") {
-                alert("First register before you can like or dislike.");
-                return;
-            }
-
-            let comments = JSON.parse(localStorage.getItem("comments")) || [];
-
-            // Initialize likes array if not present
-            if (!Array.isArray(comments[index].likedBy)) {
-                comments[index].likedBy = [];
-            }
-
-            const userIdx = comments[index].likedBy.indexOf(number);
-
-            if (userIdx !== -1) {
-                // User already liked, so remove like
-                comments[index].likedBy.splice(userIdx, 1);
-            } else {
-                // User not liked yet, so add like
-                comments[index].likedBy.push(number);
-            }
-
-            localStorage.setItem("comments", JSON.stringify(comments));
-            displayComments();
-        }
-
-        // Function to display comments from localStorage
-        function displayComments() {
-            let commentSection = document.getElementById("commentSection");
-            commentSection.innerHTML = "";
-
-            let comments = JSON.parse(localStorage.getItem("comments")) || [];
-            let number = document.getElementById("numberInput").value;
-
-            comments.forEach((commentData, idx) => {
-                // Initialize likedBy array if not present
-                if (!Array.isArray(commentData.likedBy)) {
-                    commentData.likedBy = [];
+            $.ajax({
+                url: "php/submit_feedback.php",
+                method: "POST",
+                data: { number: number, name: name, comment: comment },
+                dataType: "json",
+                success: function(response) {
+                    if (response.success) {
+                        alert("Feedback submitted successfully!");
+                        document.getElementById("commentInput").value = "";
+                        loadFeedback();
+                    } else {
+                        alert("Error: " + (response.message || "Unknown error"));
+                    }
                 }
-                let liked = commentData.likedBy.includes(number);
-                let heartColor = liked ? "text-danger" : "text-white";
-                let likeCount = commentData.likedBy.length;
-                let commentBox = document.createElement("div");
-                commentBox.className = "comment-box";
-                commentBox.innerHTML = `
-                    <strong>${commentData.name} :</strong> ${commentData.comment}
-                    <div class="mt-2">
-                        <button class="btn btn-sm" onclick="toggleLike(${idx})" style="background:transparent;">
-                            <i class="ri-heart-3-fill ${heartColor}" style="font-size:1.3em;"></i>
-                        </button>
-                        <span class="ms-1">${likeCount} like</span>
-                    </div>
-                `;
-                commentSection.appendChild(commentBox);
             });
         }
 
-        // Load comments on page load
-        document.addEventListener("DOMContentLoaded", displayComments);
-        
-    // searchbar started ......
-    
-  function highlightAndScroll(query) {
-    // Remove previous highlights
-    document.querySelectorAll('.search-highlight').forEach(el => {
-      el.outerHTML = el.innerText;
-    });
-
-    if (!query) return;
-
-    // Find all text nodes and highlight matches
-    function walk(node) {
-      if (node.nodeType === 3) { // Text node
-        const idx = node.nodeValue.toLowerCase().indexOf(query.toLowerCase());
-        if (idx !== -1) {
-          const span = document.createElement('span');
-          span.className = 'search-highlight bg-yellow-200 text-black rounded px-1';
-          const matchedText = node.splitText(idx);
-          const afterMatch = matchedText.splitText(query.length);
-          span.textContent = matchedText.nodeValue;
-          matchedText.parentNode.replaceChild(span, matchedText);
-          // Scroll to first match
-          span.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          return true; // Stop after first match
+        // Like feedback
+        function likeFeedback(feedbackId) {
+            if (!userNumber || !userName) {
+                alert("You must be registered and enter your number to like feedback.");
+                return;
+            }
+            $.ajax({
+                url: "php/like_feedback.php",
+                method: "POST",
+                data: { id: feedbackId, number: userNumber },
+                dataType: "json",
+                success: function(response) {
+                    if (response.success) {
+                        loadFeedback();
+                    } else {
+                        alert("Error: " + (response.message || "Unknown error"));
+                    }
+                }
+            });
         }
-      } else if (node.nodeType === 1 && node.childNodes && !['SCRIPT','STYLE'].includes(node.tagName)) {
-        for (let i = 0; i < node.childNodes.length; i++) {
-          if (walk(node.childNodes[i])) return true;
-        }
-      }
-      return false;
-    }
-    walk(document.body);
-  }
 
-  // Attach to all search bars
-document.querySelectorAll('input[placeholder="Search..."]').forEach(function(input) {
-  input.addEventListener('input', function() {
-    highlightAndScroll(input.value.trim());
-  });
-});
+        // Load and display all feedback from backend
+        function loadFeedback() {
+            $.ajax({
+                url: "php/get_feedback.php",
+                method: "GET",
+                dataType: "json",
+                success: function(feedbacks) {
+                    let commentSection = document.getElementById("commentSection");
+                    commentSection.innerHTML = "";
+                    if (!feedbacks.length) {
+                        commentSection.innerHTML = '<div class="text-center text-muted">No feedback found.</div>';
+                        return;
+                    }
+                    feedbacks.forEach(fb => {
+                        let liked = Array.isArray(fb.liked_by) && fb.liked_by.includes(userNumber);
+                        let heartClass = liked ? "like-btn liked" : "like-btn";
+                        let likeCount = fb.likes || 0;
+                        let commentBox = document.createElement("div");
+                        commentBox.className = "comment-box";
+                        commentBox.innerHTML = `
+                            <strong>${fb.name} :</strong> ${fb.comment}
+                            <div class="mt-2">
+                                <button class="${heartClass}" onclick="likeFeedback(${fb.id})">
+                                    <i class="ri-heart-3-fill"></i>
+                                </button>
+                                <span class="ms-1">${likeCount} like</span>
+                            </div>
+                        `;
+                        commentSection.appendChild(commentBox);
+                    });
+                }
+            });
+        }
+
+        // Initial load
+        document.addEventListener("DOMContentLoaded", loadFeedback);
     </script>
-
 </body>
 </html>

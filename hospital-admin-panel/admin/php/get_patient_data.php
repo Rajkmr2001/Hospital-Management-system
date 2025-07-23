@@ -1,6 +1,6 @@
 <?php
 // get_patient_data.php
-include '../../db/config.php';
+include '../db/config.php';
 session_start();
 
 if (!isset($_SESSION['admin_id'])) {

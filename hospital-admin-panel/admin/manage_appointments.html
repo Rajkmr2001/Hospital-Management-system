@@ -1,168 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Manage Appointments - Admin Panel</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="styledb.css" />
-    <script src="js/main.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Appointments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <style>
-        .table-container {
-            margin: 32px 0;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 4px 24px rgba(16,185,129,0.07);
-            padding: 24px;
-            overflow-x: auto;
+        :root {
+            --primary: #10b981;
+            --secondary: #f3f4f6;
+            --sidebar-width: 220px;
         }
-        #appointmentsTable {
-            width: 100%;
-            border-collapse: collapse;
-            background: #f9fafb;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        #appointmentsTable th, #appointmentsTable td {
-            padding: 16px 12px;
-            text-align: left;
-            font-size: 1.08rem;
-        }
-        #appointmentsTable th {
-            background: #10b981;
-            color: #fff;
-            font-weight: 600;
-            border-bottom: 2px solid #e3f2fd;
-        }
-        #appointmentsTable tr {
-            transition: background 0.2s;
-        }
-        #appointmentsTable tbody tr:nth-child(even) {
-            background: #e3f2fd;
-        }
-        #appointmentsTable tbody tr:hover {
-            background: #d1fae5;
-        }
-        #appointmentsTable td {
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--secondary);
+            margin: 0;
             color: #222;
-            border-bottom: 1px solid #e3f2fd;
         }
-        .deleteBtn {
-            background: linear-gradient(90deg, #ef4444 0%, #f59e42 100%);
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: var(--sidebar-width);
+            background: #fff;
+            box-shadow: 2px 0 12px rgba(16,185,129,0.07);
+            display: flex;
+            flex-direction: column;
+            padding: 32px 0 0 0;
+            position: relative;
+        }
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding: 0 24px;
+        }
+        .sidebar nav a {
+            text-decoration: none;
+            color: #222;
+            font-weight: 600;
+            font-size: 1.08rem;
+            padding: 12px 18px;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sidebar nav a.active, .sidebar nav a:hover {
+            background: var(--primary);
             color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 8px 18px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(239,68,68,0.08);
-            transition: background 0.2s;
         }
-        .deleteBtn:hover {
+        .sidebar .logout {
+            margin-top: auto;
+            padding: 24px;
+        }
+        .sidebar .logout a {
+            color: #ef4444;
+            background: #fff0f0;
+            border-radius: 8px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+        .sidebar .logout a:hover {
             background: #ef4444;
+            color: #fff;
         }
-        @media (max-width: 700px) {
-            .table-container {
-                padding: 8px 2px;
+        .main-content {
+            flex: 1;
+            padding: 0 32px 32px 32px;
+            display: flex;
+            flex-direction: column;
+        }
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 32px 0 18px 0;
+        }
+        .topbar .title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #222;
+        }
+        .placeholder {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(16,185,129,0.07);
+            padding: 48px 32px;
+            margin-top: 48px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #888;
+        }
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
             }
-            #appointmentsTable th, #appointmentsTable td {
-                padding: 8px 4px;
-                font-size: 0.95rem;
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 16px 0;
+                box-shadow: 0 2px 12px rgba(16,185,129,0.07);
+            }
+            .sidebar nav {
+                flex-direction: row;
+                gap: 10px;
+                padding: 0 8px;
+            }
+            .sidebar .logo {
+                margin-bottom: 0;
+            }
+            .sidebar .logout {
+                margin-top: 0;
+                padding: 0 8px;
+            }
+            .main-content {
+                padding: 0 8px 24px 8px;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-content {
+                padding: 0 2vw 16px 2vw;
+            }
+            .placeholder {
+                padding: 24px 4px;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Manage Appointments</h1>
-        <nav>
-            <ul>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="manage_patients.html">Manage Patients</a></li>
-                <li><a href="manage_feedback.html">Manage Feedback</a></li>
-                <li><a href="manage_appointments.html" class="active">Manage Appointments</a></li>
-                <li><a href="messages.php">Messages</a></li>
-                <li><a href="php/logout.php">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2 class="section-title" style="color:#10b981; font-size:1.5rem; margin-bottom:18px;">Appointments List</h2>
-            <div class="table-container">
-                <table id="appointmentsTable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Patient Name</th>
-                            <th>Contact</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Appointment entries will be populated here -->
-                    </tbody>
-                </table>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo"><i class="ri-hospital-line"></i> Admin Panel</div>
+            <nav>
+                <a href="dashboard.html"><i class="ri-dashboard-line"></i> Dashboard</a>
+                <a href="manage_patients.html"><i class="ri-user-3-line"></i> Manage Patients</a>
+                <a href="manage_appointments.html" class="active"><i class="ri-calendar-check-line"></i> Appointments</a>
+                <a href="manage_feedback.html"><i class="ri-message-3-line"></i> Feedback</a>
+                <a href="manage_messages.html"><i class="ri-mail-line"></i> Messages</a>
+            </nav>
+            <div class="logout">
+                <a href="#"><i class="ri-logout-box-r-line"></i> Logout</a>
             </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Maa Kalawati Hospital. All rights reserved.</p>
-    </footer>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            loadAppointments();
-
-            async function loadAppointments() {
-                try {
-                    const response = await fetch('php/get_appointments.php');
-                    if (!response.ok) throw new Error('Failed to fetch appointments');
-                    const appointments = await response.json();
-                    const tbody = document.querySelector('#appointmentsTable tbody');
-                    tbody.innerHTML = '';
-                    appointments.forEach(app => {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${app.id}</td>
-                            <td>${app.patient_name || ''}</td>
-                            <td>${app.contact || ''}</td>
-                            <td>${app.date || ''}</td>
-                            <td>${app.time || ''}</td>
-                            <td>
-                                <button data-id="${app.id}" class="deleteBtn">
-                                    <i class="ri-delete-bin-6-line" style="vertical-align:middle; margin-right:6px;"></i>Delete
-                                </button>
-                            </td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
-                    document.querySelectorAll('.deleteBtn').forEach(btn => {
-                        btn.addEventListener('click', async (e) => {
-                            const id = e.target.closest('button').getAttribute('data-id');
-                            if (confirm('Are you sure you want to delete this appointment?')) {
-                                const delResponse = await fetch('php/delete_appointment.php', {
-                                    method: 'POST',
-                                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                                    body: `id=${id}`
-                                });
-                                const delResult = await delResponse.json();
-                                if (delResult.success) {
-                                    alert('Appointment deleted successfully');
-                                    loadAppointments();
-                                } else {
-                                    alert('Failed to delete appointment');
-                                }
-                            }
-                        });
-                    });
-                } catch (error) {
-                    alert(error.message);
-                }
-            }
-        });
-    </script>
+        </aside>
+        <main class="main-content">
+            <div class="topbar">
+                <div class="title">Manage Appointments</div>
+            </div>
+            <div class="placeholder">
+                <i class="ri-calendar-check-line" style="font-size:2.5rem;color:#10b981;"></i>
+                <div>Appointments management coming soon.</div>
+            </div>
+        </main>
+    </div>
 </body>
 </html>

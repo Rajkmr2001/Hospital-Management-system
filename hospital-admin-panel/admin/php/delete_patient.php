@@ -11,14 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("i", $patient_id);
 
     if ($stmt->execute()) {
-        echo json_encode(["status" => "success", "message" => "Patient record deleted successfully."]);
+        echo json_encode(["success" => true, "message" => "Patient record deleted successfully."]);
     } else {
-        echo json_encode(["status" => "error", "message" => "Failed to delete patient record."]);
+        echo json_encode(["success" => false, "message" => "Failed to delete patient record."]);
     }
 
     $stmt->close();
 } else {
-    echo json_encode(["status" => "error", "message" => "Invalid request method."]);
+    echo json_encode(["success" => false, "message" => "Invalid request method."]);
 }
 
 $conn->close();
