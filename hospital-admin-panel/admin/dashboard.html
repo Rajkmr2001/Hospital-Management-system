@@ -144,6 +144,16 @@
             align-items: flex-start;
             gap: 10px;
             position: relative;
+            cursor: pointer;
+            transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s cubic-bezier(.4,2,.6,1);
+        }
+        .stats-card:hover, .stats-card:focus {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 8px 32px rgba(16,185,129,0.18);
+            background: #e6fcf4;
+        }
+        .stats-card:active {
+            transform: scale(0.98);
         }
         .stats-card .label {
             color: #888;
@@ -205,26 +215,51 @@
                 flex-direction: column;
             }
             .sidebar {
-                width: 100%;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                padding: 16px 0;
-                box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
+                width: 60px;
+                min-width: 60px;
+                padding: 0;
+                transition: width 0.3s;
             }
-            .sidebar nav {
-                flex-direction: row;
-                gap: 10px;
-                padding: 0 8px;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+            .sidebar.open {
+                width: 220px;
+                min-width: 220px;
+                background: #fff;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                z-index: 1000;
+                box-shadow: 2px 0 12px rgba(16,185,129,0.12);
+                display: flex;
+                flex-direction: column;
             }
             .sidebar .logo {
                 margin-bottom: 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 16px;
+            }
+            .sidebar nav {
+                display: none;
+            }
+            .sidebar.open nav {
+                display: flex;
+                flex-direction: column;
+                gap: 18px;
+                padding: 0 24px;
+                margin-top: 32px;
             }
             .sidebar .logout {
-                margin-top: 0;
-                padding: 0 8px;
+                display: none;
+            }
+            .sidebar.open .logout {
+                display: block;
+                margin-top: auto;
+                padding: 24px;
+            }
+            .hamburger {
+                display: block;
             }
             .main-content {
                 padding: 0 8px 24px 8px;
@@ -247,19 +282,19 @@
 </head>
 <body>
     <div class="dashboard-container">
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="logo">
                 <i class="ri-hospital-line"></i> Admin Panel
                 <span class="hamburger" id="hamburger">&#9776;</span>
             </div>
-            <nav>
+            <nav id="sidebarNav">
                 <a href="dashboard.html" class="active"><i class="ri-dashboard-line"></i> Dashboard</a>
                 <a href="manage_patients.html"><i class="ri-user-3-line"></i> Manage Patients</a>
                 <a href="user_visits.html"><i class="ri-bar-chart-line"></i> User Visited</a>
                 <a href="manage_feedback.html"><i class="ri-message-3-line"></i> Feedback</a>
                 <a href="manage_messages.html"><i class="ri-mail-line"></i> Messages</a>
             </nav>
-            <div class="logout">
+            <div class="logout" id="sidebarLogout">
                 <a href="login.html"><i class="ri-logout-box-r-line"></i> Logout</a>
             </div>
         </aside>
@@ -272,23 +307,23 @@
                 </div>
             </div>
             <div class="stats-cards">
-                <div class="stats-card">
+                <div class="stats-card card-link" data-link="manage_patients.html">
                     <div class="icon"><i class="ri-user-3-line"></i></div>
                     <div class="label">Total Patients</div>
                     <div class="value" id="total-patients">0</div>
                 </div>
-                <div class="stats-card">
+                <div class="stats-card card-link" data-link="user_visits.html">
                     <div class="icon"><i class="ri-bar-chart-line"></i></div>
                     <div class="label">User Visits</div>
                     <div class="value" id="user-visits">0</div>
-                    <a class="details-link" href="user_visits.html">View Details</a>
+                   
                 </div>
-                <div class="stats-card">
+                <div class="stats-card card-link" data-link="manage_feedback.html">
                     <div class="icon"><i class="ri-message-3-line"></i></div>
                     <div class="label">Feedback</div>
                     <div class="value" id="total-feedback">0</div>
                 </div>
-                <div class="stats-card">
+                <div class="stats-card card-link" data-link="manage_messages.html">
                     <div class="icon"><i class="ri-mail-line"></i></div>
                     <div class="label">Messages</div>
                     <div class="value" id="messages-count">0</div>
@@ -306,5 +341,16 @@
         </main>
     </div>
     <script src="js/main.js"></script>
+    <script>
+    // Card click navigation
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.card-link').forEach(function(card) {
+            card.addEventListener('click', function() {
+                const link = card.getAttribute('data-link');
+                if (link) window.location.href = link;
+            });
+        });
+    });
+    </script>
 </body>
 </html>

@@ -6,8 +6,7 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Assuming there is a table 'user_visits' that tracks visits
-$sql = "SELECT COUNT(*) AS total FROM user_visits";
+$sql = "SELECT COUNT(DISTINCT user_ip) AS total FROM user_visits";
 $result = $conn->query($sql);
 
 $total = 0;

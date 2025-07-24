@@ -136,6 +136,50 @@ window.deletePatient = function (id) {
 // Dashboard logic
 if (window.location.pathname.endsWith('dashboard.html')) {
     document.addEventListener('DOMContentLoaded', function () {
+        // Log user visit before fetching stats
+        fetch('php/log_user_visit.php', { method: 'POST' })
+            .finally(() => {
+                // Fetch total patients count
+                fetch('php/get_total_patients.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('total-patients').textContent = data.total || 0;
+                    })
+                    .catch(() => {
+                        document.getElementById('total-patients').textContent = 'N/A';
+                    });
+
+                // Fetch total feedback count
+                fetch('php/get_total_feedback.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('total-feedback').textContent = data.total || 0;
+                    })
+                    .catch(() => {
+                        document.getElementById('total-feedback').textContent = 'N/A';
+                    });
+
+                // Fetch total messages count
+                fetch('php/get_total_messages.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('messages-count').textContent = data.total || 0;
+                    })
+                    .catch(() => {
+                        document.getElementById('messages-count').textContent = 'N/A';
+                    });
+
+                // Fetch total user visits count
+                fetch('php/get_total_user_visits.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('user-visits').textContent = data.total || 0;
+                    })
+                    .catch(() => {
+                        document.getElementById('user-visits').textContent = 'N/A';
+                    });
+            });
+
         const hamburger = document.getElementById('hamburger');
         const nav = document.querySelector('.sidebar nav');
         if (hamburger && nav) {
@@ -144,44 +188,57 @@ if (window.location.pathname.endsWith('dashboard.html')) {
             });
         }
 
-        // Fetch total patients count
-        fetch('php/get_total_patients.php')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('total-patients').textContent = data.total || 0;
-            })
-            .catch(() => {
-                document.getElementById('total-patients').textContent = 'N/A';
-            });
+        // Hamburger menu and sidebar overlay logic for mobile
+        (function() {
+            const sidebar = document.getElementById('sidebar');
+            const hamburger = document.getElementById('hamburger');
+            const nav = document.getElementById('sidebarNav');
+            const logout = document.getElementById('sidebarLogout');
+            let sidebarOpen = false;
 
-        // Fetch total feedback count
-        fetch('php/get_total_feedback.php')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('total-feedback').textContent = data.total || 0;
-            })
-            .catch(() => {
-                document.getElementById('total-feedback').textContent = 'N/A';
+            function openSidebar() {
+                sidebar.classList.add('open');
+                sidebarOpen = true;
+                document.body.style.overflow = 'hidden';
+            }
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                sidebarOpen = false;
+                document.body.style.overflow = '';
+            }
+            if (hamburger) {
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (!sidebarOpen) openSidebar();
+                    else closeSidebar();
+                });
+            }
+            // Close sidebar when clicking outside
+            document.addEventListener('click', function(e) {
+                if (sidebarOpen && !sidebar.contains(e.target)) {
+                    closeSidebar();
+                }
             });
-
-        // Fetch total messages count
-        fetch('php/get_total_messages.php')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('messages-count').textContent = data.total || 0;
-            })
-            .catch(() => {
-                document.getElementById('messages-count').textContent = 'N/A';
+            // Close sidebar when clicking a nav link
+            if (nav) {
+                nav.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 900) closeSidebar();
+                    });
+                });
+            }
+            // Also close on logout click
+            if (logout) {
+                logout.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 900) closeSidebar();
+                    });
+                });
+            }
+            // Optional: close sidebar on resize to desktop
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 900) closeSidebar();
             });
-
-        // Fetch total user visits count
-        fetch('php/get_total_user_visits.php')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('user-visits').textContent = data.total || 0;
-            })
-            .catch(() => {
-                document.getElementById('user-visits').textContent = 'N/A';
-            });
+        })();
     });
 }
