@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>User Visits - Admin Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css">
@@ -33,13 +33,6 @@
             padding: 32px 0 0 0;
             position: relative;
             z-index: 2;
-        }
-        .hamburger {
-            display: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            padding: 0 24px;
-            user-select: none;
         }
         .sidebar .logo {
             font-size: 1.5rem;
@@ -110,40 +103,18 @@
             font-weight: 700;
             color: #222;
         }
-        .topbar .user {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .topbar .user-icon {
-            background: var(--primary);
-            color: #fff;
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-        }
-        .stats-cards {
-            display: flex;
-            gap: 24px;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-        }
         .stats-card {
             background: #fff;
             border-radius: 14px;
             box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
             padding: 28px 32px;
             min-width: 220px;
-            flex: 1 1 220px;
+            max-width: 350px;
+            margin: 40px auto 0 auto;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             gap: 10px;
-            position: relative;
         }
         .stats-card .label {
             color: #888;
@@ -159,46 +130,6 @@
             font-size: 2rem;
             color: #1976d2;
             margin-bottom: 8px;
-        }
-        .stats-card .details-link {
-            position: absolute;
-            right: 18px;
-            bottom: 18px;
-            font-size: 0.95rem;
-            color: #1976d2;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-        .quick-links {
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
-            padding: 24px 32px;
-            margin-bottom: 32px;
-        }
-        .quick-links h3 {
-            margin-top: 0;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #1976d2;
-        }
-        .quick-links .links {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-            margin-top: 12px;
-        }
-        .quick-links .links a {
-            background: var(--primary);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: background 0.2s;
-        }
-        .quick-links .links a:hover {
-            background: #1976d2;
         }
         @media (max-width: 900px) {
             .dashboard-container {
@@ -229,17 +160,12 @@
             .main-content {
                 padding: 0 8px 24px 8px;
             }
-            .stats-cards {
-                flex-direction: column;
-                gap: 16px;
-            }
         }
         @media (max-width: 600px) {
             .main-content {
                 padding: 0 2vw 16px 2vw;
             }
-            .stats-card,
-            .quick-links {
+            .stats-card {
                 padding: 16px 8px;
             }
         }
@@ -250,12 +176,11 @@
         <aside class="sidebar">
             <div class="logo">
                 <i class="ri-hospital-line"></i> Admin Panel
-                <span class="hamburger" id="hamburger">&#9776;</span>
             </div>
             <nav>
-                <a href="dashboard.html" class="active"><i class="ri-dashboard-line"></i> Dashboard</a>
+                <a href="dashboard.html"><i class="ri-dashboard-line"></i> Dashboard</a>
                 <a href="manage_patients.html"><i class="ri-user-3-line"></i> Manage Patients</a>
-                <a href="user_visits.html"><i class="ri-bar-chart-line"></i> User Visited</a>
+                <a href="user_visits.html" class="active"><i class="ri-bar-chart-line"></i> User Visited</a>
                 <a href="manage_feedback.html"><i class="ri-message-3-line"></i> Feedback</a>
                 <a href="manage_messages.html"><i class="ri-mail-line"></i> Messages</a>
             </nav>
@@ -265,46 +190,28 @@
         </aside>
         <main class="main-content">
             <div class="topbar">
-                <div class="welcome">Welcome, Admin!</div>
-                <div class="user">
-                    <div class="user-icon"><i class="ri-user-3-line"></i></div>
-                    <span>Admin</span>
-                </div>
+                <div class="welcome">User Visits</div>
             </div>
-            <div class="stats-cards">
-                <div class="stats-card">
-                    <div class="icon"><i class="ri-user-3-line"></i></div>
-                    <div class="label">Total Patients</div>
-                    <div class="value" id="total-patients">0</div>
-                </div>
-                <div class="stats-card">
-                    <div class="icon"><i class="ri-bar-chart-line"></i></div>
-                    <div class="label">User Visits</div>
-                    <div class="value" id="user-visits">0</div>
-                    <a class="details-link" href="user_visits.html">View Details</a>
-                </div>
-                <div class="stats-card">
-                    <div class="icon"><i class="ri-message-3-line"></i></div>
-                    <div class="label">Feedback</div>
-                    <div class="value" id="total-feedback">0</div>
-                </div>
-                <div class="stats-card">
-                    <div class="icon"><i class="ri-mail-line"></i></div>
-                    <div class="label">Messages</div>
-                    <div class="value" id="messages-count">0</div>
-                </div>
-            </div>
-            <div class="quick-links">
-                <h3>Quick Actions</h3>
-                <div class="links">
-                    <a href="manage_patients.html"><i class="ri-user-add-line"></i> Add Patient</a>
-                    <a href="user_visits.html"><i class="ri-bar-chart-line"></i> User Visits</a>
-                    <a href="manage_feedback.html"><i class="ri-message-2-line"></i> View Feedback</a>
-                    <a href="manage_messages.html"><i class="ri-mail-send-line"></i> View Messages</a>
-                </div>
+            <div class="stats-card">
+                <div class="icon"><i class="ri-bar-chart-line"></i></div>
+                <div class="label">Total User Visits</div>
+                <div class="value" id="user-visits">0</div>
+                <div style="margin-top:18px;color:#888;font-size:0.98rem;">More details coming soon...</div>
             </div>
         </main>
     </div>
-    <script src="js/main.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fetch total user visits count
+        fetch('php/get_total_user_visits.php')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('user-visits').textContent = data.total || 0;
+            })
+            .catch(() => {
+                document.getElementById('user-visits').textContent = 'N/A';
+            });
+    });
+    </script>
 </body>
-</html>
+</html> 

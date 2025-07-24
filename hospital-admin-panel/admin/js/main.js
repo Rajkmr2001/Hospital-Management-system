@@ -132,3 +132,56 @@ window.deletePatient = function (id) {
             .catch(error => console.error('Error deleting patient:', error));
     }
 };
+
+// Dashboard logic
+if (window.location.pathname.endsWith('dashboard.html')) {
+    document.addEventListener('DOMContentLoaded', function () {
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.querySelector('.sidebar nav');
+        if (hamburger && nav) {
+            hamburger.addEventListener('click', function () {
+                nav.classList.toggle('active');
+            });
+        }
+
+        // Fetch total patients count
+        fetch('php/get_total_patients.php')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('total-patients').textContent = data.total || 0;
+            })
+            .catch(() => {
+                document.getElementById('total-patients').textContent = 'N/A';
+            });
+
+        // Fetch total feedback count
+        fetch('php/get_total_feedback.php')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('total-feedback').textContent = data.total || 0;
+            })
+            .catch(() => {
+                document.getElementById('total-feedback').textContent = 'N/A';
+            });
+
+        // Fetch total messages count
+        fetch('php/get_total_messages.php')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('messages-count').textContent = data.total || 0;
+            })
+            .catch(() => {
+                document.getElementById('messages-count').textContent = 'N/A';
+            });
+
+        // Fetch total user visits count
+        fetch('php/get_total_user_visits.php')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('user-visits').textContent = data.total || 0;
+            })
+            .catch(() => {
+                document.getElementById('user-visits').textContent = 'N/A';
+            });
+    });
+}
