@@ -269,7 +269,7 @@
                 <div class="stats-card">
                     <div class="icon"><i class="ri-bar-chart-line"></i></div>
                     <div class="label">User Visits</div>
-                    <div class="value" id="user-visits">N/A</div>
+                    <div class="value" id="user-visits">0</div>
                 </div>
                 <div class="stats-card">
                     <div class="icon"><i class="ri-message-3-line"></i></div>
@@ -338,8 +338,17 @@
                     document.getElementById('messages-count').textContent = 'N/A';
                 });
 
-            // Placeholder for user visits count - user to implement further
-            document.getElementById('user-visits').textContent = 'N/A';
+            // Fetch total user visits count
+            fetch('/hospital_backend/hospital-admin-panel/admin/php/get_total_user_visits.php')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Total user visits data:', data);
+                    document.getElementById('user-visits').textContent = data.total || 0;
+                })
+                .catch((error) => {
+                    console.error('Error fetching total user visits:', error);
+                    document.getElementById('user-visits').textContent = 'N/A';
+                });
         });
     </script>
 </body>
