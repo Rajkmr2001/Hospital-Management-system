@@ -32,6 +32,13 @@
             padding: 32px 0 0 0;
             position: relative;
         }
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0 24px;
+            user-select: none;
+        }
         .sidebar .logo {
             font-size: 1.5rem;
             font-weight: 700;
@@ -57,6 +64,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            white-space: nowrap;
         }
         .sidebar nav a.active,
         .sidebar nav a:hover {
@@ -196,6 +204,8 @@
                 flex-direction: row;
                 gap: 10px;
                 padding: 0 8px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
             }
             .sidebar .logo {
                 margin-bottom: 0;
@@ -221,13 +231,16 @@
                 padding: 16px 8px;
             }
         }
-    </style>
+        </style>
 </head>
 
 <body>
     <div class="dashboard-container">
         <aside class="sidebar">
-            <div class="logo"><i class="ri-hospital-line"></i> Admin Panel</div>
+            <div class="logo">
+                <i class="ri-hospital-line"></i> Admin Panel
+                <span class="hamburger" id="hamburger">&#9776;</span>
+            </div>
             <nav>
                 <a href="dashboard.html" class="active"><i class="ri-dashboard-line"></i> Dashboard</a>
                 <a href="manage_patients.html"><i class="ri-user-3-line"></i> Manage Patients</a>
@@ -281,34 +294,47 @@
         </main>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            const hamburger = document.getElementById('hamburger');
+            const nav = document.querySelector('.sidebar nav');
+
+            hamburger.addEventListener('click', function () {
+                nav.classList.toggle('active');
+            });
+
             // Fetch total patients count
-            fetch('php/get_total_patients.php')
+            fetch('/hospital-admin-panel/admin/php/get_total_patients.php')
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Total patients data:', data);
                     document.getElementById('total-patients').textContent = data.total || 0;
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error('Error fetching total patients:', error);
                     document.getElementById('total-patients').textContent = 'N/A';
                 });
 
             // Fetch total feedback count
-            fetch('php/get_total_feedback.php')
+            fetch('/hospital-admin-panel/admin/php/get_total_feedback.php')
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Total feedback data:', data);
                     document.getElementById('total-feedback').textContent = data.total || 0;
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error('Error fetching total feedback:', error);
                     document.getElementById('total-feedback').textContent = 'N/A';
                 });
 
             // Fetch total messages count
-            fetch('php/get_total_messages.php')
+            fetch('/hospital-admin-panel/admin/php/get_total_messages.php')
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Total messages data:', data);
                     document.getElementById('messages-count').textContent = data.total || 0;
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error('Error fetching total messages:', error);
                     document.getElementById('messages-count').textContent = 'N/A';
                 });
 
