@@ -13,19 +13,16 @@
             --secondary: #f3f4f6;
             --sidebar-width: 220px;
         }
-
         body {
             font-family: 'Inter', Arial, sans-serif;
             background: var(--secondary);
             margin: 0;
             color: #222;
         }
-
         .dashboard-container {
             display: flex;
             min-height: 100vh;
         }
-
         .sidebar {
             width: var(--sidebar-width);
             background: #fff;
@@ -35,7 +32,6 @@
             padding: 32px 0 0 0;
             position: relative;
         }
-
         .sidebar .logo {
             font-size: 1.5rem;
             font-weight: 700;
@@ -44,14 +40,12 @@
             margin-bottom: 40px;
             letter-spacing: 1px;
         }
-
         .sidebar nav {
             display: flex;
             flex-direction: column;
             gap: 18px;
             padding: 0 24px;
         }
-
         .sidebar nav a {
             text-decoration: none;
             color: #222;
@@ -64,18 +58,15 @@
             align-items: center;
             gap: 10px;
         }
-
         .sidebar nav a.active,
         .sidebar nav a:hover {
             background: var(--primary);
             color: #fff;
         }
-
         .sidebar .logout {
             margin-top: auto;
             padding: 24px;
         }
-
         .sidebar .logout a {
             color: #ef4444;
             background: #fff0f0;
@@ -88,38 +79,32 @@
             text-decoration: none;
             transition: background 0.2s, color 0.2s;
         }
-
         .sidebar .logout a:hover {
             background: #ef4444;
             color: #fff;
         }
-
         .main-content {
             flex: 1;
             padding: 0 32px 32px 32px;
             display: flex;
             flex-direction: column;
         }
-
         .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 32px 0 18px 0;
         }
-
         .topbar .welcome {
             font-size: 1.5rem;
             font-weight: 700;
             color: #222;
         }
-
         .topbar .user {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-
         .topbar .user-icon {
             background: var(--primary);
             color: #fff;
@@ -131,14 +116,12 @@
             justify-content: center;
             font-size: 1.6rem;
         }
-
         .stats-cards {
             display: flex;
             gap: 24px;
             margin-bottom: 32px;
             flex-wrap: wrap;
         }
-
         .stats-card {
             background: #fff;
             border-radius: 14px;
@@ -151,25 +134,21 @@
             align-items: flex-start;
             gap: 10px;
         }
-
         .stats-card .label {
             color: #888;
             font-size: 1.02rem;
             font-weight: 500;
         }
-
         .stats-card .value {
             font-size: 2.1rem;
             font-weight: 700;
             color: var(--primary);
         }
-
         .stats-card .icon {
             font-size: 2rem;
             color: #1976d2;
             margin-bottom: 8px;
         }
-
         .quick-links {
             background: #fff;
             border-radius: 14px;
@@ -177,21 +156,18 @@
             padding: 24px 32px;
             margin-bottom: 32px;
         }
-
         .quick-links h3 {
             margin-top: 0;
             font-size: 1.2rem;
             font-weight: 700;
             color: #1976d2;
         }
-
         .quick-links .links {
             display: flex;
             gap: 18px;
             flex-wrap: wrap;
             margin-top: 12px;
         }
-
         .quick-links .links a {
             background: var(--primary);
             color: #fff;
@@ -201,46 +177,13 @@
             text-decoration: none;
             transition: background 0.2s;
         }
-
         .quick-links .links a:hover {
             background: #1976d2;
         }
-
-        .recent-activity {
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
-            padding: 24px 32px;
-        }
-
-        .recent-activity h3 {
-            margin-top: 0;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #1976d2;
-        }
-
-        .recent-activity ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .recent-activity li {
-            padding: 10px 0;
-            border-bottom: 1px solid #f3f4f6;
-            font-size: 1.05rem;
-        }
-
-        .recent-activity li:last-child {
-            border-bottom: none;
-        }
-
         @media (max-width: 900px) {
             .dashboard-container {
                 flex-direction: column;
             }
-
             .sidebar {
                 width: 100%;
                 flex-direction: row;
@@ -249,72 +192,34 @@
                 padding: 16px 0;
                 box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
             }
-
             .sidebar nav {
                 flex-direction: row;
                 gap: 10px;
                 padding: 0 8px;
             }
-
             .sidebar .logo {
                 margin-bottom: 0;
             }
-
             .sidebar .logout {
                 margin-top: 0;
                 padding: 0 8px;
             }
-
             .main-content {
                 padding: 0 8px 24px 8px;
             }
-
             .stats-cards {
                 flex-direction: column;
                 gap: 16px;
             }
         }
-
         @media (max-width: 600px) {
             .main-content {
                 padding: 0 2vw 16px 2vw;
             }
-
             .stats-card,
-            .quick-links,
-            .recent-activity {
+            .quick-links {
                 padding: 16px 8px;
             }
-        }
-        .recent-messages ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .recent-messages li {
-            padding: 10px 0;
-            border-bottom: 1px solid #f3f4f6;
-            font-size: 1.05rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
-        .recent-messages li:last-child {
-            border-bottom: none;
-        }
-        .delete-message-btn {
-            background: #ef4444;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 6px 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .delete-message-btn:hover {
-            background: #d32f2f;
         }
     </style>
 </head>
@@ -343,39 +248,36 @@
                 </div>
             </div>
             <div class="stats-cards">
-            <div class="stats-card">
-                <div class="icon"><i class="ri-user-3-line"></i></div>
-                <div class="label">Total Patients</div>
-                <div class="value" id="total-patients">0</div>
-            </div>
-            <!-- Removed Appointments card -->
-            <div class="stats-card">
-                <div class="icon"><i class="ri-bar-chart-line"></i></div>
-                <div class="label">User Visits</div>
-                <div class="value" id="user-visits">0</div>
-            </div>
-            <div class="stats-card">
-                <div class="icon"><i class="ri-message-3-line"></i></div>
-                <div class="label">Feedback</div>
-                <div class="value" id="total-feedback">0</div>
-            </div>
-            <div class="stats-card">
-                <div class="icon"><i class="ri-mail-line"></i></div>
-                <div class="label">Messages</div>
-                <div class="value" id="messages-count">0</div>
-            </div>
+                <div class="stats-card">
+                    <div class="icon"><i class="ri-user-3-line"></i></div>
+                    <div class="label">Total Patients</div>
+                    <div class="value" id="total-patients">0</div>
+                </div>
+                <div class="stats-card">
+                    <div class="icon"><i class="ri-bar-chart-line"></i></div>
+                    <div class="label">User Visits</div>
+                    <div class="value" id="user-visits">N/A</div>
+                </div>
+                <div class="stats-card">
+                    <div class="icon"><i class="ri-message-3-line"></i></div>
+                    <div class="label">Feedback</div>
+                    <div class="value" id="total-feedback">0</div>
+                </div>
+                <div class="stats-card">
+                    <div class="icon"><i class="ri-mail-line"></i></div>
+                    <div class="label">Messages</div>
+                    <div class="value" id="messages-count">0</div>
+                </div>
             </div>
             <div class="quick-links">
                 <h3>Quick Actions</h3>
                 <div class="links">
                     <a href="manage_patients.html"><i class="ri-user-add-line"></i> Add Patient</a>
-                    <!-- Removed New Appointment link -->
                     <a href="#"><i class="ri-bar-chart-line"></i> User Visits</a>
                     <a href="manage_feedback.html"><i class="ri-message-2-line"></i> View Feedback</a>
                     <a href="manage_messages.html"><i class="ri-mail-send-line"></i> View Messages</a>
                 </div>
             </div>
-            <!-- Removed Recent Activity section -->
         </main>
     </div>
     <script>
@@ -415,5 +317,4 @@
         });
     </script>
 </body>
-
 </html>
