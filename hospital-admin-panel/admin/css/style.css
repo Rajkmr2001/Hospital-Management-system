@@ -91,6 +91,40 @@ body {
     color: #721c24;
 }
 
+/* Chart Type Buttons for Monthly Visits - Chart View */
+.chart-type-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0 20px 0;
+}
+
+.chart-type-btn {
+    background-color: #fff;
+    color: #10b981;
+    border: 2px solid #10b981;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    outline: none;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(16,185,129,0.08);
+}
+
+.chart-type-btn:hover {
+    background-color: #10b981;
+    color: #fff;
+    border-color: #0e9b6d;
+}
+
+.chart-type-btn.active {
+    background-color: #10b981;
+    color: #fff;
+    border-color: #0e9b6d;
+    box-shadow: 0 2px 8px rgba(16,185,129,0.15);
+}
+
 @media (max-width: 768px) {
     .container {
         width: 100%;
