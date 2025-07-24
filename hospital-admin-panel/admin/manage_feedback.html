@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Manage Feedback</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <style>
         :root {
@@ -159,8 +159,8 @@
         }
         .pagination button {
             background: #fff;
-            border: 1.5px solid #10b981;
-            color: #10b981;
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
             border-radius: 6px;
             padding: 6px 14px;
             font-weight: 600;
@@ -168,7 +168,7 @@
             transition: background 0.2s, color 0.2s;
         }
         .pagination button.active, .pagination button:hover {
-            background: #10b981;
+            background: var(--primary);
             color: #fff;
         }
         @media (max-width: 900px) {
@@ -234,7 +234,7 @@
             </div>
             <div class="feedback-table-container">
                 <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="Search feedback...">
+                    <input type="text" id="searchInput" placeholder="Search feedback..." />
                 </div>
                 <table id="feedback-table">
                     <thead>
@@ -261,11 +261,21 @@
         const rowsPerPage = 5;
 
         function loadFeedback() {
-            fetch('php/get_feedback.php')
-                .then(response => response.json())
+            fetch('../../php/get_feedback.php')
+                .then(response => {
+                    if (!response.ok) {
+                        console.error('Failed to fetch feedback:', response.status, response.statusText);
+                        return [];
+                    }
+                    return response.json();
+                })
                 .then(data => {
+                    console.log('Fetched feedback data:', data);
                     feedbackData = data;
                     renderFeedback();
+                })
+                .catch(error => {
+                    console.error('Error fetching feedback:', error);
                 });
         }
 
@@ -291,7 +301,7 @@
                         <td>${fb.name || ''}</td>
                         <td>${fb.number || ''}</td>
                         <td>${fb.comment || ''}</td>
-                        <td>${fb.likes || 0}</td>
+                        <td>${fb.liked_by ? fb.liked_by.length : 0}</td>
                         <td><button class="delete-btn" onclick="deleteFeedback(${fb.id})">Delete</button></td>
                     `;
                     tbody.appendChild(tr);
@@ -318,7 +328,7 @@
 
         function deleteFeedback(id) {
             if (confirm('Are you sure you want to delete this feedback?')) {
-                fetch('php/delete_feedback.php', {
+                fetch('../../php/delete_feedback.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: `id=${encodeURIComponent(id)}`

@@ -1,5 +1,5 @@
 <?php
-include 'db/config.php';
+include '../db/config.php';
 header('Content-Type: application/json');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = intval($_POST['id'] ?? 0);

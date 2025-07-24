@@ -1,22 +1,22 @@
 // This file contains JavaScript functions for handling user interactions in the admin panel.
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     loadPatients();
 
-    document.getElementById('addPatientBtn').addEventListener('click', function() {
+    document.getElementById('addPatientBtn').addEventListener('click', function () {
         openModal('Add Patient');
     });
 
     document.querySelector('.close').addEventListener('click', closeModal);
 
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         var modal = document.getElementById('patientModal');
         if (event.target == modal) {
             closeModal();
         }
     };
 
-    document.getElementById('patientForm').addEventListener('submit', function(event) {
+    document.getElementById('patientForm').addEventListener('submit', function (event) {
         event.preventDefault();
         submitPatientForm();
     });
@@ -31,12 +31,24 @@ function loadPatients() {
             const patientTableBody = document.getElementById('patientTableBody');
             patientTableBody.innerHTML = '';
             data.forEach(patient => {
+                const genderDisplay = patient.gender.toLowerCase() === 'male' ? 'M' :
+                    patient.gender.toLowerCase() === 'female' ? 'F' : 'O';
+                const submissionTime = patient.submission_time || '';
+                const submissionDate = patient.submission_date || '';
+                const address = patient.address || '';
+                const medicalHistory = patient.medical_history || '';
+                const contact = patient.contact || '';
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${patient.id}</td>
                     <td>${patient.name}</td>
                     <td>${patient.age}</td>
-                    <td>${patient.gender}</td>
+                    <td>${genderDisplay}</td>
+                    <td>${contact}</td>
+                    <td>${address}</td>
+                    <td>${submissionTime}</td>
+                    <td>${submissionDate}</td>
+                    <td>${medicalHistory}</td>
                     <td>
                         <button class="actionBtn edit" onclick="editPatient(${patient.id})">Edit</button>
                         <button class="actionBtn delete" onclick="deletePatient(${patient.id})">Delete</button>
@@ -74,19 +86,19 @@ function submitPatientForm() {
         method: method,
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            loadPatients();
-            closeModal();
-        } else {
-            alert('Error: ' + (data.message || 'Unknown error'));
-        }
-    })
-    .catch(error => console.error('Error submitting form:', error));
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                loadPatients();
+                closeModal();
+            } else {
+                alert('Error: ' + (data.message || 'Unknown error'));
+            }
+        })
+        .catch(error => console.error('Error submitting form:', error));
 }
 
-window.editPatient = function(id) {
+window.editPatient = function (id) {
     fetch(`php/get_patient.php?id=${id}`)
         .then(response => response.json())
         .then(patient => {
@@ -102,21 +114,21 @@ window.editPatient = function(id) {
         .catch(error => console.error('Error fetching patient:', error));
 };
 
-window.deletePatient = function(id) {
+window.deletePatient = function (id) {
     if (confirm('Are you sure you want to delete this patient?')) {
         fetch('php/delete_patient.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `patient_id=${encodeURIComponent(id)}`
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                loadPatients();
-            } else {
-                alert('Error deleting patient: ' + (data.message || 'Unknown error'));
-            }
-        })
-        .catch(error => console.error('Error deleting patient:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadPatients();
+                } else {
+                    alert('Error deleting patient: ' + (data.message || 'Unknown error'));
+                }
+            })
+            .catch(error => console.error('Error deleting patient:', error));
     }
 };
