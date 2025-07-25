@@ -32,17 +32,126 @@
       --radius: 18px;
       --shadow: 0 4px 24px rgba(37,99,235,0.10);
     }
-    .navbar { width: 100%; background: var(--navbar-bg); box-shadow: var(--navbar-shadow); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 64px; position: sticky; top: 0; z-index: 100; }
-    .navbar .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 700; color: var(--primary); gap: 10px; white-space: nowrap; }
-    .navbar nav { display: flex; gap: 28px; flex-wrap: wrap; }
-    .navbar nav a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 1.08rem; padding: 8px 0; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; white-space: nowrap; }
-    .navbar nav a.active, .navbar nav a:hover { color: var(--primary); border-bottom: 2px solid var(--primary); }
-    .navbar .profile { display: flex; align-items: center; gap: 12px; cursor: pointer; position: relative; }
-    .navbar .profile .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 700; }
-    .navbar .profile .dropdown { display: none; position: absolute; right: 0; top: 52px; background: #fff; box-shadow: 0 4px 24px rgba(37,99,235,0.10); border-radius: 10px; min-width: 140px; z-index: 10; }
-    .navbar .profile.open .dropdown { display: block; }
-    .navbar .profile .dropdown a { display: block; padding: 12px 18px; color: var(--text); text-decoration: none; font-weight: 500; border-radius: 10px; transition: background 0.2s; }
-    .navbar .profile .dropdown a:hover { background: var(--bg); }
+    .navbar {
+      width: 100%;
+      background: var(--navbar-bg);
+      box-shadow: var(--navbar-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      position: relative;
+    }
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .navbar nav {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      align-items: center;
+      transition: max-height 0.3s;
+    }
+    .navbar nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 1.08rem;
+      padding: 8px 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .navbar nav a.active,
+    .navbar nav a:hover {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+    }
+    .navbar .back-btn {
+      display: flex;
+      align-items: center;
+      background: #e0e7ef;
+      color: var(--primary);
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      padding: 8px 16px;
+      margin-left: 18px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      font-size: 1rem;
+      gap: 6px;
+    }
+    .navbar .back-btn:hover {
+      background: #dbeafe;
+      color: #1746a2;
+    }
+    .navbar .hamburger {
+      display: none;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      margin-left: 18px;
+    }
+    .navbar .profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+      margin-left: 18px;
+    }
+    .navbar .profile .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .navbar .profile .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 52px;
+      background: #fff;
+      box-shadow: 0 4px 24px rgba(37,99,235,0.10);
+      border-radius: 10px;
+      min-width: 140px;
+      z-index: 10;
+    }
+    .navbar .profile.open .dropdown {
+      display: block;
+    }
+    .navbar .profile .dropdown a {
+      display: block;
+      padding: 12px 18px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      border-radius: 10px;
+      transition: background 0.2s;
+    }
+    .navbar .profile .dropdown a:hover {
+      background: var(--bg);
+    }
     .welcome-banner { width: 100%; max-width: 1200px; margin: 32px auto 0 auto; background: linear-gradient(90deg, var(--primary-light) 0%, var(--primary) 100%); color: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 36px 40px 32px 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
     .welcome-banner .text { font-size: 2.1rem; font-weight: 700; line-height: 1.2; }
     .welcome-banner .desc { font-size: 1.1rem; font-weight: 400; margin-top: 10px; color: #e0e7ef; }
@@ -65,18 +174,80 @@
     .delete-btn:hover { background: #b91c1c; }
     @media (max-width: 900px) { .patients-section { padding: 16px 2vw; } .welcome-banner { padding: 24px 12px 18px 12px; } }
     @media (max-width: 600px) { table.patients-table { min-width: 500px; font-size: 0.95rem; } .patients-header { flex-direction: column; align-items: flex-start; gap: 8px; } }
+    @media (max-width: 900px) {
+      .navbar {
+        padding: 0 10px;
+        height: 56px;
+        flex-wrap: wrap;
+      }
+      .navbar .logo {
+        font-size: 1.1rem;
+      }
+      .navbar nav {
+        position: absolute;
+        top: 56px;
+        left: 0;
+        width: 100vw;
+        background: var(--navbar-bg);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(37,99,235,0.10);
+        z-index: 200;
+      }
+      .navbar nav.open {
+        max-height: 300px;
+        padding: 12px 0 12px 0;
+        gap: 0;
+        overflow: visible;
+      }
+      .navbar nav a {
+        padding: 14px 24px;
+        width: 100%;
+        border-bottom: none;
+        border-left: 4px solid transparent;
+        font-size: 1.08rem;
+      }
+      .navbar nav a.active,
+      .navbar nav a:hover {
+        background: #f1f5f9;
+        border-left: 4px solid var(--primary);
+        color: var(--primary);
+      }
+      .navbar .hamburger {
+        display: block;
+      }
+      .navbar .back-btn {
+        margin-left: 0;
+        margin-right: 8px;
+        font-size: 0.98rem;
+        padding: 8px 12px;
+        order: 2;
+      }
+      .navbar .profile {
+        margin-left: 0;
+        order: 3;
+      }
+      .navbar {
+        flex-wrap: wrap;
+      }
+    }
   </style>
 </head>
 <body>
   <header class="navbar">
     <div class="logo"><i class="ri-hospital-line"></i> <span>Maa Kalawati Admin</span></div>
-    <nav>
+    <button class="hamburger" id="hamburger" aria-label="Open navigation">&#9776;</button>
+    <nav id="mainNav">
       <a href="dashboard.html">Dashboard</a>
       <a href="manage_patients.html" class="active">Patients</a>
       <a href="user_visits.html">Visits</a>
       <a href="manage_feedback.html">Feedback</a>
       <a href="manage_messages.html">Messages</a>
     </nav>
+    <a href="../../index.html" class="back-btn"><i class="ri-arrow-left-line"></i> Back to Home</a>
     <div class="profile" id="profileMenu">
       <div class="avatar"><i class="ri-user-3-line"></i></div>
       <span>Admin</span>
@@ -109,6 +280,7 @@
             <th>Gender</th>
             <th>Contact</th>
             <th>Address</th>
+            <th>Medical History</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -135,6 +307,7 @@
         </select></label>
         <label>Contact:<br><input type="text" id="contact" name="contact" required style="width:100%;padding:8px 10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;"></label>
         <label>Address:<br><textarea id="address" name="address" rows="2" style="width:100%;padding:8px 10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;"></textarea></label>
+        <label>Medical History:<br><textarea id="medical_history" name="medical_history" rows="2" style="width:100%;padding:8px 10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;"></textarea></label>
         <div style="display:flex;justify-content:flex-end;gap:12px;">
           <button type="button" id="cancelBtn" style="background:#ef4444;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;">Cancel</button>
           <button type="submit" id="submitBtn" style="background:var(--primary);color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;">Add Patient</button>
@@ -143,6 +316,21 @@
     </div>
   </div>
   <script>
+    // Navbar hamburger menu logic
+    const hamburger = document.getElementById('hamburger');
+    const mainNav = document.getElementById('mainNav');
+    hamburger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      mainNav.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (window.innerWidth <= 900 && mainNav.classList.contains('open') && !mainNav.contains(e.target) && e.target !== hamburger) {
+        mainNav.classList.remove('open');
+      }
+    });
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 900) mainNav.classList.remove('open');
+    });
     // Profile dropdown logic
     const profileMenu = document.getElementById('profileMenu');
     profileMenu.addEventListener('click', function(e) { e.stopPropagation(); this.classList.toggle('open'); });
@@ -155,8 +343,10 @@
     window.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; };
     // Add/Edit logic
     let editMode = false;
+    let currentEditId = null;
     document.getElementById('addPatientBtn').onclick = function() {
       editMode = false;
+      currentEditId = null;
       document.getElementById('modalTitle').textContent = 'Add Patient';
       document.getElementById('submitBtn').textContent = 'Add Patient';
       document.getElementById('patientForm').reset();
@@ -167,8 +357,9 @@
       e.preventDefault();
       const formData = new FormData(this);
       let url = 'php/add_patient.php';
-      if (editMode) {
+      if (editMode && currentEditId) {
         url = 'php/update_patient.php';
+        formData.append('patient_id', currentEditId);
       }
       fetch(url, { method: 'POST', body: formData })
         .then(r => r.json())
@@ -197,6 +388,7 @@
               <td>${patient.gender}</td>
               <td>${patient.contact}</td>
               <td>${patient.address || ''}</td>
+              <td>${patient.medical_history || ''}</td>
               <td class="action-btns">
                 <button class="edit-btn">Edit</button>
                 <button class="delete-btn">Delete</button>
@@ -205,6 +397,7 @@
             // Edit
             tr.querySelector('.edit-btn').onclick = function() {
               editMode = true;
+              currentEditId = patient.id;
               document.getElementById('modalTitle').textContent = 'Edit Patient';
               document.getElementById('submitBtn').textContent = 'Update Patient';
               document.getElementById('patientId').value = patient.id;
@@ -213,6 +406,7 @@
               document.getElementById('gender').value = patient.gender;
               document.getElementById('contact').value = patient.contact;
               document.getElementById('address').value = patient.address;
+              document.getElementById('medical_history').value = patient.medical_history || '';
               modal.style.display = 'flex';
             };
             // Delete
