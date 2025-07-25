@@ -1,403 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Manage Patients - Hospital Admin Panel</title>
-    <style>
-        /* Reset and base styles */
-        * {
-            box-sizing: border-box;
-        }
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
-            height: 100%;
-            width: 100%;
-        }
-        .container {
-            width: 100vw;
-            max-width: 100vw;
-            margin: 20px auto;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            padding: 20px 30px;
-            display: flex;
-            flex-direction: column;
-            min-height: 90vh;
-            overflow-x: hidden;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        header h1 {
-            font-size: 2rem;
-            color: #10b981;
-            margin: 0;
-            flex-grow: 1;
-        }
-        .btn-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        button {
-            background-color: #10b981;
-            border: none;
-            color: white;
-            font-weight: 600;
-            font-size: 1rem;
-            padding: 10px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 3px 8px rgba(16, 185, 129, 0.4);
-            transition: background 0.3s ease, transform 0.2s ease;
-            white-space: nowrap;
-        }
-        button:hover {
-            background-color: #0e9f6e;
-            transform: scale(1.05);
-        }
-        button#backBtn {
-            background-color: #64748b;
-            box-shadow: 0 3px 8px rgba(100,116,139,0.4);
-        }
-        button#backBtn:hover {
-            background-color: #475569;
-        }
-        .table-wrapper {
-            overflow-x: auto;
-            flex-grow: 1;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 900px;
-        }
-        thead {
-            background: #10b981;
-            color: white;
-        }
-        th, td {
-            padding: 14px 16px;
-            text-align: left;
-            border-bottom: 1px solid #e0e7ff;
-            vertical-align: middle;
-            font-size: 0.95rem;
-        }
-        tbody tr:nth-child(even) {
-            background: #f9fafb;
-        }
-        tbody tr:hover {
-            background: #d1fae5;
-            transition: background 0.3s ease;
-        }
-        .actionBtn {
-            background-color: #10b981;
-            border: none;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-right: 8px;
-            transition: background 0.3s ease;
-            min-width: 80px;
-            text-align: center;
-        }
-        .actionBtn.edit {
-            background-color: #2563eb;
-            padding: 8px 20px;
-            border-radius: 8px;
-            min-width: 80px;
-        }
-        .actionBtn.delete {
-            background-color: #dc2626;
-            padding: 8px 20px;
-            border-radius: 8px;
-            min-width: 80px;
-        }
-        .actionBtn:hover {
-            filter: brightness(1.1);
-        }
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .container {
-                padding: 15px 20px;
-            }
-            table {
-                min-width: 700px;
-            }
-        }
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .btn-group {
-                width: 100%;
-                justify-content: flex-start;
-            }
-            button {
-                width: 48%;
-                font-size: 0.9rem;
-                padding: 10px 0;
-            }
-            table {
-                min-width: 600px;
-            }
-        }
-        @media (max-width: 480px) {
-            .container {
-                padding: 10px 15px;
-            }
-            button {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-            table {
-                min-width: 500px;
-                font-size: 0.85rem;
-            }
-            th, td {
-                padding: 10px 8px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Patients - Maa Kalawati Hospital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', Arial, sans-serif;
+      background: #f8fafc;
+      color: #222;
+      min-height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+    *, *::before, *::after { box-sizing: inherit; }
+    :root {
+      --primary: #2563eb;
+      --primary-light: #60a5fa;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card-bg: #fff;
+      --navbar-bg: #fff;
+      --navbar-shadow: 0 2px 12px rgba(37,99,235,0.07);
+      --text: #222;
+      --muted: #64748b;
+      --radius: 18px;
+      --shadow: 0 4px 24px rgba(37,99,235,0.10);
+    }
+    .navbar { width: 100%; background: var(--navbar-bg); box-shadow: var(--navbar-shadow); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 64px; position: sticky; top: 0; z-index: 100; }
+    .navbar .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 700; color: var(--primary); gap: 10px; white-space: nowrap; }
+    .navbar nav { display: flex; gap: 28px; flex-wrap: wrap; }
+    .navbar nav a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 1.08rem; padding: 8px 0; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; white-space: nowrap; }
+    .navbar nav a.active, .navbar nav a:hover { color: var(--primary); border-bottom: 2px solid var(--primary); }
+    .navbar .profile { display: flex; align-items: center; gap: 12px; cursor: pointer; position: relative; }
+    .navbar .profile .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 700; }
+    .navbar .profile .dropdown { display: none; position: absolute; right: 0; top: 52px; background: #fff; box-shadow: 0 4px 24px rgba(37,99,235,0.10); border-radius: 10px; min-width: 140px; z-index: 10; }
+    .navbar .profile.open .dropdown { display: block; }
+    .navbar .profile .dropdown a { display: block; padding: 12px 18px; color: var(--text); text-decoration: none; font-weight: 500; border-radius: 10px; transition: background 0.2s; }
+    .navbar .profile .dropdown a:hover { background: var(--bg); }
+    .welcome-banner { width: 100%; max-width: 1200px; margin: 32px auto 0 auto; background: linear-gradient(90deg, var(--primary-light) 0%, var(--primary) 100%); color: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 36px 40px 32px 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .welcome-banner .text { font-size: 2.1rem; font-weight: 700; line-height: 1.2; }
+    .welcome-banner .desc { font-size: 1.1rem; font-weight: 400; margin-top: 10px; color: #e0e7ef; }
+    .welcome-banner .banner-img { width: 120px; height: 120px; background: rgba(255,255,255,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; box-shadow: 0 2px 12px rgba(16,185,129,0.10); }
+    .patients-section { width: 100%; max-width: 1200px; margin: 36px auto 0 auto; background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px 24px; }
+    .patients-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .patients-header h2 { margin: 0; font-size: 1.4rem; color: var(--primary); font-weight: 700; }
+    .add-btn { background: linear-gradient(135deg, var(--accent), var(--primary)); color: #fff; border: none; border-radius: 8px; padding: 10px 22px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(16,185,129,0.10); transition: background 0.2s; }
+    .add-btn:hover { background: linear-gradient(135deg, var(--primary), var(--accent)); }
+    .patients-table-wrapper { overflow-x: auto; }
+    table.patients-table { width: 100%; border-collapse: collapse; min-width: 800px; background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(16,185,129,0.07); }
+    table.patients-table th, table.patients-table td { padding: 12px 10px; border-bottom: 1px solid #f3f4f6; text-align: left; }
+    table.patients-table th { background: var(--primary); color: #fff; font-weight: 600; }
+    table.patients-table tr:last-child td { border-bottom: none; }
+    .action-btns { display: flex; gap: 8px; }
+    .edit-btn, .delete-btn { border: none; border-radius: 6px; padding: 7px 16px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .edit-btn { background: #2563eb; color: #fff; }
+    .edit-btn:hover { background: #1746a2; }
+    .delete-btn { background: #ef4444; color: #fff; }
+    .delete-btn:hover { background: #b91c1c; }
+    @media (max-width: 900px) { .patients-section { padding: 16px 2vw; } .welcome-banner { padding: 24px 12px 18px 12px; } }
+    @media (max-width: 600px) { table.patients-table { min-width: 500px; font-size: 0.95rem; } .patients-header { flex-direction: column; align-items: flex-start; gap: 8px; } }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Manage Patients</h1>
-            <div class="btn-group">
-                <button id="backBtn" type="button">Back to Dashboard</button>
-                <button id="addPatientBtn" type="button">Add Patient</button>
-            </div>
-        </header>
-        <div class="table-wrapper">
-            <table id="patientsTable" aria-label="Patients Table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Gender</th>
-                        <th>Contact</th>
-                        <th>Address</th>
-                        <th>Submission Time</th>
-                        <th>Submission Date</th>
-                        <th>Medical History</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="patientTableBody">
-                    <!-- Data populated by JS -->
-                </tbody>
-            </table>
-        </div>
+  <header class="navbar">
+    <div class="logo"><i class="ri-hospital-line"></i> <span>Maa Kalawati Admin</span></div>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="manage_patients.html" class="active">Patients</a>
+      <a href="user_visits.html">Visits</a>
+      <a href="manage_feedback.html">Feedback</a>
+      <a href="manage_messages.html">Messages</a>
+    </nav>
+    <div class="profile" id="profileMenu">
+      <div class="avatar"><i class="ri-user-3-line"></i></div>
+      <span>Admin</span>
+      <div class="dropdown">
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+      </div>
     </div>
-
-    <!-- Modal for Add/Edit Patient -->
-    <div id="patientModal" class="modal" style="display:none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); justify-content: center; align-items: center;">
-        <div class="modal-content" style="background: #fff; border-radius: 12px; padding: 20px 30px; max-width: 400px; width: 90%; box-shadow: 0 4px 20px rgba(0,0,0,0.2); position: relative;">
-            <span id="closeModalBtn" style="position: absolute; top: 12px; right: 16px; font-size: 1.8rem; font-weight: bold; color: #10b981; cursor: pointer;">&times;</span>
-            <h2 id="modalTitle" style="color: #10b981; margin-bottom: 20px;">Add Patient</h2>
-            <form id="patientForm">
-                <input type="hidden" id="patientId" name="patient_id" />
-                <label for="name" style="display:block; margin-bottom: 6px; font-weight: 600; color: #10b981;">Name:</label>
-                <input type="text" id="name" name="name" required style="width: 100%; padding: 8px 10px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #ccc;" />
-                <label for="age" style="display:block; margin-bottom: 6px; font-weight: 600; color: #10b981;">Age:</label>
-                <input type="number" id="age" name="age" required style="width: 100%; padding: 8px 10px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #ccc;" />
-                <label for="gender" style="display:block; margin-bottom: 6px; font-weight: 600; color: #10b981;">Gender:</label>
-                <select id="gender" name="gender" required style="width: 100%; padding: 8px 10px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #ccc;">
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
-                <label for="contact" style="display:block; margin-bottom: 6px; font-weight: 600; color: #10b981;">Contact:</label>
-                <input type="text" id="contact" name="contact" required style="width: 100%; padding: 8px 10px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #ccc;" />
-                <label for="address" style="display:block; margin-bottom: 6px; font-weight: 600; color: #10b981;">Address:</label>
-                <textarea id="address" name="address" rows="3" style="width: 100%; padding: 8px 10px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #ccc;"></textarea>
-                <label for="medical_history" style="display:block; margin-bottom: 6px; font-weight: 600; color: #10b981;">Medical History:</label>
-                <textarea id="medical_history" name="medical_history" rows="3" style="width: 100%; padding: 8px 10px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #ccc;"></textarea>
-                <div style="display: flex; justify-content: flex-end; gap: 12px;">
-                    <button type="button" id="cancelBtn" style="background: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Cancel</button>
-                    <button type="submit" id="submitBtn" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Add Patient</button>
-                </div>
-            </form>
-        </div>
+  </header>
+  <section class="welcome-banner">
+    <div>
+      <div class="text">Manage Patients</div>
+      <div class="desc">View, add, edit, or remove patients. All changes are reflected in real time.</div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const backBtn = document.getElementById('backBtn');
-            backBtn.addEventListener('click', () => {
-                window.location.href = 'dashboard.html';
-            });
-
-            const addPatientBtn = document.getElementById('addPatientBtn');
-            addPatientBtn.addEventListener('click', () => {
-                openModal('Add Patient');
-            });
-
-            const modal = document.getElementById('patientModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const cancelBtn = document.getElementById('cancelBtn');
-            const patientForm = document.getElementById('patientForm');
-            const modalTitle = document.getElementById('modalTitle');
-            const submitBtn = document.getElementById('submitBtn');
-
-            closeModalBtn.addEventListener('click', closeModal);
-            cancelBtn.addEventListener('click', closeModal);
-
-            window.addEventListener('click', (event) => {
-                if (event.target === modal) {
-                    closeModal();
-                }
-            });
-
-            patientForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                submitPatientForm();
-            });
-
-            loadPatients();
-        });
-
-        function openModal(title) {
-            const modal = document.getElementById('patientModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const submitBtn = document.getElementById('submitBtn');
-            const patientForm = document.getElementById('patientForm');
-
-            modalTitle.textContent = title;
-            submitBtn.textContent = title.includes('Edit') ? 'Update Patient' : 'Add Patient';
-            patientForm.reset();
-            document.getElementById('patientId').value = '';
-            modal.style.display = 'flex';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('patientModal');
+    <div class="banner-img"><i class="ri-user-3-line"></i></div>
+  </section>
+  <section class="patients-section">
+    <div class="patients-header">
+      <h2>Patients List</h2>
+      <button class="add-btn" id="addPatientBtn"><i class="ri-user-add-line"></i> Add Patient</button>
+    </div>
+    <div class="patients-table-wrapper">
+      <table class="patients-table" id="patientsTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="patientsTbody">
+          <!-- Data will be loaded here -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <!-- Modal for Add/Edit Patient -->
+  <div id="patientModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); justify-content:center; align-items:center;">
+    <div style="background:#fff; border-radius:14px; padding:28px 24px; max-width:400px; width:90%; box-shadow:0 4px 24px rgba(16,185,129,0.10); position:relative;">
+      <span id="closeModalBtn" style="position:absolute; top:12px; right:16px; font-size:1.8rem; font-weight:bold; color:var(--primary); cursor:pointer;">&times;</span>
+      <h3 id="modalTitle" style="color:var(--primary); margin-bottom:18px;">Add Patient</h3>
+      <form id="patientForm">
+        <input type="hidden" id="patientId" name="id" />
+        <label>Name:<br><input type="text" id="name" name="name" required style="width:100%;padding:8px 10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;"></label>
+        <label>Age:<br><input type="number" id="age" name="age" required style="width:100%;padding:8px 10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;"></label>
+        <label>Gender:<br><select id="gender" name="gender" required style="width:100%;padding:8px 10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;">
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select></label>
+        <label>Contact:<br><input type="text" id="contact" name="contact" required style="width:100%;padding:8px 10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;"></label>
+        <label>Address:<br><textarea id="address" name="address" rows="2" style="width:100%;padding:8px 10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;"></textarea></label>
+        <div style="display:flex;justify-content:flex-end;gap:12px;">
+          <button type="button" id="cancelBtn" style="background:#ef4444;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;">Cancel</button>
+          <button type="submit" id="submitBtn" style="background:var(--primary);color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;">Add Patient</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    // Profile dropdown logic
+    const profileMenu = document.getElementById('profileMenu');
+    profileMenu.addEventListener('click', function(e) { e.stopPropagation(); this.classList.toggle('open'); });
+    document.addEventListener('click', function() { profileMenu.classList.remove('open'); });
+    // Modal logic
+    const modal = document.getElementById('patientModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    closeModalBtn.onclick = cancelBtn.onclick = function() { modal.style.display = 'none'; };
+    window.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; };
+    // Add/Edit logic
+    let editMode = false;
+    document.getElementById('addPatientBtn').onclick = function() {
+      editMode = false;
+      document.getElementById('modalTitle').textContent = 'Add Patient';
+      document.getElementById('submitBtn').textContent = 'Add Patient';
+      document.getElementById('patientForm').reset();
+      document.getElementById('patientId').value = '';
+      modal.style.display = 'flex';
+    };
+    document.getElementById('patientForm').onsubmit = function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      let url = 'php/add_patient.php';
+      if (editMode) {
+        url = 'php/update_patient.php';
+      }
+      fetch(url, { method: 'POST', body: formData })
+        .then(r => r.json())
+        .then(data => {
+          if (data.success) {
             modal.style.display = 'none';
-        }
-
-        function submitPatientForm() {
-            const patientId = document.getElementById('patientId').value;
-            const formData = new FormData(document.getElementById('patientForm'));
-            let url = 'php/add_patient.php';
-            if (patientId) {
-                url = 'php/update_patient.php';
-                formData.append('patient_id', patientId);
-            }
-            fetch(url, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    closeModal();
-                    loadPatients();
-                } else {
-                    alert('Error: ' + (data.message || 'Unknown error'));
-                }
-            })
-            .catch(error => {
-                console.error('Error submitting form:', error);
-                alert('Failed to submit patient data.');
-            });
-        }
-
-        function loadPatients() {
-            fetch('php/get_patients.php')
-                .then(response => response.json())
-                .then(data => {
-                    const patientTableBody = document.getElementById('patientTableBody');
-                    patientTableBody.innerHTML = '';
-                    data.forEach(patient => {
-                        const genderDisplay = patient.gender.toLowerCase() === 'male' ? 'M' :
-                                              patient.gender.toLowerCase() === 'female' ? 'F' : 'O';
-                        const submissionTime = patient.submission_time || '';
-                        const submissionDate = patient.submission_date || '';
-                        const address = patient.address || '';
-                        const medicalHistory = patient.medical_history || '';
-                        const contact = patient.contact || '';
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${patient.id}</td>
-                            <td>${patient.name}</td>
-                            <td>${patient.age}</td>
-                            <td>${genderDisplay}</td>
-                            <td>${contact}</td>
-                            <td>${address}</td>
-                            <td>${submissionTime}</td>
-                            <td>${submissionDate}</td>
-                            <td>${medicalHistory}</td>
-                            <td>
-                                <button class="actionBtn edit" onclick="editPatient(${patient.id})">Edit</button>
-                                <button class="actionBtn delete" onclick="deletePatient(${patient.id})">Delete</button>
-                            </td>
-                        `;
-                        patientTableBody.appendChild(row);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error loading patients:', error);
-                    const patientTableBody = document.getElementById('patientTableBody');
-                    patientTableBody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:red;">Failed to load patient data.</td></tr>';
-                });
-        }
-
-        function editPatient(id) {
-            fetch(`php/get_patient.php?id=${id}`)
-                .then(response => response.json())
-                .then(patient => {
-                    openModal('Edit Patient');
-                    document.getElementById('patientId').value = patient.id;
-                    document.getElementById('name').value = patient.name;
-                    document.getElementById('age').value = patient.age;
-                    document.getElementById('gender').value = patient.gender;
-                    document.getElementById('contact').value = patient.contact;
-                    document.getElementById('address').value = patient.address;
-                    document.getElementById('medical_history').value = patient.medical_history;
-                })
-                .catch(error => {
-                    console.error('Error fetching patient:', error);
-                    alert('Failed to fetch patient data.');
-                });
-        }
-
-        function deletePatient(id) {
-            if (confirm('Are you sure you want to delete this patient?')) {
+            loadPatients();
+          } else {
+            alert('Error: ' + (data.message || 'Unknown error'));
+          }
+        })
+        .catch(() => alert('Failed to submit patient data.'));
+    };
+    function loadPatients() {
+      fetch('php/get_patients.php')
+        .then(r => r.json())
+        .then(data => {
+          const tbody = document.getElementById('patientsTbody');
+          tbody.innerHTML = '';
+          data.forEach(patient => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${patient.id}</td>
+              <td>${patient.name}</td>
+              <td>${patient.age}</td>
+              <td>${patient.gender}</td>
+              <td>${patient.contact}</td>
+              <td>${patient.address || ''}</td>
+              <td class="action-btns">
+                <button class="edit-btn">Edit</button>
+                <button class="delete-btn">Delete</button>
+              </td>
+            `;
+            // Edit
+            tr.querySelector('.edit-btn').onclick = function() {
+              editMode = true;
+              document.getElementById('modalTitle').textContent = 'Edit Patient';
+              document.getElementById('submitBtn').textContent = 'Update Patient';
+              document.getElementById('patientId').value = patient.id;
+              document.getElementById('name').value = patient.name;
+              document.getElementById('age').value = patient.age;
+              document.getElementById('gender').value = patient.gender;
+              document.getElementById('contact').value = patient.contact;
+              document.getElementById('address').value = patient.address;
+              modal.style.display = 'flex';
+            };
+            // Delete
+            tr.querySelector('.delete-btn').onclick = function() {
+              if (confirm('Are you sure you want to delete this patient?')) {
                 fetch('php/delete_patient.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `patient_id=${encodeURIComponent(id)}`
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                  body: `patient_id=${encodeURIComponent(patient.id)}`
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        loadPatients();
-                    } else {
-                        alert('Error deleting patient: ' + (data.message || 'Unknown error'));
-                    }
-                })
-                .catch(error => {
-                    console.error('Error deleting patient:', error);
-                    alert('Failed to delete patient.');
-                });
-            }
-        }
-    </script>
+                  .then(r => r.json())
+                  .then(data => {
+                    if (data.success) loadPatients();
+                    else alert('Error deleting patient: ' + (data.message || 'Unknown error'));
+                  })
+                  .catch(() => alert('Failed to delete patient.'));
+              }
+            };
+            tbody.appendChild(tr);
+          });
+        })
+        .catch(() => {
+          document.getElementById('patientsTbody').innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888;">Failed to load patient data.</td></tr>';
+        });
+    }
+    loadPatients();
+  </script>
 </body>
-</html>
+</html> 

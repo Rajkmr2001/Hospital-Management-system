@@ -1,356 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="styledb.css">
-    <style>
-        :root {
-            --primary: #10b981;
-            --secondary: #f3f4f6;
-            --sidebar-width: 220px;
-        }
-        body {
-            font-family: 'Inter', Arial, sans-serif;
-            background: var(--secondary);
-            margin: 0;
-            color: #222;
-        }
-        .dashboard-container {
-            display: flex;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: var(--sidebar-width);
-            background: #fff;
-            box-shadow: 2px 0 12px rgba(16, 185, 129, 0.07);
-            display: flex;
-            flex-direction: column;
-            padding: 32px 0 0 0;
-            position: relative;
-            z-index: 2;
-        }
-        .hamburger {
-            display: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            padding: 0 24px;
-            user-select: none;
-        }
-        .sidebar .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 40px;
-            letter-spacing: 1px;
-        }
-        .sidebar nav {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            padding: 0 24px;
-        }
-        .sidebar nav a {
-            text-decoration: none;
-            color: #222;
-            font-weight: 600;
-            font-size: 1.08rem;
-            padding: 12px 18px;
-            border-radius: 8px;
-            transition: background 0.2s, color 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            white-space: nowrap;
-        }
-        .sidebar nav a.active,
-        .sidebar nav a:hover {
-            background: var(--primary);
-            color: #fff;
-        }
-        .sidebar .logout {
-            margin-top: auto;
-            padding: 24px;
-        }
-        .sidebar .logout a {
-            color: #ef4444;
-            background: #fff0f0;
-            border-radius: 8px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 18px;
-            text-decoration: none;
-            transition: background 0.2s, color 0.2s;
-        }
-        .sidebar .logout a:hover {
-            background: #ef4444;
-            color: #fff;
-        }
-        .main-content {
-            flex: 1;
-            padding: 0 32px 32px 32px;
-            display: flex;
-            flex-direction: column;
-        }
-        .topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 32px 0 18px 0;
-        }
-        .topbar .welcome {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #222;
-        }
-        .topbar .user {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .topbar .user-icon {
-            background: var(--primary);
-            color: #fff;
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-        }
-        .stats-cards {
-            display: flex;
-            gap: 24px;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-        }
-        .stats-card {
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
-            padding: 28px 32px;
-            min-width: 220px;
-            flex: 1 1 220px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s cubic-bezier(.4,2,.6,1);
-        }
-        .stats-card:hover, .stats-card:focus {
-            transform: translateY(-6px) scale(1.03);
-            box-shadow: 0 8px 32px rgba(16,185,129,0.18);
-            background: #e6fcf4;
-        }
-        .stats-card:active {
-            transform: scale(0.98);
-        }
-        .stats-card .label {
-            color: #888;
-            font-size: 1.02rem;
-            font-weight: 500;
-        }
-        .stats-card .value {
-            font-size: 2.1rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        .stats-card .icon {
-            font-size: 2rem;
-            color: #1976d2;
-            margin-bottom: 8px;
-        }
-        .stats-card .details-link {
-            position: absolute;
-            right: 18px;
-            bottom: 18px;
-            font-size: 0.95rem;
-            color: #1976d2;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-        .quick-links {
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
-            padding: 24px 32px;
-            margin-bottom: 32px;
-        }
-        .quick-links h3 {
-            margin-top: 0;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #1976d2;
-        }
-        .quick-links .links {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-            margin-top: 12px;
-        }
-        .quick-links .links a {
-            background: var(--primary);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: background 0.2s;
-        }
-        .quick-links .links a:hover {
-            background: #1976d2;
-        }
-        @media (max-width: 900px) {
-            .dashboard-container {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 60px;
-                min-width: 60px;
-                padding: 0;
-                transition: width 0.3s;
-            }
-            .sidebar.open {
-                width: 220px;
-                min-width: 220px;
-                background: #fff;
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100vh;
-                z-index: 1000;
-                box-shadow: 2px 0 12px rgba(16,185,129,0.12);
-                display: flex;
-                flex-direction: column;
-            }
-            .sidebar .logo {
-                margin-bottom: 0;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 16px;
-            }
-            .sidebar nav {
-                display: none;
-            }
-            .sidebar.open nav {
-                display: flex;
-                flex-direction: column;
-                gap: 18px;
-                padding: 0 24px;
-                margin-top: 32px;
-            }
-            .sidebar .logout {
-                display: none;
-            }
-            .sidebar.open .logout {
-                display: block;
-                margin-top: auto;
-                padding: 24px;
-            }
-            .hamburger {
-                display: block;
-            }
-            .main-content {
-                padding: 0 8px 24px 8px;
-            }
-            .stats-cards {
-                flex-direction: column;
-                gap: 16px;
-            }
-        }
-        @media (max-width: 600px) {
-            .main-content {
-                padding: 0 2vw 16px 2vw;
-            }
-            .stats-card,
-            .quick-links {
-                padding: 16px 8px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Maa Kalawati Hospital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', Arial, sans-serif;
+      background: #f8fafc;
+      color: #222;
+      min-height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+    :root {
+      --primary: #2563eb;
+      --primary-light: #60a5fa;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card-bg: #fff;
+      --navbar-bg: #fff;
+      --navbar-shadow: 0 2px 12px rgba(37,99,235,0.07);
+      --text: #222;
+      --muted: #64748b;
+      --radius: 18px;
+      --shadow: 0 4px 24px rgba(37,99,235,0.10);
+    }
+    .navbar {
+      width: 100%;
+      background: var(--navbar-bg);
+      box-shadow: var(--navbar-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .navbar nav {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .navbar nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 1.08rem;
+      padding: 8px 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .navbar nav a.active,
+    .navbar nav a:hover {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+    }
+    .navbar .profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+    }
+    .navbar .profile .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .navbar .profile .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 52px;
+      background: #fff;
+      box-shadow: 0 4px 24px rgba(37,99,235,0.10);
+      border-radius: 10px;
+      min-width: 140px;
+      z-index: 10;
+    }
+    .navbar .profile.open .dropdown {
+      display: block;
+    }
+    .navbar .profile .dropdown a {
+      display: block;
+      padding: 12px 18px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      border-radius: 10px;
+      transition: background 0.2s;
+    }
+    .navbar .profile .dropdown a:hover {
+      background: var(--bg);
+    }
+    .welcome-banner {
+      width: 100%;
+      max-width: 1200px;
+      margin: 32px auto 0 auto;
+      background: linear-gradient(90deg, var(--primary-light) 0%, var(--primary) 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px 40px 32px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .welcome-banner .text {
+      font-size: 2.1rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .welcome-banner .desc {
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-top: 10px;
+      color: #e0e7ef;
+    }
+    .welcome-banner .banner-img {
+      width: 120px;
+      height: 120px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      box-shadow: 0 2px 12px rgba(16,185,129,0.10);
+    }
+    .dashboard-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+      margin: 40px auto 0 auto;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .dashboard-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 28px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      min-height: 140px;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .dashboard-card:hover {
+      box-shadow: 0 8px 32px rgba(16,185,129,0.18);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .dashboard-card .icon {
+      font-size: 2.3rem;
+      color: var(--primary);
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 8px;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+    }
+    .dashboard-card .label {
+      color: var(--muted);
+      font-size: 1.08rem;
+      font-weight: 500;
+    }
+    .dashboard-card .value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .fab {
+      position: fixed;
+      right: 32px;
+      bottom: 32px;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      box-shadow: 0 4px 24px rgba(16,185,129,0.18);
+      cursor: pointer;
+      z-index: 200;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .fab:hover {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 8px 32px rgba(16,185,129,0.28);
+    }
+    @media (max-width: 700px) {
+      .navbar {
+        padding: 0 10px;
+        height: 56px;
+      }
+      .welcome-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 24px 12px 18px 12px;
+        gap: 10px;
+      }
+      .dashboard-cards {
+        gap: 16px;
+        padding: 0 6px;
+      }
+      .fab {
+        right: 16px;
+        bottom: 16px;
+        width: 52px;
+        height: 52px;
+        font-size: 1.5rem;
+      }
+    }
+    @media (max-width: 500px) {
+      .dashboard-card {
+        padding: 16px 8px 16px 8px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <aside class="sidebar" id="sidebar">
-            <div class="logo">
-                <i class="ri-hospital-line"></i> Admin Panel
-                <span class="hamburger" id="hamburger">&#9776;</span>
-            </div>
-            <nav id="sidebarNav">
-                <a href="dashboard.html" class="active"><i class="ri-dashboard-line"></i> Dashboard</a>
-                <a href="manage_patients.html"><i class="ri-user-3-line"></i> Manage Patients</a>
-                <a href="user_visits.html"><i class="ri-bar-chart-line"></i> User Visited</a>
-                <a href="manage_feedback.html"><i class="ri-message-3-line"></i> Feedback</a>
-                <a href="manage_messages.html"><i class="ri-mail-line"></i> Messages</a>
-            </nav>
-            <div class="logout" id="sidebarLogout">
-                <a href="login.html"><i class="ri-logout-box-r-line"></i> Logout</a>
-            </div>
-        </aside>
-        <main class="main-content">
-            <div class="topbar">
-                <div class="welcome">Welcome, Admin!</div>
-                <div class="user">
-                    <div class="user-icon"><i class="ri-user-3-line"></i></div>
-                    <span>Admin</span>
-                </div>
-            </div>
-            <div class="stats-cards">
-                <div class="stats-card card-link" data-link="manage_patients.html">
-                    <div class="icon"><i class="ri-user-3-line"></i></div>
-                    <div class="label">Total Patients</div>
-                    <div class="value" id="total-patients">0</div>
-                </div>
-                <div class="stats-card card-link" data-link="user_visits.html">
-                    <div class="icon"><i class="ri-bar-chart-line"></i></div>
-                    <div class="label">User Visits</div>
-                    <div class="value" id="user-visits">0</div>
-                   
-                </div>
-                <div class="stats-card card-link" data-link="manage_feedback.html">
-                    <div class="icon"><i class="ri-message-3-line"></i></div>
-                    <div class="label">Feedback</div>
-                    <div class="value" id="total-feedback">0</div>
-                </div>
-                <div class="stats-card card-link" data-link="manage_messages.html">
-                    <div class="icon"><i class="ri-mail-line"></i></div>
-                    <div class="label">Messages</div>
-                    <div class="value" id="messages-count">0</div>
-                </div>
-            </div>
-            <div class="quick-links">
-                <h3>Quick Actions</h3>
-                <div class="links">
-                    <a href="manage_patients.html"><i class="ri-user-add-line"></i> Add Patient</a>
-                    <a href="user_visits.html"><i class="ri-bar-chart-line"></i> User Visits</a>
-                    <a href="manage_feedback.html"><i class="ri-message-2-line"></i> View Feedback</a>
-                    <a href="manage_messages.html"><i class="ri-mail-send-line"></i> View Messages</a>
-                </div>
-            </div>
-        </main>
+  <header class="navbar">
+    <div class="logo">
+      <i class="ri-hospital-line"></i> <span>Maa Kalawati Admin</span>
     </div>
-    <script src="js/main.js"></script>
-    <script>
-    // Card click navigation
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.card-link').forEach(function(card) {
-            card.addEventListener('click', function() {
-                const link = card.getAttribute('data-link');
-                if (link) window.location.href = link;
-            });
-        });
+    <nav>
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="manage_patients.html">Patients</a>
+      <a href="user_visits.html">Visits</a>
+      <a href="manage_feedback.html">Feedback</a>
+      <a href="manage_messages.html">Messages</a>
+    </nav>
+    <div class="profile" id="profileMenu">
+      <div class="avatar"><i class="ri-user-3-line"></i></div>
+      <span>Admin</span>
+      <div class="dropdown">
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+  <section class="welcome-banner">
+    <div>
+      <div class="text">Welcome back, Admin!</div>
+      <div class="desc">Manage patients, view analytics, and keep your hospital running smoothly with your new dashboard.</div>
+    </div>
+    <div class="banner-img"><i class="ri-dashboard-2-line"></i></div>
+  </section>
+  <section class="dashboard-cards">
+    <div class="dashboard-card">
+      <div class="icon"><i class="ri-user-3-line"></i></div>
+      <div class="label">Total Patients</div>
+      <div class="value" id="total-patients">0</div>
+    </div>
+    <div class="dashboard-card">
+      <div class="icon"><i class="ri-bar-chart-line"></i></div>
+      <div class="label">User Visits</div>
+      <div class="value" id="user-visits">0</div>
+    </div>
+    <div class="dashboard-card">
+      <div class="icon"><i class="ri-message-3-line"></i></div>
+      <div class="label">Feedback</div>
+      <div class="value" id="total-feedback">0</div>
+    </div>
+    <div class="dashboard-card">
+      <div class="icon"><i class="ri-mail-line"></i></div>
+      <div class="label">Messages</div>
+      <div class="value" id="messages-count">0</div>
+    </div>
+  </section>
+  <button class="fab" title="Add Patient"><i class="ri-user-add-line"></i></button>
+  <script>
+    // Profile dropdown logic
+    const profileMenu = document.getElementById('profileMenu');
+    profileMenu.addEventListener('click', function(e) {
+      e.stopPropagation();
+      this.classList.toggle('open');
     });
-    </script>
+    document.addEventListener('click', function() {
+      profileMenu.classList.remove('open');
+    });
+    // Floating Action Button (FAB)
+    document.querySelector('.fab').addEventListener('click', function() {
+      window.location.href = 'manage_patients.html';
+    });
+    // Card click navigation
+    const cardLinks = [
+      'manage_patients.html',
+      'user_visits.html',
+      'manage_feedback.html',
+      'manage_messages.html'
+    ];
+    document.querySelectorAll('.dashboard-card').forEach(function(card, idx) {
+      card.addEventListener('click', function() {
+        window.location.href = cardLinks[idx];
+      });
+    });
+    // Fetch dashboard stats from backend and update values
+    function updateStat(id, url, key = 'total') {
+      fetch(url)
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById(id).textContent = data[key] || 0;
+        })
+        .catch(() => {
+          document.getElementById(id).textContent = 'N/A';
+        });
+    }
+    updateStat('total-patients', 'php/get_total_patients.php');
+    updateStat('user-visits', 'php/get_total_user_visits.php');
+    updateStat('total-feedback', 'php/get_total_feedback.php');
+    updateStat('messages-count', 'php/get_total_messages.php');
+  </script>
 </body>
-</html>
+</html> 
