@@ -647,6 +647,9 @@
         <p class="text-gray-400 text-sm">
           &copy; 2025 Hospital Management System. All rights reserved.
         </p>
+        <a href="creator.html" class="text-blue-600 underline text-sm mx-4 md:mx-8 my-2 md:my-0" id="creator-link">
+          Created and managed by Raj Kumar.
+        </a>
         <div class="mt-4 md:mt-0 flex space-x-4">
           <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
           <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
@@ -655,6 +658,27 @@
       </div>
     </div>
   </footer>
+  <!-- Popup Modal -->
+  <div id="edu-popup" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5);">
+    <div style="background:#fff; max-width:400px; margin:10% auto; padding:2rem; border-radius:8px; text-align:center; position:relative;">
+      <h2>Notice</h2>
+      <p>This website has been developed solely for educational purposes.
+        <br>It is a personal project and does not represent a real-world hospital management system.</p>
+      <button id="close-popup" style="margin-top:1rem; padding:0.5rem 1rem; background:#e53e3e; color:#fff; border:none; border-radius:4px; cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+  <script>
+    // Show popup only for first-time visitors
+    window.onload = function() {
+      if (!localStorage.getItem('eduPopupShown')) {
+        document.getElementById('edu-popup').style.display = 'block';
+      }
+      document.getElementById('close-popup').onclick = function() {
+        document.getElementById('edu-popup').style.display = 'none';
+        localStorage.setItem('eduPopupShown', 'true');
+      }
+    }
+  </script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       // Mobile Menu Toggle

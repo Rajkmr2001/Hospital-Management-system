@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creators | Hospital Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 1200px;
+      width: 100vw;
+      margin: 2rem auto;
+      padding: 2rem 2vw;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(60,72,100,0.12);
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 2.5rem;
+      letter-spacing: 1px;
+    }
+    .creators {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+    }
+    .creator-card {
+      background: #f1f5f9;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(60,72,100,0.08);
+      padding: 2rem 2.5rem 1.5rem 2.5rem;
+      width: 100%;
+      max-width: 1000px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      margin: 0 auto 2rem auto;
+    }
+    .creator-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(60,72,100,0.18);
+    }
+    .creator-photo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #6366f1;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(60,72,100,0.10);
+      background: #e0e7ff;
+    }
+    .creator-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #3730a3;
+      margin-bottom: 0.2rem;
+    }
+    .creator-role {
+      font-size: 1.05rem;
+      color: #6366f1;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+    .creator-type {
+      font-size: 0.98rem;
+      color: #64748b;
+      margin-bottom: 0.7rem;
+    }
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .social-links a {
+      color: #6366f1;
+      font-size: 1.3rem;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .social-links a:hover {
+      color: #1e293b;
+      transform: scale(1.2);
+    }
+    .resume-link {
+      display: inline-block;
+      margin-bottom: 1rem;
+      color: #fff;
+      background: #6366f1;
+      padding: 0.4rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(60,72,100,0.10);
+    }
+    .resume-link:hover {
+      background: #3730a3;
+      box-shadow: 0 4px 16px rgba(60,72,100,0.18);
+    }
+    .contribution {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+    .contribution-label {
+      font-size: 0.95rem;
+      color: #475569;
+      margin-bottom: 0.2rem;
+      text-align: left;
+    }
+    .contribution-bar {
+      background: #e0e7ff;
+      border-radius: 8px;
+      height: 16px;
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 0.3rem;
+    }
+    .contribution-fill {
+      height: 100%;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #6366f1 0%, #818cf8 100%);
+      transition: width 0.4s;
+    }
+    .contribution-percent {
+      font-size: 0.95rem;
+      color: #3730a3;
+      font-weight: 600;
+      text-align: right;
+      margin-bottom: 0.5rem;
+    }
+    .home-btn {
+      display: block;
+      margin: 2.5rem auto 0 auto;
+      background: #6366f1;
+      color: #fff;
+      padding: 0.7rem 2.2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(60,72,100,0.10);
+      transition: background 0.1s, transform 0.1s;
+      text-decoration: none;
+    }
+    .home-btn:hover {
+      background: #3730a3;
+      transform: scale(1.04);
+    }
+    @media (max-width: 900px) {
+      .container {
+        max-width: 98vw;
+      }
+      .creator-card {
+        width: 98vw;
+        max-width: 98vw;
+        padding: 1.5rem 0.5rem 1rem 0.5rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 1rem 0.2rem;
+      }
+      h1 {
+        font-size: 1.3rem;
+      }
+      .creator-card {
+        padding: 1.2rem 0.2rem 1rem 0.2rem;
+      }
+    }
+    /* Dusty swirl cursor canvas overlays all content */
+    #swirl-cursor-canvas {
+      position: fixed;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .container, .home-btn {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>This website is built and managed by</h1>
+    <div class="creators">
+      <!-- Creator 1 -->
+      <div class="creator-card">
+        <img src="hospital-admin-panel/admin/img_backend/Raj.jpg" alt="Raj Kumar" class="creator-photo">
+        <div class="creator-name">Raj Kumar</div>
+        <div class="creator-role">Head</div>
+        <div class="creator-type">Full Stack Developer</div>
+        <div class="social-links">
+          <a href="https://github.com/Rajkmr2001" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.instagram.com/iam_rajkumarpandit?igsh=YzljYTk1ODg3Zg==" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=100040365782052" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
+        </div>
+        <a href="hospital-admin-panel/admin/php/resume_raj.html" class="resume-link" target="_blank"><i class="fas fa-file-alt"></i> Resume</a>
+        <div class="contribution">
+          <div class="contribution-label">Contribution</div>
+          <div class="contribution-bar">
+            <div class="contribution-fill" style="width: 90%"></div>
+          </div>
+          <div class="contribution-percent">90%</div>
+        </div>
+      </div>
+      <!-- Creator 2 -->
+      <!-- <div class="creator-card">
+        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Amit Sharma" class="creator-photo">
+        <div class="creator-name">Amit Sharma</div>
+        <div class="creator-role">Member</div>
+        <div class="creator-type">Backend Developer</div>
+        <div class="social-links">
+          <a href="https://github.com/amitsharma" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://instagram.com/amitsharma" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://facebook.com/amitsharma" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="https://t.me/amitsharma" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
+        </div>
+        <a href="https://example.com/amitsharma_resume.pdf" class="resume-link" target="_blank"><i class="fas fa-file-alt"></i> Resume</a>
+        <div class="contribution">
+          <div class="contribution-label">Contribution</div>
+          <div class="contribution-bar">
+            <div class="contribution-fill" style="width: 8%"></div>
+          </div>
+          <div class="contribution-percent">8%</div>
+        </div>
+      </div> -->
+      <!-- Creator 3 -->
+      <!-- <div class="creator-card">
+        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya Singh" class="creator-photo">
+        <div class="creator-name">Priya Singh</div>
+        <div class="creator-role">Member</div>
+        <div class="creator-type">Frontend Developer</div>
+        <div class="social-links">
+          <a href="https://github.com/priyasingh" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://instagram.com/priyasingh" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://facebook.com/priyasingh" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="https://t.me/priyasingh" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
+        </div>
+        <a href="https://example.com/priyasingh_resume.pdf" class="resume-link" target="_blank"><i class="fas fa-file-alt"></i> Resume</a>
+        <div class="contribution">
+          <div class="contribution-label">Contribution</div>
+          <div class="contribution-bar">
+            <div class="contribution-fill" style="width: 2%"></div>
+          </div>
+          <div class="contribution-percent">2%</div>
+        </div>
+      </div> -->
+    </div>
+    <a href="index.html" class="home-btn"><i class="fas fa-home"></i> Home</a>
+  </div>
+</body>
+</html> 
