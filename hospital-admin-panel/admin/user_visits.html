@@ -90,56 +90,49 @@
         }
         .main-content {
             flex: 1;
-            padding: 0 32px 32px 32px;
+            padding: 0 24px 32px 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            max-width: 900px;
+            max-width: 100vw;
             margin: 0 auto;
-        }
-        .stats-card, .calendar-section, .trend-graph-container, .chart-container, .chart-type-section, .ip-table-section {
-            max-width: 600px;
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .calendar-flex {
-            max-width: 100%;
-            width: 100%;
-        }
-        .charts-section {
-            flex-wrap: wrap;
-            gap: 24px;
-            margin: 24px 0;
-            justify-content: center;
-        }
-        .chart-container, .trend-graph-container, .chart-type-section {
-            max-height: 340px;
-            overflow-y: auto;
-        }
-        .calendar-section {
-            max-height: 340px;
-            overflow-y: auto;
-        }
-        .ip-table-section {
-            max-height: 340px;
-            overflow-y: auto;
-        }
-        table.ip-table {
-            max-height: 260px;
-            overflow-y: auto;
-            display: block;
         }
         .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 32px 0 18px 0;
+            width: 100%;
+            max-width: 900px;
         }
         .topbar .welcome {
             font-size: 1.5rem;
             font-weight: 700;
             color: #222;
+        }
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .user-icon {
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+        }
+        .stats-calendar-row {
+            display: flex;
+            gap: 32px;
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
         }
         .stats-card {
             background: #fff;
@@ -147,22 +140,17 @@
             box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
             padding: 28px 32px;
             min-width: 220px;
-            max-width: 350px;
-            margin: 40px auto 0 auto;
+            flex: 1 1 220px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             gap: 10px;
-            cursor: pointer;
-            transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s cubic-bezier(.4,2,.6,1);
+            margin-bottom: 0;
         }
-        .stats-card:hover, .stats-card:focus {
-            transform: translateY(-6px) scale(1.03);
-            box-shadow: 0 8px 32px rgba(16,185,129,0.18);
-            background: #e6fcf4;
-        }
-        .stats-card:active {
-            transform: scale(0.98);
+        .stats-card:hover {
+            box-shadow: 0 6px 24px rgba(16,185,129,0.18);
+            transform: translateY(-2px) scale(1.02);
+            transition: box-shadow 0.2s, transform 0.2s;
         }
         .stats-card .label {
             color: #888;
@@ -179,58 +167,6 @@
             color: #1976d2;
             margin-bottom: 8px;
         }
-        .charts-section {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 32px;
-            margin: 32px 0;
-            justify-content: space-between;
-        }
-        .chart-container {
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
-            padding: 24px 24px 12px 24px;
-            flex: 1 1 320px;
-            min-width: 320px;
-            max-width: 600px;
-        }
-        .chart-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1976d2;
-            margin-bottom: 12px;
-        }
-        .ip-table-section {
-            margin-top: 32px;
-        }
-        .ip-table-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1976d2;
-            margin-bottom: 12px;
-        }
-        table.ip-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
-        }
-        table.ip-table th, table.ip-table td {
-            padding: 10px 14px;
-            border-bottom: 1px solid #f3f4f6;
-            text-align: left;
-        }
-        table.ip-table th {
-            background: #10b981;
-            color: #fff;
-            font-weight: 600;
-        }
-        table.ip-table tr:last-child td {
-            border-bottom: none;
-        }
         .note {
             margin: 18px 0 0 0;
             color: #888;
@@ -241,9 +177,8 @@
             border-radius: 14px;
             box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
             padding: 24px 24px 12px 24px;
-            margin: 32px 0;
-            max-width: 350px;
             min-width: 260px;
+            flex: 1 1 260px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -264,37 +199,60 @@
         .calendar-side-panel strong {
             color: #10b981;
         }
-        .calendar-flex {
-            display: flex;
-            gap: 32px;
-            flex-wrap: wrap;
-        }
         .trend-graph-container {
             background: #fff;
             border-radius: 14px;
             box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
             padding: 24px 24px 12px 24px;
             margin: 32px 0;
-            max-width: 600px;
-            min-width: 320px;
+            width: 100%;
+            max-width: 900px;
         }
-        .chart-type-section {
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1976d2;
+            margin-bottom: 12px;
+        }
+        .charts-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            margin: 32px 0;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 900px;
+        }
+        .stats-card,
+        .chart-container {
+            flex: 1 1 220px;
+            min-width: 220px;
+            max-width: 350px;
+        }
+        .chart-container {
             background: #fff;
             border-radius: 14px;
             box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
             padding: 24px 24px 12px 24px;
-            margin: 0 auto 24px auto;
-            max-width: 100%;
-            min-width: 220px;
+            margin-bottom: 0;
+        }
+        .chart-type-section {
+            max-width: 900px;
             width: 100%;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(16,185,129,0.07);
+            padding: 24px 24px 12px 24px;
+            margin: 0 auto 24px auto;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            max-height: 320px;
-            overflow: hidden;
         }
-        .chart-type-section canvas {
-            max-height: 180px;
+        .chart-type-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1976d2;
+            margin-bottom: 12px;
         }
         .chart-type-buttons {
             display: flex;
@@ -314,16 +272,70 @@
             font-weight: 600;
             box-shadow: 0 1px 3px rgba(16,185,129,0.08);
         }
-        .chart-type-btn:hover {
-            background-color: #10b981;
-            color: #fff;
-            border-color: #0e9b6d;
-        }
+        .chart-type-btn:hover,
         .chart-type-btn.active {
             background-color: #10b981;
             color: #fff;
             border-color: #0e9b6d;
             box-shadow: 0 2px 8px rgba(16,185,129,0.15);
+        }
+        .ip-table-section {
+            margin-top: 32px;
+            width: 100%;
+            max-width: 900px;
+        }
+        .ip-table-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1976d2;
+            margin-bottom: 12px;
+        }
+        table.ip-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(16, 185, 129, 0.07);
+        }
+        table.ip-table th, table.ip-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f3f4f6;
+            text-align: left;
+        }
+        table.ip-table th {
+            background: #10b981;
+            color: #fff;
+            font-weight: 600;
+        }
+        table.ip-table tr:last-child td {
+            border-bottom: none;
+        }
+        .collapsible {
+          background: #f3f4f6;
+          color: #10b981;
+          cursor: pointer;
+          padding: 12px 18px;
+          width: 100%;
+          border: none;
+          text-align: left;
+          outline: none;
+          font-size: 1.08rem;
+          border-radius: 8px;
+          margin-bottom: 8px;
+          font-weight: 600;
+        }
+        .collapsible.active, .collapsible:hover {
+          background: #10b981;
+          color: #fff;
+        }
+        .collapse-content {
+          display: none;
+          padding: 0 18px 18px 18px;
+          background: #fff;
+          border-radius: 0 0 8px 8px;
+        }
+        .collapse-content.show {
+          display: block;
         }
         @media (max-width: 900px) {
             .dashboard-container {
@@ -355,28 +367,16 @@
                 padding: 0 4vw 24px 4vw;
                 max-width: 100vw;
             }
+            .stats-calendar-row,
             .charts-section {
                 flex-direction: column;
                 gap: 24px;
-            }
-            .chart-type-section {
-                max-width: 98vw;
-            }
-            .stats-calendar-row {
-                flex-direction: column;
-                gap: 0;
-            }
-            .stats-calendar-row .stats-card,
-            .stats-calendar-row .calendar-section {
-                margin-top: 18px;
                 max-width: 100vw;
-                width: 100%;
-                height: auto;
             }
-            .chart-type-section {
+            .trend-graph-container,
+            .chart-type-section,
+            .ip-table-section {
                 max-width: 100vw;
-                min-width: 0;
-                padding: 12px 4vw 8px 4vw;
             }
         }
         @media (max-width: 600px) {
@@ -385,13 +385,25 @@
             }
             .stats-card, .calendar-section, .trend-graph-container, .chart-container, .chart-type-section, .ip-table-section {
                 max-width: 100vw;
-            }
-            .stats-card, .chart-container {
-                padding: 16px 8px;
+                min-width: 0;
+                padding: 12px 4vw 8px 4vw;
             }
             .chart-type-section {
                 padding: 8px 2vw 4px 2vw;
             }
+            table.ip-table th, table.ip-table td {
+                padding: 8px 6px;
+                font-size: 0.95rem;
+            }
+        }
+
+        #monthlyTypeChart {
+            width: 100% !important;
+            max-width: 600px;
+            height: 320px !important;
+            max-height: 320px;
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -405,7 +417,7 @@
             <nav id="sidebarNav">
                 <a href="dashboard.html"><i class="ri-dashboard-line"></i> Dashboard</a>
                 <a href="manage_patients.html"><i class="ri-user-3-line"></i> Manage Patients</a>
-                <a href="user_visits.html"><i class="ri-bar-chart-line"></i> User Visited</a>
+                <a href="user_visits.html" class="active"><i class="ri-bar-chart-line"></i> User Visited</a>
                 <a href="manage_feedback.html"><i class="ri-message-3-line"></i> Feedback</a>
                 <a href="manage_messages.html"><i class="ri-mail-line"></i> Messages</a>
             </nav>
@@ -422,7 +434,7 @@
                 </div>
             </div>
             <div class="stats-calendar-row">
-                <div class="stats-card" style="margin-bottom: 0;">
+                <div class="stats-card">
                     <div class="icon"><i class="ri-bar-chart-line"></i></div>
                     <div class="label">Total Unique Visitors</div>
                     <div class="value" id="total-unique">0</div>
@@ -437,9 +449,12 @@
                     </div>
                 </div>
             </div>
-            <div class="trend-graph-container">
-                <div class="chart-title">Total Visits Trend (Not Unique)</div>
-                <canvas id="trendChart" height="120"></canvas>
+            <button class="collapsible">Show Trend Chart</button>
+            <div class="collapse-content">
+                <div class="trend-graph-container">
+                    <div class="chart-title">Total Visits Trend (Not Unique)</div>
+                    <canvas id="trendChart" height="80"></canvas>
+                </div>
             </div>
             <div class="charts-section">
                 <div class="stats-card" id="dailyTotalCard">
@@ -461,27 +476,30 @@
                     <div class="chart-title">Daily Unique Visits (Last 60 Days)</div>
                     <canvas id="dailyChart" height="120"></canvas>
                 </div>
-                
             </div>
-            <div class="chart-type-section">
-                <div class="chart-type-title">Monthly Visits - Chart View</div>
-                <div class="chart-type-buttons">
-                    <button class="chart-type-btn active" data-type="pie">Pie</button>
-                    <button class="chart-type-btn" data-type="doughnut">Doughnut</button>
-                    <button class="chart-type-btn" data-type="polarArea">Polar</button>
+            <button class="collapsible">Show Monthly Chart</button>
+            <div class="collapse-content">
+                <div class="chart-type-section">
+                    <div class="chart-type-title">Monthly Visits - Chart View</div>
+                    <div class="chart-type-buttons">
+                        <button class="chart-type-btn active" data-type="pie">Pie</button>
+                        <button class="chart-type-btn" data-type="doughnut">Doughnut</button>
+                        <button class="chart-type-btn" data-type="polarArea">Polar</button>
+                    </div>
+                    <canvas id="monthlyTypeChart"></canvas>
                 </div>
-                <canvas id="monthlyTypeChart" height="180"></canvas>
             </div>
-            <div class="ip-table-section">
-                <div class="ip-table-title">All Unique Visitors</div>
-                <div style="overflow-x:auto;">
+            <button class="collapsible">Show IP Table</button>
+            <div class="collapse-content">
+                <div class="ip-table-section">
+                    <div class="ip-table-title">All Unique Visitors</div>
                     <table class="ip-table">
                         <thead>
                             <tr><th>IP Address</th><th>First Visit</th></tr>
                         </thead>
-                        <tbody id="ipTableBody">
-                        </tbody>
+                        <tbody id="ipTableBody"></tbody>
                     </table>
+                    <div id="ipTablePagination" style="margin:12px 0; text-align:center;"></div>
                 </div>
             </div>
         </main>
@@ -513,13 +531,11 @@
                 else closeSidebar();
             });
         }
-        // Close sidebar when clicking outside
         document.addEventListener('click', function(e) {
             if (sidebarOpen && !sidebar.contains(e.target)) {
                 closeSidebar();
             }
         });
-        // Close sidebar when clicking a nav link
         if (nav) {
             nav.querySelectorAll('a').forEach(function(link) {
                 link.addEventListener('click', function() {
@@ -527,7 +543,6 @@
                 });
             });
         }
-        // Also close on logout click
         if (logout) {
             logout.querySelectorAll('a').forEach(function(link) {
                 link.addEventListener('click', function() {
@@ -535,7 +550,6 @@
                 });
             });
         }
-        // Optional: close sidebar on resize to desktop
         window.addEventListener('resize', function() {
             if (window.innerWidth > 900) closeSidebar();
         });
@@ -543,13 +557,10 @@
     document.addEventListener('DOMContentLoaded', function () {
         fetch('php/get_user_visits_stats.php')
             .then(response => response.json())
-            .then(data => {
-                // Total unique
+            .then(function(data) {
                 document.getElementById('total-unique').textContent = data.ips.length;
-                // Only declare monthlyCounts and monthlyLabels once
                 const monthlyCounts = data.monthly.map(m => Number(m.count));
                 const monthlyLabels = data.monthly.map(() => '');
-                // --- Monthly Chart Type Section ---
                 let chartType = 'pie';
                 let monthlyTypeChart;
                 function renderMonthlyTypeChart(type) {
@@ -559,7 +570,7 @@
                         data: {
                             labels: monthlyLabels,
                             datasets: [{
-                                label: '', // Remove legend label
+                                label: '',
                                 data: monthlyCounts,
                                 backgroundColor: [
                                     'rgba(16,185,129,0.4)', '#1976d2', '#f59e42', '#ef4444', '#6366f1', '#fbbf24', '#22d3ee', '#a3e635', '#f472b6', '#facc15', '#818cf8', '#f87171'
@@ -572,7 +583,7 @@
                             plugins: { legend: { display: false } },
                             scales: {},
                             responsive: true,
-                            maintainAspectRatio: false
+                            maintainAspectRatio: true // <-- set to true
                         }
                     });
                 }
@@ -585,17 +596,8 @@
                         renderMonthlyTypeChart(chartType);
                     });
                 });
-                // IP Table
-                const ipTableBody = document.getElementById('ipTableBody');
-                ipTableBody.innerHTML = '';
-                data.ips.forEach(row => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `<td>${row.user_ip}</td><td>${row.first_visit}</td>`;
-                    ipTableBody.appendChild(tr);
-                });
-
-                // --- New: Total (not unique) visits logic ---
-                // Calculate daily, weekly, monthly totals
+                window.userVisitsData = data; // Store data for pagination
+                renderIpTablePage(data); // Initial render of IP table
                 let today = new Date();
                 let todayStr = today.toISOString().slice(0,10);
                 let weekStart = new Date(today);
@@ -605,7 +607,6 @@
                 let dailyTotal = 0, weeklyTotal = 0, monthlyTotal = 0;
                 let trendLabels = [], trendCounts = [];
                 if (data.all_visits) {
-                    // If backend provides all visits per day
                     data.all_visits.forEach(row => {
                         trendLabels.push(row.day);
                         trendCounts.push(Number(row.count));
@@ -635,8 +636,6 @@
                         scales: { y: { beginAtZero: true } }
                     }
                 });
-
-                // Calendar logic
                 flatpickr('#calendar', {
                     defaultDate: today,
                     onChange: function(selectedDates, dateStr) {
@@ -660,5 +659,40 @@
             });
     });
     </script>
+    <script>
+document.querySelectorAll('.collapsible').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.classList.toggle('active');
+    const content = this.nextElementSibling;
+    content.classList.toggle('show');
+  });
+});
+
+// IP Table Pagination
+let currentPage = 1, rowsPerPage = 10;
+function renderIpTablePage(data) {
+  const ipTableBody = document.getElementById('ipTableBody');
+  ipTableBody.innerHTML = '';
+  const start = (currentPage - 1) * rowsPerPage;
+  const end = start + rowsPerPage;
+  data.ips.slice(start, end).forEach(row => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${row.user_ip}</td><td>${row.first_visit}</td>`;
+    ipTableBody.appendChild(tr);
+  });
+  const totalPages = Math.ceil(data.ips.length / rowsPerPage);
+  let paginationHtml = '';
+  if (totalPages > 1) {
+    if (currentPage > 1) paginationHtml += `<button onclick="changeIpPage(${currentPage-1})">Prev</button>`;
+    paginationHtml += ` Page ${currentPage} of ${totalPages} `;
+    if (currentPage < totalPages) paginationHtml += `<button onclick="changeIpPage(${currentPage+1})">Next</button>`;
+  }
+  document.getElementById('ipTablePagination').innerHTML = paginationHtml;
+}
+function changeIpPage(page) {
+  currentPage = page;
+  renderIpTablePage(window.userVisitsData);
+}
+</script>
 </body>
-</html> 
+</html>
