@@ -7,24 +7,76 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #3730a3;
+      --bg-light: #f8fafc;
+      --bg-dark: #18181b;
+      --bg-eye: #fdf6e3; /* Solarized base3 */
+      --text-light: #222;
+      --text-dark: #f4f4f4;
+      --text-eye: #657b83; /* Solarized base00 */
+      --card-bg-light: #fff;
+      --card-bg-dark: #23232a;
+      --card-bg-eye: #f5ecd7; /* Solarized base2 */
+    }
+    body[data-theme="light"] {
+      background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+      color: var(--text-light);
+    }
+    body[data-theme="dark"] {
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #23232a 100%);
+      color: var(--text-dark);
+    }
+    body[data-theme="eye"] {
+      background: linear-gradient(135deg, var(--bg-eye) 0%, #f5ecd7 100%);
+      color: var(--text-eye);
     }
     .container {
       max-width: 1200px;
       width: 100vw;
       margin: 2rem auto;
       padding: 2rem 2vw;
-      background: #fff;
+      background: var(--card-bg-light);
       border-radius: 18px;
       box-shadow: 0 8px 32px rgba(60,72,100,0.12);
+      transition: background 0.3s, color 0.3s;
+    }
+    body[data-theme="dark"] .container {
+      background: var(--card-bg-dark);
+      color: var(--text-dark);
+    }
+    body[data-theme="eye"] .container {
+      background: var(--card-bg-eye);
+      color: var(--text-eye);
+    }
+    .theme-toggle {
+      position: absolute;
+      top: 1.5rem;
+      right: 2.5vw;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1.2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(60,72,100,0.10);
+      transition: background 0.2s, color 0.2s, transform 0.1s;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+    }
+    .theme-toggle:hover {
+      background: var(--primary-dark);
+      color: #e0e7ff;
+      transform: scale(1.04);
+    }
+    .theme-toggle .icon {
+      font-size: 1.3em;
+      transition: color 0.2s;
     }
     h1 {
       text-align: center;
@@ -33,6 +85,12 @@
       color: #2d3748;
       margin-bottom: 2.5rem;
       letter-spacing: 1px;
+    }
+    body[data-theme="dark"] h1 {
+      color: #fffbe7;
+    }
+    body[data-theme="eye"] h1 {
+      color: #b58900;
     }
     .creators {
       display: flex;
@@ -185,6 +243,12 @@
       .creator-card {
         padding: 1.2rem 0.2rem 1rem 0.2rem;
       }
+      .theme-toggle {
+        top: 1rem;
+        right: 1vw;
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+      }
     }
     /* Dusty swirl cursor canvas overlays all content */
     #swirl-cursor-canvas {
@@ -200,8 +264,12 @@
     }
   </style>
 </head>
-<body>
+<body data-theme="light">
   <div class="container">
+    <button class="theme-toggle" id="themeToggleBtn" type="button">
+      <span class="icon" id="themeIcon">☀️</span>
+      <span id="themeLabel">Light</span>
+    </button>
     <h1>This website is built and managed by</h1>
     <div class="creators">
       <!-- Creator 1 -->
@@ -270,5 +338,33 @@
     </div>
     <a href="index.html" class="home-btn"><i class="fas fa-home"></i> Home</a>
   </div>
+  <script>
+    // Theme toggle logic for three modes: light, dark, eye comfortable
+    const themes = [
+      { name: 'light', icon: '☀️', label: 'Light' },
+      { name: 'dark', icon: '🌙', label: 'Dark' },
+      { name: 'eye', icon: '🌅', label: 'Solarized' }
+    ];
+    let currentTheme = 0;
+    const btn = document.getElementById('themeToggleBtn');
+    const icon = document.getElementById('themeIcon');
+    const label = document.getElementById('themeLabel');
+    function setTheme(idx) {
+      document.body.setAttribute('data-theme', themes[idx].name);
+      icon.textContent = themes[idx].icon;
+      label.textContent = themes[idx].label;
+    }
+    btn.addEventListener('click', function() {
+      currentTheme = (currentTheme + 1) % themes.length;
+      setTheme(currentTheme);
+    });
+    // Responsive: set initial theme based on prefers-color-scheme
+    window.addEventListener('DOMContentLoaded', function() {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        currentTheme = 1;
+        setTheme(currentTheme);
+      }
+    });
+  </script>
 </body>
 </html> 
