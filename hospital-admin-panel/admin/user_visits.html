@@ -143,6 +143,73 @@
     .stat-card .value { font-size: 2.1rem; font-weight: 700; color: var(--primary); }
     .stat-card .icon { font-size: 2rem; color: #1976d2; margin-bottom: 8px; }
     .chart-container { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(16,185,129,0.07); padding: 24px 24px 12px 24px; margin-bottom: 0; width: 100%; max-width: 900px; margin: 0 auto; }
+    .chart-type-section {
+      margin-top: 24px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(16,185,129,0.07);
+      padding: 24px 18px 18px 18px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .chart-type-title {
+      font-weight: 600;
+      color: #1976d2;
+      margin-bottom: 12px;
+    }
+    .chart-type-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .chart-type-btn {
+      background: #fff;
+      color: #2563eb;
+      border: 2px solid #2563eb;
+      border-radius: 6px;
+      padding: 8px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      outline: none;
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(37,99,235,0.08);
+    }
+    .chart-type-btn.active,
+    .chart-type-btn:hover {
+      background: #2563eb;
+      color: #fff;
+      border-color: #1746a2;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.15);
+    }
+    .ip-table-section {
+      margin-top: 32px;
+      width: 100%;
+      max-width: 1200px;
+      overflow-x: auto;
+    }
+    table.ip-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(16,185,129,0.07);
+    }
+    table.ip-table th, table.ip-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f3f4f6;
+      text-align: left;
+      font-size: 1rem;
+    }
+    table.ip-table th {
+      background: #2563eb;
+      color: #fff;
+      font-weight: 600;
+    }
+    table.ip-table tr:last-child td {
+      border-bottom: none;
+    }
     @media (max-width: 900px) { .analytics-section { padding: 16px 2vw; } .welcome-banner { padding: 24px 12px 18px 12px; } .stats-row { flex-direction: column; gap: 16px; } }
     @media (max-width: 600px) { .chart-container { padding: 12px 2px; } .stat-card, .chart-container { max-width: 100vw; min-width: 0; } .stat-card .label, .stat-card .value { font-size: 1rem; } }
     @media (max-width: 900px) {
@@ -205,6 +272,10 @@
         flex-wrap: wrap;
       }
     }
+    @media (max-width: 600px) {
+      .chart-type-section { padding: 8px 2vw 4px 2vw; }
+      table.ip-table th, table.ip-table td { padding: 8px 6px; font-size: 0.95rem; }
+    }
   </style>
 </head>
 <body>
@@ -259,9 +330,40 @@
         <div class="value" id="monthly-total">0</div>
       </div>
     </div>
-    <div class="chart-container">
-      <div class="label" style="font-weight:600;color:#1976d2;margin-bottom:8px;">Total Visits Trend (Last 60 Days)</div>
-      <canvas id="trendChart" height="80"></canvas>
+    <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;justify-content:space-between;width:100%;max-width:1200px;margin:0 auto 32px auto;">
+      <div style="flex:1 1 320px;min-width:260px;max-width:340px;background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(16,185,129,0.07);padding:24px 18px 18px 18px;">
+        <div style="font-weight:600;color:#1976d2;margin-bottom:8px;">Calendar</div>
+        <input id="calendar" type="text" style="width:100%;padding:10px;border-radius:6px;border:1px solid #27ec08;" readonly>
+        <div class="calendar-side-panel" id="calendarSidePanel" style="margin-top:18px;background:#f3f4f6;border-radius:8px;padding:12px 16px;width:100%;">
+          <div><strong>Today:</strong> <span id="calendarToday"></span></div>
+          <div id="calendarVisitInfo"></div>
+        </div>
+      </div>
+      <div class="chart-container" style="flex:2 1 500px;min-width:320px;">
+        <div class="label" style="font-weight:600;color:#1976d2;margin-bottom:8px;">Total Visits Trend (Last 60 Days)</div>
+        <canvas id="trendChart" height="80"></canvas>
+      </div>
+    </div>
+    <div class="chart-type-section" style="margin-top:24px;background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(16,185,129,0.07);padding:24px 18px 18px 18px;max-width:900px;margin-left:auto;margin-right:auto;">
+      <div class="chart-type-title" style="font-weight:600;color:#1976d2;margin-bottom:12px;">Visits Analytics</div>
+      <div class="chart-type-buttons" style="display:flex;gap:10px;margin-bottom:18px;">
+        <button class="chart-type-btn active" data-type="pie">Pie</button>
+        <button class="chart-type-btn" data-type="doughnut">Doughnut</button>
+        <button class="chart-type-btn" data-type="polarArea">Polar</button>
+      </div>
+      <div style="width:100%;max-width:600px;margin:0 auto;">
+        <canvas id="visitsTypeChart" height="120"></canvas>
+      </div>
+      <div id="chartNoData" style="text-align:center;color:#888;margin-top:12px;display:none;">No data available for this chart.</div>
+    </div>
+    <div class="ip-table-section" style="margin-top:32px;width:100%;max-width:1200px;">
+      <div class="ip-table-title" style="font-size:1.1rem;font-weight:600;color:#1976d2;margin-bottom:12px;">All Unique Visitors</div>
+      <table class="ip-table" style="width:100%;border-collapse:collapse;background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(16,185,129,0.07);">
+        <thead>
+          <tr><th>IP Address</th><th>Visit Time</th></tr>
+        </thead>
+        <tbody id="ipTableBody"></tbody>
+      </table>
     </div>
   </section>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -286,7 +388,7 @@
     profileMenu.addEventListener('click', function(e) { e.stopPropagation(); this.classList.toggle('open'); });
     document.addEventListener('click', function() { profileMenu.classList.remove('open'); });
     // Fetch and render analytics
-    fetch('php/get_user_visits_stats.php')
+    fetch('../../php/get_user_visits_stats.php')
       .then(r => r.json())
       .then(data => {
         document.getElementById('total-unique').textContent = data.ips.length;
@@ -297,6 +399,7 @@
         let monthStr = today.toISOString().slice(0,7);
         let dailyTotal = 0, weeklyTotal = 0, monthlyTotal = 0;
         let trendLabels = [], trendCounts = [];
+        let dayOfWeekCounts = [0,0,0,0,0,0,0]; // Sun-Sat
         if (data.all_visits) {
           data.all_visits.forEach(row => {
             trendLabels.push(row.day);
@@ -304,6 +407,9 @@
             if (row.day === todayStr) dailyTotal = Number(row.count);
             if (row.day >= weekStartStr) weeklyTotal += Number(row.count);
             if (row.day.startsWith(monthStr)) monthlyTotal += Number(row.count);
+            // Pie chart: count by day of week
+            const d = new Date(row.day);
+            if (!isNaN(d)) dayOfWeekCounts[d.getDay()] += Number(row.count);
           });
         }
         document.getElementById('daily-total').textContent = dailyTotal;
@@ -314,6 +420,155 @@
           data: { labels: trendLabels, datasets: [{ label: 'Total Visits', data: trendCounts, borderColor: '#1976d2', backgroundColor: 'rgba(25,118,210,0.10)', fill: true, tension: 0.3 }] },
           options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
         });
+        // --- Chart Section ---
+        const chartTypeBtns = document.querySelectorAll('.chart-type-btn');
+        let visitsTypeChart;
+        function renderVisitsTypeChart(type) {
+          if (visitsTypeChart) visitsTypeChart.destroy();
+          let chartData = {labels: [], datasets: []};
+          let chartOptions = {plugins:{legend:{display:true,position:'bottom'}},responsive:true,maintainAspectRatio:true};
+          let showNoData = false;
+          if (type === 'pie') {
+            // Pie: Today's visits by hour
+            let today = new Date();
+            let todayStr = today.toISOString().slice(0,10);
+            let hourCounts = Array(24).fill(0);
+            if (data.visits_by_hour) {
+              data.visits_by_hour.forEach(row => {
+                if (row.day === todayStr) hourCounts[parseInt(row.hour)] = Number(row.count);
+              });
+            } else if (data.all_visits_by_time) {
+              data.all_visits_by_time.forEach(row => {
+                if (row.day === todayStr) hourCounts[parseInt(row.hour)] = Number(row.count);
+              });
+            }
+            chartData.labels = Array.from({length:24},(_,i)=>i+':00');
+            chartData.datasets = [{
+              data: hourCounts,
+              backgroundColor: Array.from({length:24},(_,i)=>`rgba(${37+i*8},99,235,0.45)`)
+            }];
+            showNoData = hourCounts.reduce((a,b)=>a+b,0) === 0;
+          } else if (type === 'doughnut') {
+            // Doughnut: Current week, daily stats
+            let weekDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+            let weekCounts = Array(7).fill(0);
+            let today = new Date();
+            let weekStart = new Date(today); weekStart.setDate(today.getDate() - today.getDay());
+            let weekStartStr = weekStart.toISOString().slice(0,10);
+            if (data.all_visits) {
+              data.all_visits.forEach(row => {
+                let d = new Date(row.day);
+                if (!isNaN(d) && row.day >= weekStartStr) weekCounts[d.getDay()] += Number(row.count);
+              });
+            }
+            chartData.labels = weekDays;
+            chartData.datasets = [{
+              data: weekCounts,
+              backgroundColor: [
+                'rgba(96,165,250,0.45)','rgba(37,99,235,0.45)','rgba(16,185,129,0.45)','rgba(245,158,66,0.45)','rgba(239,68,68,0.45)','rgba(99,102,241,0.45)','rgba(251,191,36,0.45)'
+              ]
+            }];
+            showNoData = weekCounts.reduce((a,b)=>a+b,0) === 0;
+          } else if (type === 'polarArea') {
+            // Polar: Current month, weekly stats
+            let today = new Date();
+            let monthStr = today.toISOString().slice(0,7);
+            let weekStats = [];
+            if (data.all_visits) {
+              let weeks = {};
+              data.all_visits.forEach(row => {
+                if (row.day.startsWith(monthStr)) {
+                  let d = new Date(row.day);
+                  let weekNum = Math.floor((d.getDate()-1)/7);
+                  if (!weeks[weekNum]) weeks[weekNum]=0;
+                  weeks[weekNum] += Number(row.count);
+                }
+              });
+              weekStats = Object.values(weeks);
+            }
+            chartData.labels = weekStats.map((_,i)=>'Week '+(i+1));
+            chartData.datasets = [{
+              data: weekStats,
+              backgroundColor: [
+                'rgba(96,165,250,0.45)','rgba(37,99,235,0.45)','rgba(16,185,129,0.45)','rgba(245,158,66,0.45)'
+              ]
+            }];
+            showNoData = weekStats.length === 0 || weekStats.reduce((a,b)=>a+b,0) === 0;
+          }
+          document.getElementById('chartNoData').style.display = showNoData ? 'block' : 'none';
+          visitsTypeChart = new Chart(document.getElementById('visitsTypeChart').getContext('2d'), {
+            type: type,
+            data: chartData,
+            options: chartOptions
+          });
+        }
+        // Ensure Pie is shown and active by default
+        renderVisitsTypeChart('pie');
+        chartTypeBtns.forEach(btn => {
+          btn.addEventListener('click', function() {
+            chartTypeBtns.forEach(b=>b.classList.remove('active'));
+            btn.classList.add('active');
+            renderVisitsTypeChart(btn.getAttribute('data-type'));
+          });
+        });
+        // Calendar logic
+        flatpickr('#calendar', {
+          defaultDate: today,
+          onChange: function(selectedDates, dateStr) {
+            let selected = dateStr;
+            let dayCount = 0, dayUnique = 0;
+            if (data.all_visits) {
+              let found = data.all_visits.find(row => row.day === selected);
+              if (found) dayCount = Number(found.count);
+            }
+            if (data.daily) {
+              let found = data.daily.find(row => row.day === selected);
+              if (found) dayUnique = Number(found.count);
+            }
+            document.getElementById('calendarSidePanel').innerHTML =
+              `<div><strong>Selected:</strong> ${selected}</div>`+
+              `<div><strong>Total Visits:</strong> ${dayCount}</div>`+
+              `<div><strong>Unique Visits:</strong> ${dayUnique}</div>`;
+          }
+        });
+        // Show today's date and time in calendar side panel
+        function updateCalendarToday() {
+          const now = new Date();
+          let hours = now.getHours();
+          let minutes = now.getMinutes();
+          let ampm = hours >= 12 ? 'PM' : 'AM';
+          hours = hours % 12;
+          hours = hours ? hours : 12;
+          let timeStr = hours + ':' + (minutes<10?'0':'') + minutes + ' ' + ampm;
+          document.getElementById('calendarToday').textContent = now.toLocaleDateString() + ' ' + timeStr;
+        }
+        updateCalendarToday();
+        setInterval(updateCalendarToday, 1000*30);
+        // Show today's stats in side panel by default
+        let todayCount = 0, todayUnique = 0;
+        if (data.all_visits) {
+          let found = data.all_visits.find(row => row.day === todayStr);
+          if (found) todayCount = Number(found.count);
+        }
+        if (data.daily) {
+          let found = data.daily.find(row => row.day === todayStr);
+          if (found) todayUnique = Number(found.count);
+        }
+        document.getElementById('calendarVisitInfo').innerHTML =
+          `<div><strong>Today's Visits:</strong> ${todayCount}</div>`+
+          `<div><strong>Today's Unique:</strong> ${todayUnique}</div>`;
+        // IP Table
+        const ipTableBody = document.getElementById('ipTableBody');
+        ipTableBody.innerHTML = '';
+        if (Array.isArray(data.ips) && data.ips.length > 0) {
+          data.ips.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${row.user_ip}</td><td>${row.visit_time || ''}</td>`;
+            ipTableBody.appendChild(tr);
+          });
+        } else {
+          ipTableBody.innerHTML = '<tr><td colspan="2" style="text-align:center;color:#888;">No IP data found.</td></tr>';
+        }
       });
   </script>
 </body>
