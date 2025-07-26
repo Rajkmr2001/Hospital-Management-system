@@ -533,14 +533,17 @@
         });
         // Show today's date and time in calendar side panel
         function updateCalendarToday() {
-          const now = new Date();
-          let hours = now.getHours();
-          let minutes = now.getMinutes();
-          let ampm = hours >= 12 ? 'PM' : 'AM';
-          hours = hours % 12;
-          hours = hours ? hours : 12;
-          let timeStr = hours + ':' + (minutes<10?'0':'') + minutes + ' ' + ampm;
-          document.getElementById('calendarToday').textContent = now.toLocaleDateString() + ' ' + timeStr;
+          const calendarTodayElement = document.getElementById('calendarToday');
+          if (calendarTodayElement) {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            let timeStr = hours + ':' + (minutes<10?'0':'') + minutes + ' ' + ampm;
+            calendarTodayElement.textContent = now.toLocaleDateString() + ' ' + timeStr;
+          }
         }
         updateCalendarToday();
         setInterval(updateCalendarToday, 1000*30);

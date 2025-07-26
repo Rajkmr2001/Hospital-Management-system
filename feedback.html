@@ -7,20 +7,51 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Visit Tracking -->
+    <img src="hospital-admin-panel/admin/php/log_user_visit.php" style="display:none;" alt="" />
     <style>
-        #commentSection {
-            margin-top: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+        body {
+            background: linear-gradient(120deg, #f3f4f6 60%, #e6f9ed 100%);
+            min-height: 100vh;
+        }
+        .feedback-card {
+            border-radius: 20px;
+            box-shadow: 0 4px 24px 0 #10b98122;
+            background: #fff;
+            max-width: 480px;
+            margin: 32px auto;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+        }
+        .feedback-title {
+            font-family: 'Pacifico', cursive;
+            color: #10b981;
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #10b981;
+        }
+        .form-control:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 0.2rem #10b98133;
+        }
+        .register-btn {
+            background: #f59e42;
+            color: #fff;
+            border: none;
+        }
+        .register-btn:hover {
+            background: #e67e22;
+            color: #fff;
         }
         .comment-box {
-            padding: 14px 18px;
             background: linear-gradient(90deg, #f3f4f6 60%, #e6f9ed 100%);
-            border-radius: 12px;
-            margin-bottom: 16px;
+            border-radius: 14px;
+            margin-bottom: 18px;
             border-left: 5px solid #10b981;
             box-shadow: 0 2px 8px 0 #10b98122;
+            padding: 1rem 1.2rem;
             transition: box-shadow 0.2s;
         }
         .comment-box strong {
@@ -29,13 +60,6 @@
         .comment-box:hover {
             box-shadow: 0 4px 16px 0 #10b98133;
             background: linear-gradient(90deg, #e6f9ed 60%, #f3f4f6 100%);
-        }
-        .card {
-            border-radius: 18px;
-        }
-        .card-body {
-            background: #fff;
-            border-radius: 18px;
         }
         .like-btn {
             background: transparent;
@@ -50,157 +74,642 @@
         .like-btn.liked .ri-heart-3-fill {
             color: #ef4444;
         }
-        .like-btn:not(.liked) .ri-heart-3-fill {
-            color: #bbb;
-        }
+                 .like-btn:not(.liked) .ri-heart-3-fill {
+             color: #bbb;
+         }
+         .dislike-btn {
+             background: transparent;
+             border: none;
+             outline: none;
+             cursor: pointer;
+         }
+         .dislike-btn .ri-thumb-down-fill {
+             font-size: 1.3em;
+             transition: color 0.2s;
+         }
+         .dislike-btn.disliked .ri-thumb-down-fill {
+             color: #ef4444;
+         }
+         .dislike-btn:not(.disliked) .ri-thumb-down-fill {
+             color: #bbb;
+         }
+         .custom-dialog {
+             position: fixed;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             background: rgba(0, 0, 0, 0.5);
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             z-index: 9999;
+             opacity: 0;
+             visibility: hidden;
+             transition: all 0.3s ease;
+         }
+         .custom-dialog.show {
+             opacity: 1;
+             visibility: visible;
+         }
+         .dialog-content {
+             background: white;
+             border-radius: 20px;
+             padding: 2rem;
+             max-width: 400px;
+             width: 90%;
+             text-align: center;
+             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+             transform: scale(0.7);
+             transition: transform 0.3s ease;
+         }
+         .custom-dialog.show .dialog-content {
+             transform: scale(1);
+         }
+         .dialog-icon {
+             font-size: 3rem;
+             margin-bottom: 1rem;
+         }
+         .dialog-icon.success {
+             color: #10b981;
+         }
+         .dialog-icon.error {
+             color: #ef4444;
+         }
+         .dialog-title {
+             font-size: 1.5rem;
+             font-weight: 600;
+             margin-bottom: 0.5rem;
+             color: #1f2937;
+         }
+         .dialog-message {
+             color: #6b7280;
+             margin-bottom: 1.5rem;
+         }
+         .dialog-btn {
+             background: #10b981;
+             color: white;
+             border: none;
+             padding: 0.75rem 2rem;
+             border-radius: 10px;
+             font-weight: 500;
+             cursor: pointer;
+             transition: background 0.2s;
+         }
+         .dialog-btn:hover {
+             background: #059669;
+         }
+         
+         /* Theme Toggle Styles */
+         .theme-toggle {
+             position: relative;
+             display: inline-flex;
+             align-items: center;
+             background: #f3f4f6;
+             border-radius: 25px;
+             padding: 4px;
+             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+             transition: all 0.3s ease;
+         }
+         
+         .theme-toggle button {
+             border: none;
+             background: transparent;
+             padding: 8px 12px;
+             border-radius: 20px;
+             font-size: 0.9rem;
+             font-weight: 500;
+             cursor: pointer;
+             transition: all 0.3s ease;
+             color: #6b7280;
+             position: relative;
+             z-index: 2;
+         }
+         
+         .theme-toggle button.active {
+             background: #10b981;
+             color: white;
+             box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+         }
+         
+         .theme-toggle button:hover:not(.active) {
+             color: #10b981;
+         }
+         
+         /* Dark Mode Styles */
+         body.dark-mode {
+             background: linear-gradient(120deg, #1f2937 60%, #111827 100%);
+             color: #f9fafb;
+         }
+         
+         body.dark-mode .feedback-card {
+             background: #374151;
+             box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.3);
+         }
+         
+         body.dark-mode .feedback-title {
+             color: #10b981;
+         }
+         
+         body.dark-mode .form-label {
+             color: #10b981;
+         }
+         
+         body.dark-mode .form-control {
+             background: #4b5563;
+             border-color: #6b7280;
+             color: #f9fafb;
+         }
+         
+         body.dark-mode .form-control:focus {
+             background: #4b5563;
+             border-color: #10b981;
+             color: #f9fafb;
+         }
+         
+         body.dark-mode .form-control::placeholder {
+             color: #9ca3af;
+         }
+         
+         body.dark-mode .comment-box {
+             background: linear-gradient(90deg, #4b5563 60%, #374151 100%);
+             border-left-color: #10b981;
+             color: #f9fafb;
+         }
+         
+         body.dark-mode .comment-box:hover {
+             background: linear-gradient(90deg, #374151 60%, #4b5563 100%);
+         }
+         
+         body.dark-mode .comment-box strong {
+             color: #10b981;
+         }
+         
+         body.dark-mode .text-muted {
+             color: #9ca3af !important;
+         }
+         
+         body.dark-mode .btn-outline-success {
+             border-color: #10b981;
+             color: #10b981;
+         }
+         
+         body.dark-mode .btn-outline-success:hover {
+             background: #10b981;
+             color: #111827;
+         }
+         
+         /* Solarized Mode Styles */
+         body.solarized-mode {
+             background: linear-gradient(120deg, #fdf6e3 60%, #eee8d5 100%);
+             color: #586e75;
+         }
+         
+         body.solarized-mode .feedback-card {
+             background: #fdf6e3;
+             box-shadow: 0 4px 24px 0 rgba(101, 123, 131, 0.2);
+         }
+         
+         body.solarized-mode .feedback-title {
+             color: #268bd2;
+         }
+         
+         body.solarized-mode .form-label {
+             color: #268bd2;
+         }
+         
+         body.solarized-mode .form-control {
+             background: #eee8d5;
+             border-color: #93a1a1;
+             color: #586e75;
+         }
+         
+         body.solarized-mode .form-control:focus {
+             background: #eee8d5;
+             border-color: #268bd2;
+             color: #586e75;
+         }
+         
+         body.solarized-mode .form-control::placeholder {
+             color: #93a1a1;
+         }
+         
+         body.solarized-mode .comment-box {
+             background: linear-gradient(90deg, #eee8d5 60%, #fdf6e3 100%);
+             border-left-color: #268bd2;
+             color: #586e75;
+         }
+         
+         body.solarized-mode .comment-box:hover {
+             background: linear-gradient(90deg, #fdf6e3 60%, #eee8d5 100%);
+         }
+         
+         body.solarized-mode .comment-box strong {
+             color: #268bd2;
+         }
+         
+         body.solarized-mode .text-muted {
+             color: #93a1a1 !important;
+         }
+         
+         body.solarized-mode .btn-outline-success {
+             border-color: #268bd2;
+             color: #268bd2;
+         }
+         
+         body.solarized-mode .btn-outline-success:hover {
+             background: #268bd2;
+             color: #fdf6e3;
+         }
+         
+         body.solarized-mode .btn-success {
+             background: #268bd2;
+             border-color: #268bd2;
+         }
+         
+         body.solarized-mode .btn-success:hover {
+             background: #1e6bb8;
+             border-color: #1e6bb8;
+         }
+         
+         body.solarized-mode .register-btn {
+             background: #cb4b16;
+         }
+         
+         body.solarized-mode .register-btn:hover {
+             background: #a83900;
+         }
+         
+         body.solarized-mode .dialog-content {
+             background: #fdf6e3;
+             color: #586e75;
+         }
+         
+         body.solarized-mode .dialog-title {
+             color: #268bd2;
+         }
+         
+         body.solarized-mode .dialog-message {
+             color: #93a1a1;
+         }
+         
+         body.solarized-mode .dialog-btn {
+             background: #268bd2;
+         }
+         
+         body.solarized-mode .dialog-btn:hover {
+             background: #1e6bb8;
+         }
+         
+         body.dark-mode .dialog-content {
+             background: #374151;
+             color: #f9fafb;
+         }
+         
+         body.dark-mode .dialog-title {
+             color: #10b981;
+         }
+         
+         body.dark-mode .dialog-message {
+             color: #9ca3af;
+         }
+         
+         body.dark-mode .dialog-btn {
+             background: #10b981;
+         }
+         
+         body.dark-mode .dialog-btn:hover {
+             background: #059669;
+         }
+         
+         @media (max-width: 600px) {
+            .feedback-card {
+                padding: 1.2rem 0.5rem 1rem 0.5rem;
+                margin: 16px 0;
+            }
+                         .feedback-title {
+                 font-size: 1.5rem;
+             }
+             .theme-toggle {
+                 margin-top: 10px;
+             }
+             .theme-toggle button {
+                 padding: 6px 10px;
+                 font-size: 0.8rem;
+             }
+         }
     </style>
 </head>
 <body>
-    <!-- Feedback Section -->
-    <section class="p-5 min-vh-100 d-flex align-items-center bg-light">
-        <div class="container mt-5" style="max-width: 600px;">
-            <!-- Back to Home Button -->
-            <div class="mb-4 text-start">
-                <a href="index.html" class="btn btn-outline-success rounded-pill shadow-sm">
-                    <i class="ri-arrow-left-line"></i> Back to Home
-                </a>
-            </div>
-            <div class="card shadow-lg border-0">
-                <div class="card-body">
-                    <h2 class="mb-4 text-success fw-bold" style="font-family: 'Pacifico', cursive;">Feedback</h2>
-                    <div class="mb-3">
-                        <input type="text" id="numberInput" class="form-control mb-2" placeholder="Enter your registered mobile number" oninput="fetchName()">
-                        <input type="text" id="nameInput" class="form-control mb-2" placeholder="Your name automatically appear" readonly>
-                        <textarea id="commentInput" class="form-control" placeholder="Write a comment..." disabled></textarea>
-                        <button class="btn btn-success mt-2 w-100" onclick="addComment()" disabled>Add Comment</button>
-                    </div>
-                    <hr>
-                    <div id="commentSection"></div>
-                </div>
-            </div>
+    <div class="container-fluid min-vh-100 d-flex flex-column justify-content-center align-items-center p-0">
+        <div class="w-100 text-start mt-3 mb-2 px-3">
+            <a href="index.html" class="btn btn-outline-success rounded-pill shadow-sm">
+                <i class="ri-arrow-left-line"></i> Back to Home
+            </a>
         </div>
-    </section>
+                 <div class="feedback-card w-100">
+             <div class="text-center">
+                 <div class="d-flex justify-content-center align-items-center gap-3 mb-2">
+                     <div class="feedback-title">Feedback</div>
+                     <div class="theme-toggle">
+                         <button id="lightBtn" class="active" onclick="setTheme('light')">
+                             <i class="ri-sun-line"></i> Light
+                         </button>
+                         <button id="darkBtn" onclick="setTheme('dark')">
+                             <i class="ri-moon-line"></i> Dark
+                         </button>
+                         <button id="solarizedBtn" onclick="setTheme('solarized')">
+                             <i class="ri-palette-line"></i> Solarized
+                         </button>
+                     </div>
+                 </div>
+                 <div class="mb-4 text-muted">We value your feedback! Please register to comment if you haven't already.</div>
+             </div>
+            <form id="feedbackForm" autocomplete="off">
+                <div class="mb-3">
+                    <label for="numberInput" class="form-label">Mobile Number</label>
+                    <input type="text" id="numberInput" class="form-control" placeholder="Enter your registered mobile number" maxlength="15" required>
+                </div>
+                <div class="mb-3">
+                    <label for="nameInput" class="form-label">Name</label>
+                    <input type="text" id="nameInput" class="form-control" placeholder="Your name will appear here" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="commentInput" class="form-label">Comment</label>
+                    <textarea id="commentInput" class="form-control" placeholder="Write a comment..." rows="3" disabled></textarea>
+                </div>
+                <div class="d-grid gap-2" id="actionBtnContainer">
+                    <button type="button" id="addCommentBtn" class="btn btn-success" disabled>Add Comment</button>
+                </div>
+            </form>
+            <hr class="my-4">
+                         <div id="commentSection"></div>
+         </div>
+     </div>
+     
+     <!-- Custom Dialog Box -->
+     <div id="customDialog" class="custom-dialog">
+         <div class="dialog-content">
+             <div id="dialogIcon" class="dialog-icon"></div>
+             <div id="dialogTitle" class="dialog-title"></div>
+             <div id="dialogMessage" class="dialog-message"></div>
+             <button id="dialogBtn" class="dialog-btn">OK</button>
+         </div>
+     </div>
     <script>
-        let userNumber = '';
-        let userName = '';
+                 let userNumber = '';
+         let userName = '';
+         let isRegistered = false;
+         let currentTheme = 'light';
+
+         // Theme management functions
+         function setTheme(theme) {
+             const body = document.body;
+             const lightBtn = document.getElementById('lightBtn');
+             const darkBtn = document.getElementById('darkBtn');
+             const solarizedBtn = document.getElementById('solarizedBtn');
+             
+             // Remove all theme classes
+             body.classList.remove('dark-mode', 'solarized-mode');
+             
+             // Remove active class from all buttons
+             lightBtn.classList.remove('active');
+             darkBtn.classList.remove('active');
+             solarizedBtn.classList.remove('active');
+             
+             // Apply selected theme
+             switch(theme) {
+                 case 'dark':
+                     body.classList.add('dark-mode');
+                     darkBtn.classList.add('active');
+                     currentTheme = 'dark';
+                     break;
+                 case 'solarized':
+                     body.classList.add('solarized-mode');
+                     solarizedBtn.classList.add('active');
+                     currentTheme = 'solarized';
+                     break;
+                 default:
+                     lightBtn.classList.add('active');
+                     currentTheme = 'light';
+                     break;
+             }
+             
+             // Save theme preference
+             localStorage.setItem('feedback-theme', theme);
+         }
+         
+         // Load saved theme on page load
+         function loadSavedTheme() {
+             const savedTheme = localStorage.getItem('feedback-theme');
+             if (savedTheme) {
+                 setTheme(savedTheme);
+             }
+         }
+
+         // Custom dialog functions
+         function showDialog(title, message, type = 'success') {
+             const dialog = document.getElementById('customDialog');
+             const icon = document.getElementById('dialogIcon');
+             const titleEl = document.getElementById('dialogTitle');
+             const messageEl = document.getElementById('dialogMessage');
+             
+             icon.className = 'dialog-icon ' + type;
+             icon.innerHTML = type === 'success' ? '<i class="ri-check-line"></i>' : '<i class="ri-error-warning-line"></i>';
+             titleEl.textContent = title;
+             messageEl.textContent = message;
+             
+             dialog.classList.add('show');
+         }
+         
+         function hideDialog() {
+             const dialog = document.getElementById('customDialog');
+             dialog.classList.remove('show');
+         }
+         
+         // Close dialog when clicking OK button or outside
+         document.getElementById('dialogBtn').addEventListener('click', hideDialog);
+         document.getElementById('customDialog').addEventListener('click', function(e) {
+             if (e.target === this) hideDialog();
+         });
+
+        // Helper to reset action button
+        function setActionButton({text, color, icon, onClick, disabled}) {
+            const btn = document.getElementById('addCommentBtn');
+            btn.className = 'btn w-100';
+            if (color === 'success') btn.classList.add('btn-success');
+            else if (color === 'warning') btn.classList.add('register-btn');
+            else btn.classList.add('btn-secondary');
+            btn.innerHTML = icon ? `<i class="${icon}"></i> ${text}` : text;
+            btn.disabled = !!disabled;
+            btn.onclick = onClick;
+        }
 
         // Fetch name from the database
-        function fetchName() {
-            let number = document.getElementById("numberInput").value;
-            let nameField = document.getElementById("nameInput");
-            let commentInput = document.getElementById("commentInput");
-            let addButton = document.querySelector("button[onclick='addComment()']");
+        document.getElementById('numberInput').addEventListener('input', function() {
+            const number = this.value.trim();
             userNumber = number;
-            if (number.trim() === "") {
-                nameField.value = "";
+            const nameField = document.getElementById('nameInput');
+            const commentInput = document.getElementById('commentInput');
+            if (!number) {
+                nameField.value = '';
+                commentInput.value = '';
                 commentInput.disabled = true;
-                addButton.disabled = true;
+                setActionButton({text: 'Add Comment', color: 'success', onClick: addComment, disabled: true});
+                isRegistered = false;
                 userName = '';
                 return;
             }
             $.ajax({
-                url: "fetch_name.php",
-                method: "POST",
+                url: 'fetch_name.php',
+                method: 'POST',
                 data: { contact: number },
                 success: function(response) {
-                    if (response.trim() === "not_found") {
-                        nameField.value = "First register before commenting!";
+                    if (response.trim() === 'not_found') {
+                        nameField.value = '';
+                        commentInput.value = '';
                         commentInput.disabled = true;
-                        addButton.disabled = true;
+                        setActionButton({
+                            text: 'Register Now',
+                            color: 'warning',
+                            icon: 'ri-user-add-line',
+                            onClick: function() { window.location.href = 'patient_registration.html'; },
+                            disabled: false
+                        });
+                        isRegistered = false;
                         userName = '';
                     } else {
                         nameField.value = response;
                         commentInput.disabled = false;
-                        addButton.disabled = false;
+                        setActionButton({text: 'Add Comment', color: 'success', onClick: addComment, disabled: false});
+                        isRegistered = true;
                         userName = response;
                     }
                 }
             });
-        }
+        });
 
         // Add feedback to backend
         function addComment() {
-            let number = document.getElementById("numberInput").value;
-            let name = document.getElementById("nameInput").value;
-            let comment = document.getElementById("commentInput").value;
-            if (number.trim() === "" || name === "First register before commenting!" || comment.trim() === "") {
-                alert("Please enter valid details.");
-                return;
-            }
+            const number = document.getElementById('numberInput').value.trim();
+            const name = document.getElementById('nameInput').value.trim();
+            const comment = document.getElementById('commentInput').value.trim();
+                         if (!isRegistered || !number || !name || !comment) {
+                 showDialog('Validation Error', 'Please enter valid details and ensure you are registered.', 'error');
+                 return;
+             }
             $.ajax({
-                url: "php/submit_feedback.php",
-                method: "POST",
+                url: 'php/submit_feedback.php',
+                method: 'POST',
                 data: { number: number, name: name, comment: comment },
-                dataType: "json",
-                success: function(response) {
-                    if (response.success) {
-                        alert("Feedback submitted successfully!");
-                        document.getElementById("commentInput").value = "";
-                        loadFeedback();
-                    } else {
-                        alert("Error: " + (response.message || "Unknown error"));
-                    }
-                }
+                dataType: 'json',
+                                 success: function(response) {
+                     if (response.success) {
+                         showDialog('Success!', 'Your feedback has been submitted successfully!', 'success');
+                         document.getElementById('commentInput').value = '';
+                         loadFeedback();
+                     } else {
+                         showDialog('Error', response.message || 'Unknown error occurred', 'error');
+                     }
+                 }
             });
         }
 
-        // Like feedback
-        function likeFeedback(feedbackId) {
-            if (!userNumber || !userName) {
-                alert("You must be registered and enter your number to like feedback.");
-                return;
-            }
-            $.ajax({
-                url: "php/like_feedback.php",
-                method: "POST",
-                data: { id: feedbackId, number: userNumber },
-                dataType: "json",
-                success: function(response) {
-                    if (response.success) {
-                        loadFeedback();
-                    } else {
-                        alert("Error: " + (response.message || "Unknown error"));
-                    }
-                }
-            });
-        }
+                 // Like/Dislike feedback
+         function likeFeedback(feedbackId) {
+             if (!userNumber || !userName) {
+                 showDialog('Authentication Required', 'You must be registered and enter your number to like feedback.', 'error');
+                 return;
+             }
+             $.ajax({
+                 url: 'php/like_feedback.php',
+                 method: 'POST',
+                 data: { id: feedbackId, number: userNumber, action: 'like' },
+                 dataType: 'json',
+                 success: function(response) {
+                     if (response.success) {
+                         loadFeedback();
+                     } else {
+                         showDialog('Error', response.message || 'Unknown error occurred', 'error');
+                     }
+                 }
+             });
+         }
+         
+         function dislikeFeedback(feedbackId) {
+             if (!userNumber || !userName) {
+                 showDialog('Authentication Required', 'You must be registered and enter your number to dislike feedback.', 'error');
+                 return;
+             }
+             $.ajax({
+                 url: 'php/like_feedback.php',
+                 method: 'POST',
+                 data: { id: feedbackId, number: userNumber, action: 'dislike' },
+                 dataType: 'json',
+                 success: function(response) {
+                     if (response.success) {
+                         loadFeedback();
+                     } else {
+                         showDialog('Error', response.message || 'Unknown error occurred', 'error');
+                     }
+                 }
+             });
+         }
 
         // Load and display all feedback from backend
         function loadFeedback() {
             $.ajax({
-                url: "php/get_feedback.php",
-                method: "GET",
-                dataType: "json",
+                url: 'php/get_feedback.php',
+                method: 'GET',
+                dataType: 'json',
                 success: function(feedbacks) {
-                    let commentSection = document.getElementById("commentSection");
-                    commentSection.innerHTML = "";
+                    const commentSection = document.getElementById('commentSection');
+                    commentSection.innerHTML = '';
                     if (!feedbacks.length) {
                         commentSection.innerHTML = '<div class="text-center text-muted">No feedback found.</div>';
                         return;
                     }
-                    feedbacks.forEach(fb => {
-                        let liked = Array.isArray(fb.liked_by) && fb.liked_by.includes(userNumber);
-                        let heartClass = liked ? "like-btn liked" : "like-btn";
-                        let likeCount = fb.likes || 0;
-                        let commentBox = document.createElement("div");
-                        commentBox.className = "comment-box";
-                        commentBox.innerHTML = `
-                            <strong>${fb.name} :</strong> ${fb.comment}
-                            <div class="mt-2">
-                                <button class="${heartClass}" onclick="likeFeedback(${fb.id})">
-                                    <i class="ri-heart-3-fill"></i>
-                                </button>
-                                <span class="ms-1">${likeCount} like</span>
-                            </div>
-                        `;
-                        commentSection.appendChild(commentBox);
-                    });
+                                         feedbacks.forEach(fb => {
+                         let liked = Array.isArray(fb.liked_by) && fb.liked_by.includes(userNumber);
+                         let disliked = Array.isArray(fb.disliked_by) && fb.disliked_by.includes(userNumber);
+                         let heartClass = liked ? 'like-btn liked' : 'like-btn';
+                         let thumbClass = disliked ? 'dislike-btn disliked' : 'dislike-btn';
+                         let likeCount = fb.likes || 0;
+                         let dislikeCount = fb.dislikes || 0;
+                         let commentBox = document.createElement('div');
+                         commentBox.className = 'comment-box';
+                         commentBox.innerHTML = `
+                             <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                 <div class="fw-bold"><strong>${fb.name}</strong></div>
+                                 <div class="small text-muted">${fb.created_at ? fb.created_at : ''}</div>
+                             </div>
+                             <div class="mt-1 mb-2">${fb.comment}</div>
+                             <div class="d-flex align-items-center gap-3">
+                                 <div class="d-flex align-items-center gap-1">
+                                     <button class="${heartClass}" onclick="likeFeedback(${fb.id})">
+                                         <i class="ri-heart-3-fill"></i>
+                                     </button>
+                                     <span class="ms-1">${likeCount}</span>
+                                 </div>
+                                 <div class="d-flex align-items-center gap-1">
+                                     <button class="${thumbClass}" onclick="dislikeFeedback(${fb.id})">
+                                         <i class="ri-thumb-down-fill"></i>
+                                     </button>
+                                     <span class="ms-1">${dislikeCount}</span>
+                                 </div>
+                             </div>
+                         `;
+                         commentSection.appendChild(commentBox);
+                     });
                 }
             });
         }
 
-        // Initial load
-        document.addEventListener("DOMContentLoaded", loadFeedback);
+                 // Initial load
+         document.addEventListener('DOMContentLoaded', function() {
+             loadSavedTheme();
+             loadFeedback();
+         });
     </script>
 </body>
 </html>

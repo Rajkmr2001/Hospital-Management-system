@@ -36,6 +36,8 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
   <link rel="stylesheet" href="style1.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Visit Tracking -->
+  <img src="hospital-admin-panel/admin/php/log_user_visit.php" style="display:none;" alt="" />
 </head>
 
 <body class="bg-gray-50">
@@ -229,23 +231,32 @@
     </div>
   </section>
 
-  <!-- Graph Section: Number of Patients Visited (Feedback Count) -->
+  <!-- Graph Section: Patient Visits & Feedback -->
   <section class="py-12 bg-gray-50">
     <div class="container mx-auto px-4">
       <div class="max-w-2xl mx-auto text-center mb-10">
         <h2 class="text-2xl font-bold text-gray-900 mb-2">Patient Visits & Feedback</h2>
         <div class="w-16 h-1 bg-primary mx-auto mb-4"></div>
-        <p class="text-gray-600">See how many patients have visited and left feedback. This graph is updated in
-          real-time based on feedback submitted.</p>
+        <p class="text-gray-600">See how many patients have visited and left feedback. Data shows last 2 months with automatic cleanup.</p>
       </div>
       <div class="flex flex-col items-center">
-        <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 w-full max-w-xl">
-          <canvas id="feedbackChart" height="120"></canvas>
-          <div class="mt-4 text-center text-gray-700">
-            <span class="font-semibold">Total Feedbacks:</span>
-            <span id="feedbackCount" class="text-primary font-bold"></span>
+        <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 w-full max-w-4xl">
+          <canvas id="statsChart" height="120"></canvas>
+          <div class="mt-6 flex justify-center gap-4">
+            <button id="weekBtn" class="date-range-btn px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-700 transition-colors font-medium">This Week</button>
+            <button id="monthBtn" class="date-range-btn px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors font-medium">Last 2 Months</button>
           </div>
-          <div class="mt-2 text-xs text-gray-400 text-center">* Feedback count is synced with the feedback system.</div>
+          <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+            <div class="bg-gray-50 rounded-lg p-4">
+              <span class="font-semibold text-gray-700">Total Visits:</span>
+              <span id="totalVisits" class="text-primary font-bold text-xl ml-2">0</span>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4">
+              <span class="font-semibold text-gray-700">Total Feedback:</span>
+              <span id="totalFeedback" class="text-blue-600 font-bold text-xl ml-2">0</span>
+            </div>
+          </div>
+          <div class="mt-2 text-xs text-gray-400 text-center">* Data automatically resets after 2 months to maintain performance.</div>
         </div>
       </div>
     </div>
@@ -357,50 +368,65 @@
         mobileSpecialitiesMenu.classList.toggle('hidden');
       });
 
-      // Feedback Chart Logic (sync with feedback.html localStorage)
-      function getFeedbackCount() {
-        // Try to get feedback count from localStorage (shared by feedback.html)
-        let comments = [];
+      // Stats Chart Logic (Backend-driven)
+      let statsChart;
+      
+      async function fetchStats(range = 'week') {
         try {
-          comments = JSON.parse(localStorage.getItem("comments")) || [];
-        } catch (e) {
-          comments = [];
+          const [visitsRes, feedbackRes] = await Promise.all([
+            fetch(`php/api_get_user_visits_stats.php?range=${range}`),
+            fetch(`php/api_get_feedback_stats.php?range=${range}`)
+          ]);
+          
+          if (!visitsRes.ok || !feedbackRes.ok) {
+            throw new Error('Failed to fetch data');
+          }
+          
+          const visits = await visitsRes.json();
+          const feedback = await feedbackRes.json();
+          
+          return { visits, feedback };
+        } catch (error) {
+          console.error('Error fetching stats:', error);
+          return { visits: { labels: [], counts: [], total_visits: 0 }, feedback: { labels: [], counts: [], total_feedback: 0 } };
         }
-        return comments.length;
       }
 
-      function renderFeedbackChart() {
-        const ctx = document.getElementById('feedbackChart').getContext('2d');
-        const feedbackCount = getFeedbackCount();
-        document.getElementById('feedbackCount').textContent = feedbackCount;
-
-        // Example: Show feedback count per month (for demo, all in current month)
-        const now = new Date();
-        const months = [];
-        const data = [];
-        for (let i = 5; i >= 0; i--) {
-          const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-          months.push(d.toLocaleString('default', { month: 'short', year: '2-digit' }));
-          // For demo, put all feedbacks in current month
-          data.push(i === 0 ? feedbackCount : Math.floor(Math.random() * 3));
+      function renderStatsChart(labels, visitsData, feedbackData) {
+        const ctx = document.getElementById('statsChart').getContext('2d');
+        
+        if (statsChart) {
+          statsChart.destroy();
         }
-
-        new Chart(ctx, {
+        
+        statsChart = new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: months,
-            datasets: [{
-              label: 'Feedbacks (Patients Visited)',
-              data: data,
-              backgroundColor: '#10b981',
-              borderRadius: 8,
-              borderSkipped: false,
-            }]
+            labels: labels,
+            datasets: [
+              {
+                label: 'Patient Visits',
+                data: visitsData,
+                backgroundColor: '#10b981',
+                borderRadius: 8,
+                borderSkipped: false,
+              },
+              {
+                label: 'Feedbacks',
+                data: feedbackData,
+                backgroundColor: '#3b82f6',
+                borderRadius: 8,
+                borderSkipped: false,
+              }
+            ]
           },
           options: {
             responsive: true,
             plugins: {
-              legend: { display: false },
+              legend: { 
+                display: true,
+                position: 'top'
+              },
               title: { display: false }
             },
             scales: {
@@ -413,14 +439,36 @@
         });
       }
 
-      if (document.getElementById('feedbackChart')) {
-        renderFeedbackChart();
-        // Optional: Listen for storage changes (if feedback.html is open in another tab)
-        window.addEventListener('storage', function (e) {
-          if (e.key === 'comments') {
-            renderFeedbackChart();
-          }
+      async function updateChart(range = 'week') {
+        const { visits, feedback } = await fetchStats(range);
+        
+        // Update totals
+        document.getElementById('totalVisits').textContent = visits.total_visits || 0;
+        document.getElementById('totalFeedback').textContent = feedback.total_feedback || 0;
+        
+        // Render chart
+        renderStatsChart(visits.labels, visits.counts, feedback.counts);
+        
+        // Update button states
+        document.querySelectorAll('.date-range-btn').forEach(btn => {
+          btn.classList.remove('bg-primary', 'text-white');
+          btn.classList.add('bg-gray-300', 'text-gray-700');
         });
+        
+        const activeBtn = range === 'week' ? document.getElementById('weekBtn') : document.getElementById('monthBtn');
+        if (activeBtn) {
+          activeBtn.classList.remove('bg-gray-300', 'text-gray-700');
+          activeBtn.classList.add('bg-primary', 'text-white');
+        }
+      }
+
+      // Event listeners for date range buttons
+      document.getElementById('weekBtn').addEventListener('click', () => updateChart('week'));
+      document.getElementById('monthBtn').addEventListener('click', () => updateChart('month'));
+
+      // Initial load
+      if (document.getElementById('statsChart')) {
+        updateChart('week');
       }
     });
     
