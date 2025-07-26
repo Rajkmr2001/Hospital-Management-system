@@ -144,8 +144,158 @@
     table.feedback-table tr:last-child td { border-bottom: none; }
     .delete-btn { background: #ef4444; color: #fff; border: none; border-radius: 6px; padding: 7px 16px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
     .delete-btn:hover { background: #b91c1c; }
+    
+    /* Like/Dislike indicators */
+    .interaction-indicators {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .like-indicator, .dislike-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .like-indicator {
+      background: rgba(239, 68, 68, 0.1);
+      color: #dc2626;
+    }
+    .dislike-indicator {
+      background: rgba(107, 114, 128, 0.1);
+      color: #6b7280;
+    }
+    .like-icon {
+      color: #dc2626;
+      font-size: 1.1rem;
+    }
+    .dislike-icon {
+      color: #6b7280;
+      font-size: 1.1rem;
+    }
+         .interaction-time {
+       font-size: 0.85rem;
+       color: #6b7280;
+       font-style: italic;
+     }
+     
+     /* Custom Dialog Styles */
+     .custom-dialog-overlay {
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       background: rgba(0, 0, 0, 0.5);
+       display: none;
+       justify-content: center;
+       align-items: center;
+       z-index: 1000;
+       backdrop-filter: blur(4px);
+     }
+     .custom-dialog {
+       background: #fff;
+       border-radius: 12px;
+       padding: 32px;
+       max-width: 400px;
+       width: 90%;
+       text-align: center;
+       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+       transform: scale(0.9);
+       opacity: 0;
+       transition: all 0.3s ease;
+     }
+     .custom-dialog.show {
+       transform: scale(1);
+       opacity: 1;
+     }
+     .custom-dialog-icon {
+       width: 60px;
+       height: 60px;
+       background: #fef2f2;
+       border-radius: 50%;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       margin: 0 auto 20px;
+       color: #dc2626;
+       font-size: 1.8rem;
+     }
+     .custom-dialog-title {
+       font-size: 1.3rem;
+       font-weight: 700;
+       color: #1f2937;
+       margin-bottom: 12px;
+     }
+     .custom-dialog-message {
+       font-size: 1rem;
+       color: #6b7280;
+       margin-bottom: 24px;
+       line-height: 1.5;
+     }
+     .custom-dialog-buttons {
+       display: flex;
+       gap: 12px;
+       justify-content: center;
+     }
+     .custom-dialog-btn {
+       padding: 10px 24px;
+       border: none;
+       border-radius: 8px;
+       font-weight: 600;
+       font-size: 0.95rem;
+       cursor: pointer;
+       transition: all 0.2s ease;
+       min-width: 100px;
+     }
+     .custom-dialog-btn.cancel {
+       background: #f3f4f6;
+       color: #6b7280;
+     }
+     .custom-dialog-btn.cancel:hover {
+       background: #e5e7eb;
+       color: #374151;
+     }
+     .custom-dialog-btn.confirm {
+       background: #dc2626;
+       color: #fff;
+     }
+     .custom-dialog-btn.confirm:hover {
+       background: #b91c1c;
+     }
     @media (max-width: 900px) { .feedback-section { padding: 16px 2vw; } .welcome-banner { padding: 24px 12px 18px 12px; } }
-    @media (max-width: 600px) { table.feedback-table { min-width: 400px; font-size: 0.95rem; } .feedback-header { flex-direction: column; align-items: flex-start; gap: 8px; } }
+         @media (max-width: 600px) { 
+       table.feedback-table { min-width: 500px; font-size: 0.9rem; } 
+       .feedback-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+       .interaction-indicators { gap: 4px; }
+       .like-indicator, .dislike-indicator { padding: 2px 6px; font-size: 0.8rem; }
+       .interaction-time { font-size: 0.8rem; }
+       
+       /* Mobile dialog styles */
+       .custom-dialog {
+         padding: 24px;
+         margin: 20px;
+         width: calc(100% - 40px);
+       }
+       .custom-dialog-title {
+         font-size: 1.2rem;
+       }
+       .custom-dialog-message {
+         font-size: 0.95rem;
+       }
+       .custom-dialog-buttons {
+         flex-direction: column;
+         gap: 8px;
+       }
+       .custom-dialog-btn {
+         width: 100%;
+         padding: 12px 24px;
+       }
+     }
     @media (max-width: 900px) {
       .navbar {
         padding: 0 10px;
@@ -249,16 +399,32 @@
             <th>Name</th>
             <th>Number</th>
             <th>Comment</th>
-            <th>Likes</th>
+            <th>Interactions</th>
+            <th>Last Interaction</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody id="feedbackTbody">
           <!-- Data will be loaded here -->
         </tbody>
-      </table>
-    </div>
-  </section>
+             </table>
+     </div>
+   </section>
+   
+   <!-- Custom Delete Confirmation Dialog -->
+   <div class="custom-dialog-overlay" id="deleteDialog">
+     <div class="custom-dialog" id="deleteDialogContent">
+       <div class="custom-dialog-icon">
+         <i class="ri-delete-bin-line"></i>
+       </div>
+       <div class="custom-dialog-title">Delete Feedback</div>
+       <div class="custom-dialog-message">Are you sure you want to delete this feedback? This action cannot be undone.</div>
+       <div class="custom-dialog-buttons">
+         <button class="custom-dialog-btn cancel" onclick="hideDeleteDialog()">Cancel</button>
+         <button class="custom-dialog-btn confirm" id="confirmDeleteBtn">Delete</button>
+       </div>
+     </div>
+   </div>
   <script>
     // Navbar hamburger menu logic
     const hamburger = document.getElementById('hamburger');
@@ -275,51 +441,128 @@
     window.addEventListener('resize', function() {
       if (window.innerWidth > 900) mainNav.classList.remove('open');
     });
-    // Profile dropdown logic
-    const profileMenu = document.getElementById('profileMenu');
-    profileMenu.addEventListener('click', function(e) { e.stopPropagation(); this.classList.toggle('open'); });
-    document.addEventListener('click', function() { profileMenu.classList.remove('open'); });
+         // Profile dropdown logic
+     const profileMenu = document.getElementById('profileMenu');
+     profileMenu.addEventListener('click', function(e) { e.stopPropagation(); this.classList.toggle('open'); });
+     document.addEventListener('click', function() { profileMenu.classList.remove('open'); });
+     
+     // Custom Dialog Functions
+     let currentFeedbackId = null;
+     
+     function showDeleteDialog(feedbackId) {
+       currentFeedbackId = feedbackId;
+       const dialog = document.getElementById('deleteDialog');
+       const dialogContent = document.getElementById('deleteDialogContent');
+       dialog.style.display = 'flex';
+       setTimeout(() => {
+         dialogContent.classList.add('show');
+       }, 10);
+     }
+     
+     function hideDeleteDialog() {
+       const dialog = document.getElementById('deleteDialog');
+       const dialogContent = document.getElementById('deleteDialogContent');
+       dialogContent.classList.remove('show');
+       setTimeout(() => {
+         dialog.style.display = 'none';
+         currentFeedbackId = null;
+       }, 300);
+     }
+     
+     function confirmDelete() {
+       if (currentFeedbackId) {
+         fetch('../../php/delete_feedback.php', {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+           body: `id=${encodeURIComponent(currentFeedbackId)}`
+         })
+           .then(r => r.json())
+           .then(data => {
+             hideDeleteDialog();
+             if (data.success) {
+               loadFeedback();
+             } else {
+               alert('Error deleting feedback: ' + (data.message || 'Unknown error'));
+             }
+           })
+           .catch(() => {
+             hideDeleteDialog();
+             alert('Failed to delete feedback.');
+           });
+       }
+     }
+     
+     // Add event listener for confirm delete button
+     document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
+     
+     // Close dialog when clicking outside
+     document.getElementById('deleteDialog').addEventListener('click', function(e) {
+       if (e.target === this) {
+         hideDeleteDialog();
+       }
+     });
     // Load feedback
     function loadFeedback() {
-      fetch('../../php/get_feedback.php')
+      fetch('../../php/get_feedback_with_timestamps.php')
         .then(r => r.json())
         .then(data => {
           const tbody = document.getElementById('feedbackTbody');
           tbody.innerHTML = '';
           if (Array.isArray(data) && data.length > 0) {
             data.forEach(fb => {
+              // Create interaction indicators
+              let interactionsHtml = '<div class="interaction-indicators">';
+              if (fb.likes_count > 0) {
+                interactionsHtml += `<div class="like-indicator"><i class="ri-heart-fill like-icon"></i>${fb.likes_count}</div>`;
+              }
+              if (fb.dislikes_count > 0) {
+                interactionsHtml += `<div class="dislike-indicator"><i class="ri-heart-line dislike-icon"></i>${fb.dislikes_count}</div>`;
+              }
+              if (fb.likes_count === 0 && fb.dislikes_count === 0) {
+                interactionsHtml += '<span style="color:#9ca3af;font-style:italic;">No interactions</span>';
+              }
+              interactionsHtml += '</div>';
+              
+              // Format interaction time
+              let interactionTimeHtml = '<span class="interaction-time">No interactions</span>';
+              if (fb.latest_interaction) {
+                const interactionDate = new Date(fb.latest_interaction);
+                const now = new Date();
+                const diffTime = Math.abs(now - interactionDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                if (diffDays === 1) {
+                  interactionTimeHtml = `<span class="interaction-time">Today at ${interactionDate.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'})}</span>`;
+                } else if (diffDays === 2) {
+                  interactionTimeHtml = `<span class="interaction-time">Yesterday at ${interactionDate.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'})}</span>`;
+                } else if (diffDays <= 7) {
+                  interactionTimeHtml = `<span class="interaction-time">${diffDays - 1} days ago at ${interactionDate.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'})}</span>`;
+                } else {
+                  interactionTimeHtml = `<span class="interaction-time">${interactionDate.toLocaleDateString()} at ${interactionDate.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'})}</span>`;
+                }
+              }
+              
               const tr = document.createElement('tr');
               tr.innerHTML = `
                 <td>${fb.id}</td>
                 <td>${fb.name || ''}</td>
                 <td>${fb.number || ''}</td>
                 <td>${fb.comment || ''}</td>
-                <td>${fb.liked_by ? fb.liked_by.length : 0}</td>
+                <td>${interactionsHtml}</td>
+                <td>${interactionTimeHtml}</td>
                 <td><button class="delete-btn">Delete</button></td>
               `;
-              tr.querySelector('.delete-btn').onclick = function() {
-                if (confirm('Are you sure you want to delete this feedback?')) {
-                  fetch('../../php/delete_feedback.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `id=${encodeURIComponent(fb.id)}`
-                  })
-                    .then(r => r.json())
-                    .then(data => {
-                      if (data.success) loadFeedback();
-                      else alert('Error deleting feedback: ' + (data.message || 'Unknown error'));
-                    })
-                    .catch(() => alert('Failed to delete feedback.'));
-                }
-              };
+                             tr.querySelector('.delete-btn').onclick = function() {
+                 showDeleteDialog(fb.id);
+               };
               tbody.appendChild(tr);
             });
           } else {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#888;">No feedback found.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888;">No feedback found.</td></tr>';
           }
         })
         .catch(() => {
-          document.getElementById('feedbackTbody').innerHTML = '<tr><td colspan="6" style="text-align:center;color:#888;">Failed to load feedback.</td></tr>';
+          document.getElementById('feedbackTbody').innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888;">Failed to load feedback.</td></tr>';
         });
     }
     loadFeedback();

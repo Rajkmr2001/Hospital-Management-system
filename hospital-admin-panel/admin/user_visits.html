@@ -355,6 +355,19 @@
         <canvas id="visitsTypeChart" height="120"></canvas>
       </div>
       <div id="chartNoData" style="text-align:center;color:#888;margin-top:12px;display:none;">No data available for this chart.</div>
+      
+      <!-- Chart Descriptions -->
+      <div id="pieDescription" class="chart-description" style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #1976d2;display:block;">
+        <strong>Pie Chart:</strong> This chart displays the distribution of user visits across different time periods. Each slice represents a specific time range (Today, This Week, This Month, etc.), showing the proportion of visits for each period relative to the total visits. The larger the slice, the higher the number of visits for that time period.
+      </div>
+      
+      <div id="doughnutDescription" class="chart-description" style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #1976d2;display:none;">
+        <strong>Doughnut Chart:</strong> Similar to the pie chart, this doughnut visualization shows the distribution of user visits across different time periods. The center space allows for better focus on the data segments and can accommodate additional information if needed. Each ring segment represents visits for a specific time range.
+      </div>
+      
+      <div id="polarDescription" class="chart-description" style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #1976d2;display:none;">
+        <strong>Polar Area Chart:</strong> This chart represents user visits using both area and radius to display data. The distance from the center represents the number of visits, while the area of each segment also reflects the visit count. This dual representation makes it easy to compare visit patterns across different time periods at a glance.
+      </div>
     </div>
     <div class="ip-table-section" style="margin-top:32px;width:100%;max-width:1200px;">
       <div class="ip-table-title" style="font-size:1.1rem;font-weight:600;color:#1976d2;margin-bottom:12px;">All Unique Visitors</div>
@@ -508,7 +521,18 @@
           btn.addEventListener('click', function() {
             chartTypeBtns.forEach(b=>b.classList.remove('active'));
             btn.classList.add('active');
-            renderVisitsTypeChart(btn.getAttribute('data-type'));
+            const chartType = btn.getAttribute('data-type');
+            renderVisitsTypeChart(chartType);
+            
+            // Show/hide appropriate chart description
+            document.querySelectorAll('.chart-description').forEach(desc => desc.style.display = 'none');
+            if (chartType === 'pie') {
+              document.getElementById('pieDescription').style.display = 'block';
+            } else if (chartType === 'doughnut') {
+              document.getElementById('doughnutDescription').style.display = 'block';
+            } else if (chartType === 'polarArea') {
+              document.getElementById('polarDescription').style.display = 'block';
+            }
           });
         });
         // Calendar logic
