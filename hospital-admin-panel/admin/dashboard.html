@@ -356,6 +356,7 @@
       <a href="user_visits.html">Visits</a>
       <a href="manage_feedback.html">Feedback</a>
       <a href="manage_messages.html">Messages</a>
+      <a href="manage_registered_persons.html">REG_PERSON</a>
     </nav>
     <a href="../../index.html" class="back-btn"><i class="ri-arrow-left-line"></i> Back to Home</a>
     <div class="profile" id="profileMenu">
@@ -396,6 +397,11 @@
       <div class="label">Messages</div>
       <div class="value" id="messages-count">0</div>
     </div>
+    <div class="dashboard-card">
+      <div class="icon"><i class="ri-user-settings-line"></i></div>
+      <div class="label">REG_PERSON</div>
+      <div class="value" id="total-registered-persons">0</div>
+    </div>
   </section>
   <button class="fab" title="Add Patient"><i class="ri-user-add-line"></i></button>
   <script>
@@ -432,7 +438,8 @@
       'manage_patients.html',
       'user_visits.html',
       'manage_feedback.html',
-      'manage_messages.html'
+      'manage_messages.html',
+      'manage_registered_persons.html'
     ];
     document.querySelectorAll('.dashboard-card').forEach(function(card, idx) {
       card.addEventListener('click', function() {
@@ -454,6 +461,7 @@
     updateStat('user-visits', 'php/get_total_user_visits.php');
     updateStat('total-feedback', 'php/get_total_feedback.php');
     updateStat('messages-count', 'php/get_total_messages.php');
+    updateStat('total-registered-persons', 'php/get_total_registered_persons.php');
   </script>
 </body>
 </html> 

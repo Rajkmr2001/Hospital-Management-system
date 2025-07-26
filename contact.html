@@ -182,12 +182,15 @@
           methods.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-        <div class="bg-primary/5 rounded-lg p-6 flex flex-col items-center">
+        <div class="bg-primary/5 rounded-lg p-6 flex flex-col items-center cursor-pointer hover:bg-primary/10 transition-colors duration-200" onclick="openGoogleMaps()">
           <i class="ri-map-pin-line text-primary text-3xl mb-2"></i>
           <h3 class="text-xl font-semibold text-primary mb-2">Address</h3>
           <p class="text-gray-700 text-center">Namkum Ranchi Sindroll, Ranchi Road</p>
+          <button class="mt-3 bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors duration-200">
+            <i class="ri-map-pin-fill mr-1"></i>View on Map
+          </button>
         </div>
-        <div class="bg-primary/5 rounded-lg p-6 flex flex-col items-center">
+        <div class="bg-primary/5 rounded-lg p-6 flex flex-col items-center hover:bg-primary/10 transition-colors duration-200">
           <i class="ri-phone-line text-primary text-3xl mb-2"></i>
           <h3 class="text-xl font-semibold text-primary mb-2">Contact Details</h3>
           <p class="text-gray-700">Email: <a href="mailto:rajkmr7070@gmail.com"
@@ -206,7 +209,7 @@
       </div>
       <div class="bg-primary/5 rounded-lg p-8">
         <h2 class="text-2xl font-bold text-primary mb-4">Send Us a Message</h2>
-        <form class="space-y-4" action="submit_message.php" method="POST">
+        <form class="space-y-4" id="contactForm">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input name="name" type="text" placeholder="Your Name"
               class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -305,6 +308,22 @@
     </div>
   </footer>
 
+  <!-- Custom Message Dialog -->
+  <div id="messageDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" onclick="hideMessageDialog()">
+    <div id="messageDialogContent" class="bg-white rounded-lg p-8 max-w-md w-full mx-4 transform scale-95 opacity-0 transition-all duration-300" onclick="event.stopPropagation()">
+      <div id="messageDialogIcon" class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600 text-2xl">
+        <i class="ri-check-line"></i>
+      </div>
+      <h3 id="messageDialogTitle" class="text-xl font-bold text-gray-800 mb-2 text-center">Message Sent Successfully!</h3>
+      <p id="messageDialogMessage" class="text-gray-600 mb-6 text-center">Thank you for contacting us. We will get back to you soon.</p>
+      <div class="flex justify-center">
+        <button onclick="hideMessageDialog()" class="bg-primary text-white px-6 py-2 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       // Mobile Menu Toggle
@@ -325,7 +344,102 @@
       mobileSpecialitiesButton.addEventListener('click', function () {
         mobileSpecialitiesMenu.classList.toggle('hidden');
       });
+      
+      // Contact Form Submission
+      const contactForm = document.getElementById('contactForm');
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        
+        // Disable button and show loading
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        
+        fetch('submit_message.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            showSuccessDialog();
+            contactForm.reset();
+          } else {
+            showErrorDialog(data.error || 'Failed to send message');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          showErrorDialog('Failed to send message. Please try again.');
+        })
+        .finally(() => {
+          // Re-enable button
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        });
+      });
     });
+    
+    // Custom Dialog Functions
+    function showSuccessDialog() {
+      const dialog = document.getElementById('messageDialog');
+      const dialogContent = document.getElementById('messageDialogContent');
+      const icon = document.getElementById('messageDialogIcon');
+      const title = document.getElementById('messageDialogTitle');
+      const message = document.getElementById('messageDialogMessage');
+      
+      icon.innerHTML = '<i class="ri-check-line"></i>';
+      icon.className = 'w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600 text-2xl';
+      title.textContent = 'Message Sent Successfully!';
+      title.className = 'text-xl font-bold text-gray-800 mb-2';
+      message.textContent = 'Thank you for contacting us. We will get back to you soon.';
+      message.className = 'text-gray-600 mb-6';
+      
+      dialog.classList.remove('hidden');
+      setTimeout(() => {
+        dialogContent.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+    
+    function showErrorDialog(errorMessage) {
+      const dialog = document.getElementById('messageDialog');
+      const dialogContent = document.getElementById('messageDialogContent');
+      const icon = document.getElementById('messageDialogIcon');
+      const title = document.getElementById('messageDialogTitle');
+      const message = document.getElementById('messageDialogMessage');
+      
+      icon.innerHTML = '<i class="ri-error-warning-line"></i>';
+      icon.className = 'w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 text-red-600 text-2xl';
+      title.textContent = 'Error';
+      title.className = 'text-xl font-bold text-gray-800 mb-2';
+      message.textContent = errorMessage;
+      message.className = 'text-gray-600 mb-6';
+      
+      dialog.classList.remove('hidden');
+      setTimeout(() => {
+        dialogContent.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+    
+    function hideMessageDialog() {
+      const dialog = document.getElementById('messageDialog');
+      const dialogContent = document.getElementById('messageDialogContent');
+      
+      dialogContent.classList.remove('scale-100', 'opacity-100');
+      setTimeout(() => {
+        dialog.classList.add('hidden');
+      }, 300);
+    }
+    
+    // Google Maps function
+    function openGoogleMaps() {
+      const googleMapsUrl = "https://www.google.com/maps/place/Maa+Kalawati+Hospital+and+Research+Center/@23.302763,85.396889,320m/data=!3m1!1e3!4m14!1m7!3m6!1s0x39f51d77eebdf709:0x6c4e5a198a6720c9!2sTribal+College+Of+Nursing!8m2!3d23.302504!4d85.3974866!16s%2Fg%2F1q4knk30f!3m5!1s0x39f51d78001a8e33:0x824291db3cba4ad0!8m2!3d23.3026709!4d85.3973221!16s%2Fg%2F11c70j4y8h?entry=ttu&g_ep=EgoyMDI1MDcyMy4wIKXMDSoASAFQAw%3D%3D";
+      window.open(googleMapsUrl, '_blank');
+    }
+    
     // searchbar started ......
     
   function highlightAndScroll(query) {

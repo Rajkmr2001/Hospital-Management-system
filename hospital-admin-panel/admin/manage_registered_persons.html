@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manage Messages - Maa Kalawati Hospital</title>
+  <title>Manage Registered Persons - Maa Kalawati Hospital</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
   <style>
@@ -134,16 +134,20 @@
     .welcome-banner .text { font-size: 2.1rem; font-weight: 700; line-height: 1.2; }
     .welcome-banner .desc { font-size: 1.1rem; font-weight: 400; margin-top: 10px; color: #e0e7ef; }
     .welcome-banner .banner-img { width: 120px; height: 120px; background: rgba(255,255,255,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; box-shadow: 0 2px 12px rgba(16,185,129,0.10); }
-    .messages-section { width: 100%; max-width: 1200px; margin: 36px auto 0 auto; background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px 24px; }
-    .messages-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
-    .messages-header h2 { margin: 0; font-size: 1.4rem; color: var(--primary); font-weight: 700; }
-    .messages-table-wrapper { overflow-x: auto; }
-    table.messages-table { width: 100%; border-collapse: collapse; min-width: 700px; background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(16,185,129,0.07); }
-    table.messages-table th, table.messages-table td { padding: 12px 10px; border-bottom: 1px solid #f3f4f6; text-align: left; }
-    table.messages-table th { background: var(--primary); color: #fff; font-weight: 600; }
-    table.messages-table tr:last-child td { border-bottom: none; }
-    .delete-btn { background: #ef4444; color: #fff; border: none; border-radius: 6px; padding: 7px 16px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .persons-section { width: 100%; max-width: 1200px; margin: 36px auto 0 auto; background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px 24px; }
+    .persons-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .persons-header h2 { margin: 0; font-size: 1.4rem; color: var(--primary); font-weight: 700; }
+    .persons-table-wrapper { overflow-x: auto; }
+    table.persons-table { width: 100%; border-collapse: collapse; min-width: 800px; background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(16,185,129,0.07); }
+    table.persons-table th, table.persons-table td { padding: 12px 10px; border-bottom: 1px solid #f3f4f6; text-align: left; }
+    table.persons-table th { background: var(--primary); color: #fff; font-weight: 600; }
+    table.persons-table tr:last-child td { border-bottom: none; }
+    .action-buttons { display: flex; gap: 8px; }
+    .edit-btn { background: #3b82f6; color: #fff; border: none; border-radius: 6px; padding: 6px 12px; font-weight: 600; cursor: pointer; transition: background 0.2s; font-size: 0.9rem; }
+    .edit-btn:hover { background: #2563eb; }
+    .delete-btn { background: #ef4444; color: #fff; border: none; border-radius: 6px; padding: 6px 12px; font-weight: 600; cursor: pointer; transition: background 0.2s; font-size: 0.9rem; }
     .delete-btn:hover { background: #b91c1c; }
+    .password-field { font-family: monospace; background: #f8fafc; padding: 4px 8px; border-radius: 4px; border: 1px solid #e2e8f0; }
     
     /* Custom Dialog Styles */
     .dialog-overlay {
@@ -167,7 +171,7 @@
       border-radius: var(--radius);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
       padding: 32px;
-      max-width: 400px;
+      max-width: 500px;
       width: 90%;
       text-align: center;
       animation: dialogSlideIn 0.3s ease-out;
@@ -235,8 +239,47 @@
       background: #b91c1c;
     }
     
-    @media (max-width: 900px) { .messages-section { padding: 16px 2vw; } .welcome-banner { padding: 24px 12px 18px 12px; } }
-    @media (max-width: 600px) { table.messages-table { min-width: 400px; font-size: 0.95rem; } .messages-header { flex-direction: column; align-items: flex-start; gap: 8px; } }
+    /* Edit Dialog Styles */
+    .edit-dialog-box {
+      max-width: 600px;
+      text-align: left;
+    }
+    .edit-dialog-box .dialog-title {
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .edit-dialog-box .dialog-buttons {
+      justify-content: flex-end;
+    }
+    .edit-dialog-box .dialog-btn.confirm {
+      background: var(--primary);
+    }
+    .edit-dialog-box .dialog-btn.confirm:hover {
+      background: #1d4ed8;
+    }
+    
+    @media (max-width: 900px) { .persons-section { padding: 16px 2vw; } .welcome-banner { padding: 24px 12px 18px 12px; } }
+    @media (max-width: 600px) { table.persons-table { min-width: 600px; font-size: 0.95rem; } .persons-header { flex-direction: column; align-items: flex-start; gap: 8px; } }
     @media (max-width: 900px) {
       .navbar {
         padding: 0 10px;
@@ -308,8 +351,8 @@
       <a href="manage_patients.html">Patients</a>
       <a href="user_visits.html">Visits</a>
       <a href="manage_feedback.html">Feedback</a>
-      <a href="manage_messages.html" class="active">Messages</a>
-      <a href="manage_registered_persons.html">REG_PERSON</a>
+      <a href="manage_messages.html">Messages</a>
+      <a href="manage_registered_persons.html" class="active">REG_PERSON</a>
     </nav>
     <a href="../../index.html" class="back-btn"><i class="ri-arrow-left-line"></i> Back to Home</a>
     <div class="profile" id="profileMenu">
@@ -324,48 +367,81 @@
   </header>
   <section class="welcome-banner">
     <div>
-      <div class="text">Manage Messages</div>
-      <div class="desc">View and manage user messages. You can delete resolved or spam messages.</div>
+      <div class="text">Manage Registered Persons</div>
+      <div class="desc">View and manage all registered persons. You can edit or delete records as needed.</div>
     </div>
-    <div class="banner-img"><i class="ri-mail-line"></i></div>
+    <div class="banner-img"><i class="ri-user-settings-line"></i></div>
   </section>
-  <section class="messages-section">
-    <div class="messages-header">
-      <h2>Messages List</h2>
+  <section class="persons-section">
+    <div class="persons-header">
+      <h2>Registered Persons List</h2>
     </div>
-    <div class="messages-table-wrapper">
-      <table class="messages-table" id="messagesTable">
+    <div class="persons-table-wrapper">
+      <table class="persons-table" id="personsTable">
         <thead>
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Subject</th>
-            <th>Message</th>
-            <th>Date</th>
-            <th>Time</th>
+            <th>Mobile No</th>
+            <th>Gender</th>
+            <th>Password</th>
+            <th>Register Date</th>
+            <th>Register Time</th>
             <th>Action</th>
           </tr>
         </thead>
-        <tbody id="messagesTbody">
+        <tbody id="personsTbody">
           <!-- Data will be loaded here -->
         </tbody>
       </table>
     </div>
   </section>
   
-  <!-- Custom Dialog Box -->
+  <!-- Delete Dialog Box -->
   <div class="dialog-overlay" id="deleteDialog">
     <div class="dialog-box">
       <div class="dialog-icon">
         <i class="ri-delete-bin-line"></i>
       </div>
-      <div class="dialog-title">Delete Message</div>
-      <div class="dialog-message">Are you sure you want to delete this message?</div>
+      <div class="dialog-title">Delete Registered Person</div>
+      <div class="dialog-message">Are you sure you want to delete this registered person?</div>
       <div class="dialog-buttons">
         <button class="dialog-btn cancel" id="cancelDelete">Cancel</button>
         <button class="dialog-btn confirm" id="confirmDelete">Delete</button>
       </div>
+    </div>
+  </div>
+  
+  <!-- Edit Dialog Box -->
+  <div class="dialog-overlay" id="editDialog">
+    <div class="dialog-box edit-dialog-box">
+      <div class="dialog-title">Edit Registered Person</div>
+      <form id="editForm">
+        <div class="form-group">
+          <label for="editName">Name</label>
+          <input type="text" id="editName" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="editMobile">Mobile No</label>
+          <input type="text" id="editMobile" name="mobile_no" required>
+        </div>
+        <div class="form-group">
+          <label for="editGender">Gender</label>
+          <select id="editGender" name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editPassword">Password (leave empty to keep current)</label>
+          <input type="text" id="editPassword" name="password" placeholder="Enter new password or leave empty">
+        </div>
+        <div class="dialog-buttons">
+          <button type="button" class="dialog-btn cancel" id="cancelEdit">Cancel</button>
+          <button type="submit" class="dialog-btn confirm">Update</button>
+        </div>
+      </form>
     </div>
   </div>
   
@@ -385,96 +461,161 @@
     window.addEventListener('resize', function() {
       if (window.innerWidth > 900) mainNav.classList.remove('open');
     });
+    
     // Profile dropdown logic
     const profileMenu = document.getElementById('profileMenu');
     profileMenu.addEventListener('click', function(e) { e.stopPropagation(); this.classList.toggle('open'); });
     document.addEventListener('click', function() { profileMenu.classList.remove('open'); });
-    // Custom Dialog Functions
-    let currentMessageId = null;
     
-    function showDeleteDialog(messageId) {
-      currentMessageId = messageId;
+    // Custom Dialog Functions
+    let currentPersonId = null;
+    let currentPersonData = null;
+    
+    function showDeleteDialog(personId) {
+      currentPersonId = personId;
       document.getElementById('deleteDialog').classList.add('show');
     }
     
     function hideDeleteDialog() {
       document.getElementById('deleteDialog').classList.remove('show');
-      currentMessageId = null;
+      currentPersonId = null;
     }
     
-    function deleteMessage() {
-      if (!currentMessageId) return;
+    function showEditDialog(personData) {
+      currentPersonData = personData;
+      document.getElementById('editName').value = personData.name || '';
+      document.getElementById('editMobile').value = personData.mobile_no || '';
+      document.getElementById('editGender').value = personData.gender || 'Male';
+      document.getElementById('editPassword').value = ''; // Clear password field for security
+      document.getElementById('editDialog').classList.add('show');
+    }
+    
+    function hideEditDialog() {
+      document.getElementById('editDialog').classList.remove('show');
+      currentPersonData = null;
+    }
+    
+    function deletePerson() {
+      if (!currentPersonId) return;
       
-      fetch('php/delete_message.php', {
+      fetch('php/delete_registered_person.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `id=${encodeURIComponent(currentMessageId)}`
+        body: `id=${encodeURIComponent(currentPersonId)}`
       })
         .then(r => r.json())
         .then(data => {
           if (data.success) {
-            loadMessages();
+            loadPersons();
             hideDeleteDialog();
           } else {
-            alert('Error deleting message: ' + (data.message || 'Unknown error'));
+            alert('Error deleting person: ' + (data.message || 'Unknown error'));
           }
         })
         .catch(() => {
-          alert('Failed to delete message.');
+          alert('Failed to delete person.');
+        });
+    }
+    
+    function updatePerson(formData) {
+      if (!currentPersonData) return;
+      
+      fetch('php/update_registered_person.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (data.success) {
+            loadPersons();
+            hideEditDialog();
+          } else {
+            alert('Error updating person: ' + (data.message || 'Unknown error'));
+          }
+        })
+        .catch(() => {
+          alert('Failed to update person.');
         });
     }
     
     // Dialog event listeners
     document.getElementById('cancelDelete').addEventListener('click', hideDeleteDialog);
-    document.getElementById('confirmDelete').addEventListener('click', deleteMessage);
+    document.getElementById('confirmDelete').addEventListener('click', deletePerson);
+    document.getElementById('cancelEdit').addEventListener('click', hideEditDialog);
     
-    // Close dialog when clicking outside
+    // Close dialogs when clicking outside
     document.getElementById('deleteDialog').addEventListener('click', function(e) {
       if (e.target === this) {
         hideDeleteDialog();
       }
     });
+    document.getElementById('editDialog').addEventListener('click', function(e) {
+      if (e.target === this) {
+        hideEditDialog();
+      }
+    });
     
-    // Load messages
-    function loadMessages() {
-      fetch('php/get_messages.php')
-        .then(r => r.json())
+    // Edit form submission
+    document.getElementById('editForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      formData.append('id', currentPersonData.id);
+      
+      const urlEncodedData = new URLSearchParams(formData).toString();
+      updatePerson(urlEncodedData);
+    });
+    
+    // Load persons
+    function loadPersons() {
+      console.log('Loading persons...');
+      fetch('php/get_registered_persons.php')
+        .then(r => {
+          console.log('Response status:', r.status);
+          return r.json();
+        })
         .then(data => {
-          const tbody = document.getElementById('messagesTbody');
+          console.log('Received data:', data);
+          const tbody = document.getElementById('personsTbody');
           tbody.innerHTML = '';
-          data.forEach(msg => {
-            let timestamp = msg.timestamp || '';
-            let date = '';
-            let time = '';
-            if (timestamp && timestamp.includes(' ')) {
-              const parts = timestamp.split(' ');
-              date = parts[0];
-              time = parts[1] || '';
-            } else {
-              date = timestamp;
-            }
+          
+          if (data.error) {
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#ef4444;">Error: ${data.error}</td></tr>`;
+            return;
+          }
+          
+          if (!Array.isArray(data) || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#888;">No registered persons found.</td></tr>';
+            return;
+          }
+          
+          data.forEach(person => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-              <td>${msg.id}</td>
-              <td>${msg.name || 'Anonymous'}</td>
-              <td>${msg.email || ''}</td>
-              <td>${msg.subject || ''}</td>
-              <td>${msg.message || msg.content || ''}</td>
-              <td>${date}</td>
-              <td>${time}</td>
-              <td><button class="delete-btn">Delete</button></td>
+              <td>${person.id}</td>
+              <td>${person.name || 'N/A'}</td>
+              <td>${person.mobile_no || 'N/A'}</td>
+              <td>${person.gender || 'N/A'}</td>
+              <td><span class="password-field">${person.password === 'Hashed Password' ? '••••••••' : person.password || 'N/A'}</span></td>
+              <td>${person.register_date || 'N/A'}</td>
+              <td>${person.register_time || 'N/A'}</td>
+              <td>
+                <div class="action-buttons">
+                  <button class="edit-btn" onclick="showEditDialog(${JSON.stringify(person).replace(/"/g, '&quot;')})">Edit</button>
+                  <button class="delete-btn" onclick="showDeleteDialog(${person.id})">Delete</button>
+                </div>
+              </td>
             `;
-            tr.querySelector('.delete-btn').onclick = function() {
-              showDeleteDialog(msg.id);
-            };
             tbody.appendChild(tr);
           });
         })
-        .catch(() => {
-          document.getElementById('messagesTbody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:#888;">Failed to load messages.</td></tr>';
+        .catch(error => {
+          console.error('Error loading persons:', error);
+          document.getElementById('personsTbody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:#888;">Failed to load registered persons.</td></tr>';
         });
     }
-    loadMessages();
+    
+    loadPersons();
   </script>
 </body>
 </html> 

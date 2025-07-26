@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Test</title>
+</head>
+<body>
+    <h1>Database Test</h1>
+                    <button onclick="testDB()">Test Database Connection</button>
+                <button onclick="testGetPersons()">Test Get Registered Persons</button>
+                <button onclick="checkTableStructure()">Check Table Structure</button>
+                <button onclick="testFix()">Test Registered Persons Fix</button>
+    <div id="result"></div>
+
+    <script>
+        function testDB() {
+            fetch('php/test_db.php')
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                })
+                .catch(error => {
+                    document.getElementById('result').innerHTML = 'Error: ' + error.message;
+                });
+        }
+
+                            function testGetPersons() {
+                        fetch('php/get_registered_persons.php')
+                            .then(r => r.json())
+                            .then(data => {
+                                document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                            })
+                            .catch(error => {
+                                document.getElementById('result').innerHTML = 'Error: ' + error.message;
+                            });
+                    }
+
+                    function checkTableStructure() {
+                        fetch('php/check_table_structure.php')
+                            .then(r => r.json())
+                            .then(data => {
+                                document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                            })
+                            .catch(error => {
+                                document.getElementById('result').innerHTML = 'Error: ' + error.message;
+                            });
+                    }
+
+                    function testFix() {
+                        fetch('php/test_registered_persons_fix.php')
+                            .then(r => r.json())
+                            .then(data => {
+                                document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                            })
+                            .catch(error => {
+                                document.getElementById('result').innerHTML = 'Error: ' + error.message;
+                            });
+                    }
+    </script>
+</body>
+</html> 
