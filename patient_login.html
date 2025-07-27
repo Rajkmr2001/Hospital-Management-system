@@ -52,7 +52,7 @@
   <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 w-full max-w-md p-8">
     <h2 class="text-3xl font-bold text-primary mb-2 text-center pacifico">Patient Login</h2>
     <p class="text-gray-500 mb-6 text-center">Login to access your account and book appointments.</p>
-    <form action="patient_login.php" method="POST" onsubmit="return validateForm()" class="space-y-5">
+    <form id="loginForm" class="space-y-5">
       <div>
         <label for="mobile" class="block text-gray-700 font-semibold mb-1">Mobile Number</label>
         <input type="text" id="mobile" name="mobile" required maxlength="10"
@@ -61,8 +61,13 @@
       </div>
       <div>
         <label for="password" class="block text-gray-700 font-semibold mb-1">Password</label>
-        <input type="password" id="password" name="password" required
-          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none transition">
+        <div class="relative">
+          <input type="password" id="password" name="password" required
+            class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none transition">
+          <button type="button" id="passwordToggle" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-primary transition">
+            <i class="ri-eye-line" id="passwordIcon"></i>
+          </button>
+        </div>
         <span id="passwordError" class="text-red-500 text-sm mt-1 block"></span>
       </div>
       <button type="submit"
@@ -95,6 +100,61 @@
 </footer>
 
 <script>
+    // Password toggle functionality
+    document.getElementById('passwordToggle').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const passwordIcon = document.getElementById('passwordIcon');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            passwordIcon.className = 'ri-eye-off-line';
+        } else {
+            passwordInput.type = 'password';
+            passwordIcon.className = 'ri-eye-line';
+        }
+    });
+
+    // Form submission
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('mobile', document.getElementById('mobile').value);
+        formData.append('password', document.getElementById('password').value);
+
+        // Show loading state
+        const submitBtn = document.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<div class="loading"></div> Logging in...';
+        submitBtn.disabled = true;
+
+        fetch('patient_login.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = 'patient_dashboard.html';
+            } else {
+                showError(data.message || 'Login failed');
+            }
+        })
+        .catch(error => {
+            console.error('Login error:', error);
+            showError('Network error. Please try again.');
+        })
+        .finally(() => {
+            // Reset button state
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        });
+    });
+
     function validateForm() {
         let mobile = document.getElementById("mobile").value;
         let password = document.getElementById("password").value;
@@ -120,6 +180,46 @@
 
         return isValid;
     }
+
+    function showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4';
+        errorDiv.innerHTML = `
+            <div class="flex items-center">
+                <i class="ri-error-warning-line mr-2"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        const form = document.getElementById('loginForm');
+        form.insertBefore(errorDiv, form.firstChild);
+        
+        // Remove error after 5 seconds
+        setTimeout(() => {
+            if (errorDiv.parentNode) {
+                errorDiv.remove();
+            }
+        }, 5000);
+    }
+
+    // Loading spinner styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    `;
+    document.head.appendChild(style);
 </script>
 
 </body>

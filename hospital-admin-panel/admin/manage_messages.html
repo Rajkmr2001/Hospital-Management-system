@@ -340,6 +340,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Phone</th>
             <th>Subject</th>
             <th>Message</th>
             <th>Date</th>
@@ -458,6 +459,7 @@
               <td>${msg.id}</td>
               <td>${msg.name || 'Anonymous'}</td>
               <td>${msg.email || ''}</td>
+              <td>${msg.phone || 'N/A'}</td>
               <td>${msg.subject || ''}</td>
               <td>${msg.message || msg.content || ''}</td>
               <td>${date}</td>
@@ -471,7 +473,7 @@
           });
         })
         .catch(() => {
-          document.getElementById('messagesTbody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:#888;">Failed to load messages.</td></tr>';
+          document.getElementById('messagesTbody').innerHTML = '<tr><td colspan="9" style="text-align:center;color:#888;">Failed to load messages.</td></tr>';
         });
     }
     loadMessages();

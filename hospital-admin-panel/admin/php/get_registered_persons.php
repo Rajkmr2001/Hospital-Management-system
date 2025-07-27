@@ -25,9 +25,9 @@ try {
     
     $persons = [];
     while ($row = $result->fetch_assoc()) {
-        // The password is hashed using password_hash(), so we can't decrypt it
-        // We'll show "Hashed Password" instead of the actual hash for security
-        $password = "Hashed Password";
+        // Since passwords are hashed, we can't show the original password
+        // We'll show "••••••••" for security
+        $password = "••••••••";
         $persons[] = [
             'id' => $row['mobile_no'], // Use mobile_no as ID since it's unique
             'name' => $row['name'],

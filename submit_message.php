@@ -24,18 +24,27 @@ if ($conn->connect_error) {
 // Get POST data and sanitize
 $name = $conn->real_escape_string(trim($_POST['name'] ?? ''));
 $email = $conn->real_escape_string(trim($_POST['email'] ?? ''));
+$phone = $conn->real_escape_string(trim($_POST['phone'] ?? ''));
 $subject = $conn->real_escape_string(trim($_POST['subject'] ?? ''));
 $message = $conn->real_escape_string(trim($_POST['message'] ?? ''));
 
-if (!$name || !$email || !$subject || !$message) {
+if (!$name || !$email || !$phone || !$subject || !$message) {
     http_response_code(400);
     echo json_encode(['error' => 'All fields are required']);
     $conn->close();
     exit;
 }
 
+// Validate phone number (10 digits)
+if (!preg_match('/^\d{10}$/', $phone)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Please enter a valid 10-digit phone number']);
+    $conn->close();
+    exit;
+}
+
 // Insert message into database
-$sql = "INSERT INTO messages (name, email, subject, message) VALUES ('$name', '$email', '$subject', '$message')";
+$sql = "INSERT INTO messages (name, email, phone, subject, message) VALUES ('$name', '$email', '$phone', '$subject', '$message')";
 if ($conn->query($sql) === TRUE) {
     echo json_encode(['success' => 'Message received']);
 } else {
