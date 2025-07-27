@@ -6,8 +6,9 @@ $host = 'localhost';
 $user = 'root';
 $password = '';
 $dbname = 'hospital_management';
+$port = 3307; // Add port number
 
-$conn = new mysqli($host, $user, $password, $dbname);
+$conn = new mysqli($host, $user, $password, $dbname, $port);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }

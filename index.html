@@ -106,10 +106,38 @@
         </nav>
         <!-- Search Bar -->
         <div class="hidden md:flex items-center">
-          <button id="adminPanelBtn" onclick="window.location.href='hospital-admin-panel/admin/dashboard.html'"
-            class="mr-4 px-4 py-2 bg-primary text-white rounded-button hover:bg-primary/90 transition-colors duration-200">
-            Admin Panel
-          </button>
+          <!-- Login Dropdown -->
+          <div class="relative group mr-4">
+            <button
+              class="flex items-center px-4 py-2 bg-primary text-white rounded-button hover:bg-primary/90 transition-colors duration-200">
+              <i class="ri-user-line mr-2"></i>
+              Login
+              <i class="ri-arrow-down-s-line ml-2 transition-transform duration-200 group-hover:rotate-180"></i>
+            </button>
+            <div
+              class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right z-50">
+              <div class="py-2">
+
+                <a href="patient_login.html"
+                  class="flex items-center px-4 py-3 text-gray-700 hover:bg-primary/5 hover:text-primary transition-colors duration-150">
+                  <i class="ri-user-heart-line mr-3 text-primary"></i>
+                  <div>
+                    <div class="font-medium">Patient Login</div>
+                    <div class="text-xs text-gray-500">View Records</div>
+                  </div>
+                </a>
+                <div class="border-t border-gray-100 my-1"></div>
+                <a href="hospital-admin-panel/admin/login.html"
+                  class="flex items-center px-4 py-3 text-gray-700 hover:bg-primary/5 hover:text-primary transition-colors duration-150">
+                  <i class="ri-admin-line mr-3 text-primary"></i>
+                  <div>
+                    <div class="font-medium">Admin Login</div>
+                    <div class="text-xs text-gray-500">Access Dashboard</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
           <div class="relative">
             <input type="text" placeholder="Search..."
               class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm" />
@@ -166,11 +194,35 @@
         <a href="doctors.html" class="block py-2 text-gray-700 hover:text-primary font-medium">Doctors</a>
         <a href="contact.html" class="block py-2 text-gray-700 hover:text-primary font-medium">Contact</a>
         <a href="faqs.html" class="block py-2 text-gray-700 hover:text-primary font-medium">FAQs</a>
-        <div class="mt-4 relative flex items-center space-x-4">
-          <button onclick="window.location.href='hospital-admin-panel/admin/dashboard.html'"
-            class="px-4 py-2 bg-primary text-white rounded-button hover:bg-primary/90 transition-colors duration-200 whitespace-nowrap">
-            Admin Panel
+        <!-- Mobile Login Dropdown -->
+        <div class="py-2">
+          <button id="mobile-login-button"
+            class="flex items-center justify-between w-full text-gray-700 hover:text-primary font-medium">
+            <span class="flex items-center">
+              <i class="ri-user-line mr-2"></i>
+              Login
+            </span>
+            <i class="ri-arrow-down-s-line transition-transform duration-200"></i>
           </button>
+          <div id="mobile-login-menu" class="hidden pl-4 mt-2 space-y-2">
+            <a href="hospital-admin-panel/admin/login.html"
+              class="flex items-center py-2 text-gray-700 hover:text-primary">
+              <i class="ri-admin-line mr-3 text-primary"></i>
+              <div>
+                <div class="font-medium">Admin Login</div>
+                <div class="text-xs text-gray-500">Access Dashboard</div>
+              </div>
+            </a>
+            <a href="patient_login.html" class="flex items-center py-2 text-gray-700 hover:text-primary">
+              <i class="ri-user-heart-line mr-3 text-primary"></i>
+              <div>
+                <div class="font-medium">Patient Login</div>
+                <div class="text-xs text-gray-500">View Records</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="mt-4 relative flex items-center space-x-4">
           <input type="text" placeholder="Search..."
             class="flex-grow pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm" />
           <div class="absolute left-3 top-2.5 w-4 h-4 flex items-center justify-center">
@@ -661,21 +713,25 @@
     </div>
   </footer>
   <!-- Popup Modal -->
-  <div id="edu-popup" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5);">
-    <div style="background:#fff; max-width:400px; margin:10% auto; padding:2rem; border-radius:8px; text-align:center; position:relative;">
+  <div id="edu-popup"
+    style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5);">
+    <div
+      style="background:#fff; max-width:400px; margin:10% auto; padding:2rem; border-radius:8px; text-align:center; position:relative;">
       <h2>Notice</h2>
       <p>This website has been developed solely for educational purposes.
-        <br>It is a personal project and does not represent a real-world hospital management system.</p>
-      <button id="close-popup" style="margin-top:1rem; padding:0.5rem 1rem; background:#e53e3e; color:#fff; border:none; border-radius:4px; cursor:pointer;">Cancel</button>
+        <br>It is a personal project and does not represent a real-world hospital management system.
+      </p>
+      <button id="close-popup"
+        style="margin-top:1rem; padding:0.5rem 1rem; background:#e53e3e; color:#fff; border:none; border-radius:4px; cursor:pointer;">Cancel</button>
     </div>
   </div>
   <script>
     // Show popup only for first-time visitors
-    window.onload = function() {
+    window.onload = function () {
       if (!localStorage.getItem('eduPopupShown')) {
         document.getElementById('edu-popup').style.display = 'block';
       }
-      document.getElementById('close-popup').onclick = function() {
+      document.getElementById('close-popup').onclick = function () {
         document.getElementById('edu-popup').style.display = 'none';
         localStorage.setItem('eduPopupShown', 'true');
       }
@@ -700,6 +756,15 @@
       const mobileSpecialitiesMenu = document.getElementById("mobile-specialities-menu");
       mobileSpecialitiesButton.addEventListener("click", function () {
         mobileSpecialitiesMenu.classList.toggle("hidden");
+      });
+      // Mobile Login Dropdown
+      const mobileLoginButton = document.getElementById("mobile-login-button");
+      const mobileLoginMenu = document.getElementById("mobile-login-menu");
+      const mobileLoginArrow = mobileLoginButton.querySelector(".ri-arrow-down-s-line");
+
+      mobileLoginButton.addEventListener("click", function () {
+        mobileLoginMenu.classList.toggle("hidden");
+        mobileLoginArrow.style.transform = mobileLoginMenu.classList.contains("hidden") ? "rotate(0deg)" : "rotate(180deg)";
       });
     });
     document.addEventListener("DOMContentLoaded", function () {

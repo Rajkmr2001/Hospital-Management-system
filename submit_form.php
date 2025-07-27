@@ -4,12 +4,13 @@ $servername = "localhost";  // Change to your server name if different
 $username = "root";         // Database username
 $password = "";             // Database password (if any)
 $dbname = "hospital_management";  // Your database name
+$port = 3307; // Add port number
 
 // Set the default timezone
 date_default_timezone_set("Asia/Kolkata"); // Change to your desired timezone
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
 
 // Check connection
 if ($conn->connect_error) {

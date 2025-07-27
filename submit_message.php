@@ -13,8 +13,9 @@ $host = 'localhost';
 $user = 'root';
 $password = '';
 $dbname = 'hospital_management';
+$port = 3307; // Add port number
 
-$conn = new mysqli($host, $user, $password, $dbname);
+$conn = new mysqli($host, $user, $password, $dbname, $port);
 if ($conn->connect_error) {
     http_response_code(500);
     echo json_encode(['error' => 'Database connection failed: ' . $conn->connect_error]);
