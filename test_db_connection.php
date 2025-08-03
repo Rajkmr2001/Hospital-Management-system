@@ -4,7 +4,7 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "hospital_management";
-$port = 3307;
+$port = 3306;
 
 echo "<h2>Testing Database Connection</h2>";
 echo "<p>Attempting to connect to MySQL on port $port...</p>";

@@ -4,7 +4,7 @@ $servername = "localhost";  // Change to your server name if different
 $username = "root";         // Database username
 $password = "";             // Database password (if any)
 $dbname = "hospital_management";  // Your database name
-$port = 3307; // Add port number
+$port = 3306; // MySQL default port
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname, $port);

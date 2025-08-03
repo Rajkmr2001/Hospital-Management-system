@@ -27,7 +27,7 @@ try {
     $stmt->close();
 
     // Get patient feedback
-    $stmt = $conn->prepare("SELECT * FROM feedback WHERE number = ? ORDER BY created_at DESC");
+    $stmt = $conn->prepare("SELECT * FROM feedback WHERE number = ? ORDER BY timestamp DESC");
     $stmt->bind_param("s", $patient_mobile);
     $stmt->execute();
     $feedback_result = $stmt->get_result();

@@ -63,10 +63,10 @@ function displayFeedback(feedback) {
   container.innerHTML = feedback.map(item => `
     <div class="border border-gray-200 rounded-lg p-4">
       <div class="flex justify-between items-start mb-2">
-        <span class="font-semibold text-gray-800">${item.comment.substring(0, 50)}${item.comment.length > 50 ? '...' : ''}</span>
-        <span class="text-sm text-gray-500">${new Date(item.created_at).toLocaleDateString()}</span>
+        <span class="font-semibold text-gray-800">${item.feedback.substring(0, 50)}${item.feedback.length > 50 ? '...' : ''}</span>
+        <span class="text-sm text-gray-500">${new Date(item.timestamp).toLocaleDateString()}</span>
       </div>
-      <p class="text-gray-600 text-sm">${item.comment}</p>
+      <p class="text-gray-600 text-sm">${item.feedback}</p>
       <div class="flex items-center mt-2 text-sm text-gray-500">
         <i class="ri-thumb-up-line mr-1"></i>
         <span>${item.likes || 0}</span>
