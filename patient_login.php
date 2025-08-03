@@ -1,6 +1,20 @@
 <?php
 session_start();
-include 'db/config.php';
+
+// Database credentials
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hospital_management";
+$port = 3306;
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 // Disable error reporting for production
 error_reporting(0);

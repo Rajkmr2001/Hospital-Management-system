@@ -1,6 +1,21 @@
 <?php
 session_start();
-include 'db/config.php';
+
+// Database credentials
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hospital_management";
+$port = 3306;
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 header('Content-Type: application/json');
 
 // Check if patient is logged in
@@ -49,7 +64,7 @@ try {
     $stmt->close();
 
     // Get last visit
-    $stmt = $conn->prepare("SELECT visit_time FROM user_visits WHERE user_ip = ? ORDER BY visit_time DESC LIMIT 1");
+    $stmt = $conn->prepare("SELECT CONCAT(visit_date, ' ', visit_time) as visit_datetime FROM user_visits WHERE user_ip = ? ORDER BY visit_date DESC, visit_time DESC LIMIT 1");
     $stmt->bind_param("s", $_SERVER['REMOTE_ADDR']);
     $stmt->execute();
     $visit_result = $stmt->get_result();
@@ -67,7 +82,7 @@ try {
         'register_date' => $patient_register['register_date'] ?? 'N/A',
         'total_feedback' => count($feedback),
         'total_messages' => count($messages),
-        'last_visit' => $last_visit['visit_time'] ?? 'N/A'
+        'last_visit' => $last_visit['visit_datetime'] ?? 'N/A'
     ];
 
     // Check for profile picture
