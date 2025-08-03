@@ -636,25 +636,7 @@
              });
          }
          
-         function dislikeFeedback(feedbackId) {
-             if (!userNumber || !userName) {
-                 showDialog('Authentication Required', 'You must be registered and enter your number to dislike feedback.', 'error');
-                 return;
-             }
-             $.ajax({
-                 url: 'php/like_feedback.php',
-                 method: 'POST',
-                 data: { id: feedbackId, number: userNumber, action: 'dislike' },
-                 dataType: 'json',
-                 success: function(response) {
-                     if (response.success) {
-                         loadFeedback();
-                     } else {
-                         showDialog('Error', response.message || 'Unknown error occurred', 'error');
-                     }
-                 }
-             });
-         }
+
 
         // Load and display all feedback from backend
         function loadFeedback() {
@@ -671,31 +653,22 @@
                     }
                                          feedbacks.forEach(fb => {
                          let liked = Array.isArray(fb.liked_by) && fb.liked_by.includes(userNumber);
-                         let disliked = Array.isArray(fb.disliked_by) && fb.disliked_by.includes(userNumber);
                          let heartClass = liked ? 'like-btn liked' : 'like-btn';
-                         let thumbClass = disliked ? 'dislike-btn disliked' : 'dislike-btn';
-                         let likeCount = fb.likes || 0;
-                         let dislikeCount = fb.dislikes || 0;
+                         let likeCount = fb.liked_by ? fb.liked_by.length : 0;
                          let commentBox = document.createElement('div');
                          commentBox.className = 'comment-box';
                          commentBox.innerHTML = `
                              <div class="d-flex justify-content-between align-items-center flex-wrap">
                                  <div class="fw-bold"><strong>${fb.name}</strong></div>
-                                 <div class="small text-muted">${fb.created_at ? fb.created_at : ''}</div>
+                                 <div class="small text-muted">${fb.timestamp ? fb.timestamp : ''}</div>
                              </div>
-                             <div class="mt-1 mb-2">${fb.comment}</div>
+                             <div class="mt-1 mb-2">${fb.feedback}</div>
                              <div class="d-flex align-items-center gap-3">
                                  <div class="d-flex align-items-center gap-1">
                                      <button class="${heartClass}" onclick="likeFeedback(${fb.id})">
                                          <i class="ri-heart-3-fill"></i>
                                      </button>
                                      <span class="ms-1">${likeCount}</span>
-                                 </div>
-                                 <div class="d-flex align-items-center gap-1">
-                                     <button class="${thumbClass}" onclick="dislikeFeedback(${fb.id})">
-                                         <i class="ri-thumb-down-fill"></i>
-                                     </button>
-                                     <span class="ms-1">${dislikeCount}</span>
                                  </div>
                              </div>
                          `;

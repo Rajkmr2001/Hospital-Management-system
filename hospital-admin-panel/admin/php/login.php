@@ -1,6 +1,19 @@
 <?php
 session_start();
-include '../../db/config.php';
+// Database credentials
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hospital_management";
+$port = 3306;
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 // Set header to return JSON
 header('Content-Type: application/json');
@@ -72,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode([
                 'success' => true,
                 'message' => 'Login successful!',
-                'redirect' => '../dashboard_auth.php'
+                'redirect' => 'dashboard_auth.php'
             ]);
         } else {
             echo json_encode([

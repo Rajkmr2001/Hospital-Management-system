@@ -1,66 +1,65 @@
 <?php
-include '../db/config.php';
+// Database credentials
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hospital_management";
+$port = 3306;
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = intval($_POST['id'] ?? 0);
-    $number = $_POST['number'] ?? '';
+    $feedback_id = intval($_POST['feedback_id'] ?? 0);
+    $user_ip = $_POST['user_ip'] ?? '';
     $action = $_POST['action'] ?? 'like'; // 'like' or 'dislike'
     
-    if ($id && $number) {
-        // Check if user has already interacted with this feedback
-        $check = $conn->prepare("SELECT * FROM feedback_likes WHERE feedback_id = ? AND number = ?");
-        $check->bind_param("is", $id, $number);
-        $check->execute();
-        $result = $check->get_result();
+    if ($feedback_id && $user_ip && $action) {
+        // Check if user already interacted with this feedback
+        $stmt = $conn->prepare("SELECT id, dislike_type FROM feedback_likes WHERE feedback_id = ? AND user_ip = ?");
+        $stmt->bind_param("is", $feedback_id, $user_ip);
+        $stmt->execute();
+        $result = $stmt->get_result();
         
-        if ($result->num_rows == 0) {
-            // First time interaction - add like or dislike
-            if ($action === 'like') {
-                $conn->query("UPDATE feedback SET likes = likes + 1 WHERE id = $id");
-            } else {
-                $conn->query("UPDATE feedback SET dislikes = dislikes + 1 WHERE id = $id");
-            }
-            
-            $insert = $conn->prepare("INSERT INTO feedback_likes (feedback_id, number, dislike_type) VALUES (?, ?, ?)");
-            $insert->bind_param("iss", $id, $number, $action);
-            $insert->execute();
-            
-            echo json_encode(['success' => true, 'action' => $action]);
-        } else {
-            // User has already interacted - handle toggle
+        if ($result->num_rows > 0) {
             $existing = $result->fetch_assoc();
-            $current_action = $existing['dislike_type'];
-            
-            if ($current_action === $action) {
-                // Remove the interaction (toggle off)
-                if ($action === 'like') {
-                    $conn->query("UPDATE feedback SET likes = likes - 1 WHERE id = $id");
+            if ($existing['dislike_type'] === $action) {
+                // User is clicking the same action, remove it
+                $stmt = $conn->prepare("DELETE FROM feedback_likes WHERE feedback_id = ? AND user_ip = ?");
+                $stmt->bind_param("is", $feedback_id, $user_ip);
+                if ($stmt->execute()) {
+                    echo json_encode(['success' => true, 'action' => 'removed']);
                 } else {
-                    $conn->query("UPDATE feedback SET dislikes = dislikes - 1 WHERE id = $id");
+                    echo json_encode(['success' => false, 'message' => $stmt->error]);
                 }
-                
-                $delete = $conn->prepare("DELETE FROM feedback_likes WHERE feedback_id = ? AND number = ?");
-                $delete->bind_param("is", $id, $number);
-                $delete->execute();
-                
-                echo json_encode(['success' => true, 'action' => 'removed']);
             } else {
-                // Change from like to dislike or vice versa
-                if ($current_action === 'like') {
-                    $conn->query("UPDATE feedback SET likes = likes - 1, dislikes = dislikes + 1 WHERE id = $id");
+                // User is changing from like to dislike or vice versa, update it
+                $stmt = $conn->prepare("UPDATE feedback_likes SET dislike_type = ?, liked_at = NOW() WHERE feedback_id = ? AND user_ip = ?");
+                $stmt->bind_param("sis", $action, $feedback_id, $user_ip);
+                if ($stmt->execute()) {
+                    echo json_encode(['success' => true, 'action' => 'changed']);
                 } else {
-                    $conn->query("UPDATE feedback SET dislikes = dislikes - 1, likes = likes + 1 WHERE id = $id");
+                    echo json_encode(['success' => false, 'message' => $stmt->error]);
                 }
-                
-                $update = $conn->prepare("UPDATE feedback_likes SET dislike_type = ? WHERE feedback_id = ? AND number = ?");
-                $update->bind_param("sis", $action, $id, $number);
-                $update->execute();
-                
-                echo json_encode(['success' => true, 'action' => $action]);
+            }
+        } else {
+            // User hasn't interacted, add the interaction
+            $stmt = $conn->prepare("INSERT INTO feedback_likes (feedback_id, user_ip, dislike_type, liked_at) VALUES (?, ?, ?, NOW())");
+            $stmt->bind_param("iss", $feedback_id, $user_ip, $action);
+            if ($stmt->execute()) {
+                echo json_encode(['success' => true, 'action' => 'added']);
+            } else {
+                echo json_encode(['success' => false, 'message' => $stmt->error]);
             }
         }
-        $check->close();
+        $stmt->close();
     } else {
         echo json_encode(['success' => false, 'message' => 'Missing fields']);
     }

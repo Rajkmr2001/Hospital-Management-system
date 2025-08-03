@@ -1,16 +1,29 @@
 <?php
-include '../db/config.php'; // adjust path as needed
+// Database credentials
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hospital_management";
+$port = 3306;
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'] ?? '';
     $number = $_POST['number'] ?? '';
     $comment = $_POST['comment'] ?? '';
-    $likes = 0;
 
 if ($name && $number && $comment) {
-    $stmt = $conn->prepare("INSERT INTO feedback (name, number, comment, likes, created_at) VALUES (?, ?, ?, ?, NOW())");
-    $stmt->bind_param("sssi", $name, $number, $comment, $likes);
+    $stmt = $conn->prepare("INSERT INTO feedback (name, number, feedback, timestamp) VALUES (?, ?, ?, NOW())");
+    $stmt->bind_param("sss", $name, $number, $comment);
     if ($stmt->execute()) {
         echo json_encode(['success' => true]);
     } else {

@@ -1,6 +1,20 @@
 <?php
 // get_feedback.php
-include '../db/config.php';
+// Database credentials
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hospital_management";
+$port = 3306;
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 session_start();
 
 /* Temporarily bypass login check for testing */
@@ -17,7 +31,7 @@ $feedbacks = [];
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         // Get liked_by and disliked_by arrays for each feedback
-        $stmt = $conn->prepare("SELECT number, dislike_type FROM feedback_likes WHERE feedback_id = ?");
+        $stmt = $conn->prepare("SELECT user_ip, dislike_type FROM feedback_likes WHERE feedback_id = ?");
         $stmt->bind_param("i", $row['id']);
         $stmt->execute();
         $likes_result = $stmt->get_result();
@@ -25,9 +39,9 @@ if ($result && $result->num_rows > 0) {
         $disliked_by = [];
         while ($like_row = $likes_result->fetch_assoc()) {
             if ($like_row['dislike_type'] === 'like') {
-                $liked_by[] = $like_row['number'];
+                $liked_by[] = $like_row['user_ip'];
             } else {
-                $disliked_by[] = $like_row['number'];
+                $disliked_by[] = $like_row['user_ip'];
             }
         }
         $stmt->close();

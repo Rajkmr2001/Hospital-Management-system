@@ -472,7 +472,7 @@
      
      function confirmDelete() {
        if (currentFeedbackId) {
-         fetch('../../php/delete_feedback.php', {
+                   fetch('/hospital_backend/php/delete_feedback.php', {
            method: 'POST',
            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
            body: `id=${encodeURIComponent(currentFeedbackId)}`
@@ -504,7 +504,7 @@
      });
     // Load feedback
     function loadFeedback() {
-      fetch('../../php/get_feedback_with_timestamps.php')
+      fetch('/hospital_backend/php/get_feedback_with_timestamps.php')
         .then(r => r.json())
         .then(data => {
           const tbody = document.getElementById('feedbackTbody');
@@ -548,7 +548,7 @@
                 <td>${fb.id}</td>
                 <td>${fb.name || ''}</td>
                 <td>${fb.number || ''}</td>
-                <td>${fb.comment || ''}</td>
+                <td>${fb.feedback || ''}</td>
                 <td>${interactionsHtml}</td>
                 <td>${interactionTimeHtml}</td>
                 <td><button class="delete-btn">Delete</button></td>
