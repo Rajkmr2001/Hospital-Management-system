@@ -1,12 +1,28 @@
 <?php
 session_start();
-include 'db/config.php';
 
-// Disable error reporting for production
-error_reporting(0);
-ini_set('display_errors', 0);
+// Database credentials
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hospital_management";
+$port = 3306;
 
-header('Content-Type: application/json');
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
+
+// Check connection
+if ($conn->connect_error) {
+    echo json_encode(['success' => false, 'message' => 'Database connection failed: ' . $conn->connect_error]);
+    exit();
+}
+
+// Enable error reporting for debugging (only if not already output)
+if (!headers_sent()) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    header('Content-Type: application/json');
+}
 
 // Check if patient is logged in
 if (!isset($_SESSION['patient_logged_in']) || $_SESSION['patient_logged_in'] !== true) {
@@ -26,7 +42,6 @@ $name = trim($_POST['name'] ?? '');
 $age = trim($_POST['age'] ?? '');
 $gender = trim($_POST['gender'] ?? '');
 $address = trim($_POST['address'] ?? '');
-$medical_history = trim($_POST['medical_history'] ?? '');
 
 // Validate required fields
 if (empty($name)) {
@@ -37,6 +52,11 @@ if (empty($name)) {
 if (!empty($age) && (!is_numeric($age) || $age < 1 || $age > 120)) {
     echo json_encode(['success' => false, 'message' => 'Age must be between 1 and 120']);
     exit();
+}
+
+// Convert empty age to null for database
+if (empty($age)) {
+    $age = null;
 }
 
 if (!in_array($gender, ['Male', 'Female', 'Other'])) {
@@ -66,12 +86,34 @@ try {
     
     if ($result->num_rows > 0) {
         // Update existing patient_data record
-        $stmt = $conn->prepare("UPDATE patient_data SET name = ?, age = ?, gender = ?, address = ?, medical_history = ? WHERE contact = ?");
-        $stmt->bind_param("sissss", $name, $age, $gender, $address, $medical_history, $patient_mobile);
+        if ($age === null) {
+            $stmt = $conn->prepare("UPDATE patient_data SET name = ?, age = NULL, gender = ?, address = ? WHERE contact = ?");
+            if (!$stmt) {
+                throw new Exception('Failed to prepare UPDATE statement: ' . $conn->error);
+            }
+            $stmt->bind_param("sssss", $name, $gender, $address, $patient_mobile);
+        } else {
+            $stmt = $conn->prepare("UPDATE patient_data SET name = ?, age = ?, gender = ?, address = ? WHERE contact = ?");
+            if (!$stmt) {
+                throw new Exception('Failed to prepare UPDATE statement: ' . $conn->error);
+            }
+            $stmt->bind_param("sisss", $name, $age, $gender, $address, $patient_mobile);
+        }
     } else {
         // Insert new patient_data record
-        $stmt = $conn->prepare("INSERT INTO patient_data (contact, name, age, gender, address, medical_history, submission_time, submission_date) VALUES (?, ?, ?, ?, ?, ?, NOW(), CURDATE())");
-        $stmt->bind_param("ssisss", $patient_mobile, $name, $age, $gender, $address, $medical_history);
+        if ($age === null) {
+            $stmt = $conn->prepare("INSERT INTO patient_data (contact, name, age, gender, address, submission_time, submission_date) VALUES (?, ?, NULL, ?, ?, NOW(), CURDATE())");
+            if (!$stmt) {
+                throw new Exception('Failed to prepare INSERT statement: ' . $conn->error);
+            }
+            $stmt->bind_param("sssss", $patient_mobile, $name, $gender, $address);
+        } else {
+            $stmt = $conn->prepare("INSERT INTO patient_data (contact, name, age, gender, address, submission_time, submission_date) VALUES (?, ?, ?, ?, ?, NOW(), CURDATE())");
+            if (!$stmt) {
+                throw new Exception('Failed to prepare INSERT statement: ' . $conn->error);
+            }
+            $stmt->bind_param("ssisss", $patient_mobile, $name, $age, $gender, $address);
+        }
     }
     
     if (!$stmt->execute()) {

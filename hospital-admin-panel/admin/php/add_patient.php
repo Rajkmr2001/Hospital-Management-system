@@ -15,13 +15,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate required fields
     if (empty($name) || empty($age) || empty($gender) || empty($contact) || empty($address)) {
-        echo json_encode(['success' => false, 'message' => 'All fields except medical history are required.']);
+        echo json_encode(['success' => false, 'message' => 'Name, age, gender, contact, and address are required fields.']);
         exit;
     }
 
     // Prepare an SQL statement to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO patient_data (name, age, gender, contact, address, medical_history) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sissss", $name, $age, $gender, $contact, $address, $medical_history);
+    $stmt = $conn->prepare("INSERT INTO patient_data (contact, name, age, gender, address) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssiss", $contact, $name, $age, $gender, $address);
 
     // Execute the statement
     if ($stmt->execute()) {

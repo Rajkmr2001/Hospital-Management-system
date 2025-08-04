@@ -9,12 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $address = $_POST['address'] ?? '';
     $contact = $_POST['contact'] ?? '';
     $medical_history = $_POST['medical_history'] ?? '';
-    if (empty($patient_id) || empty($name) || empty($age) || empty($gender) || empty($address) || empty($contact)) {
-        echo json_encode(['success' => false, 'message' => 'All fields except medical history are required.']);
+    if (empty($patient_id) || empty($name) || empty($age) || empty($gender) || empty($contact) || empty($address)) {
+        echo json_encode(['success' => false, 'message' => 'Patient ID, name, age, gender, contact, and address are required fields.']);
         exit;
     }
-    $stmt = $conn->prepare("UPDATE patient_data SET name=?, age=?, gender=?, address=?, contact=?, medical_history=? WHERE id=?");
-    $stmt->bind_param("sissssi", $name, $age, $gender, $address, $contact, $medical_history, $patient_id);
+    $stmt = $conn->prepare("UPDATE patient_data SET contact=?, name=?, age=?, gender=?, address=? WHERE id=?");
+    $stmt->bind_param("ssissi", $contact, $name, $age, $gender, $address, $patient_id);
     if ($stmt->execute()) {
         echo json_encode(['success' => true, 'message' => 'Patient updated successfully.']);
     } else {

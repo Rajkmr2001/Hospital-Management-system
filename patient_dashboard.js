@@ -1,3 +1,25 @@
+// Debug function to check if all required elements exist
+function debugElements() {
+  const requiredElements = [
+    'patientName', 'patientNameInfo', 'patientAgeInfo', 'patientGenderInfo',
+    'patientContactInfo', 'patientAddressInfo', 'registrationDateInfo',
+    'totalFeedbackInfo', 'totalMessagesInfo', 'lastVisitInfo',
+    'feedbackList', 'messagesList', 'profilePicture',
+    'editName', 'editAge', 'editGender', 'editAddress',
+    'editDialog', 'editForm', 'customDialog', 'dialogConfirm'
+  ];
+  
+  console.log('Checking required elements...');
+  requiredElements.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      console.log(`✅ ${id} - Found`);
+    } else {
+      console.error(`❌ ${id} - Missing`);
+    }
+  });
+}
+
 // Check if user is logged in
 function checkAuth() {
   fetch('check_patient_auth.php')
@@ -6,7 +28,10 @@ function checkAuth() {
       if (!data.logged_in) {
         window.location.href = 'patient_login.html';
       } else {
-        document.getElementById('patientName').textContent = data.name;
+        const patientNameElement = document.getElementById('patientName');
+        if (patientNameElement) {
+          patientNameElement.textContent = data.name;
+        }
         loadPatientData();
       }
     })
@@ -18,45 +43,84 @@ function checkAuth() {
 
 // Load patient data
 function loadPatientData() {
+  // Show loading state with null checks
+  const feedbackList = document.getElementById('feedbackList');
+  const messagesList = document.getElementById('messagesList');
+  
+  if (feedbackList) {
+    feedbackList.innerHTML = '<div class="text-center py-8"><div class="loading"></div><p class="text-gray-500 mt-2">Loading feedback...</p></div>';
+  }
+  if (messagesList) {
+    messagesList.innerHTML = '<div class="text-center py-8"><div class="loading"></div><p class="text-gray-500 mt-2">Loading messages...</p></div>';
+  }
+  
   fetch('get_patient_dashboard_data.php')
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok: ' + response.status);
+      }
+      return response.json();
+    })
     .then(data => {
       if (data.success) {
         displayPatientInfo(data.patient_info);
         displayFeedback(data.feedback);
         displayMessages(data.messages);
-        if (data.profile_picture) {
-          document.getElementById('profilePicture').src = data.profile_picture;
+        const profilePicture = document.getElementById('profilePicture');
+        if (data.profile_picture && profilePicture) {
+          profilePicture.src = data.profile_picture;
         }
       } else {
+        console.error('Data loading error:', data.message);
         showDialog('Error', data.message || 'Failed to load patient data');
+        // Show default values for feedback and messages
+        displayFeedback([]);
+        displayMessages([]);
       }
     })
     .catch(error => {
       console.error('Error loading patient data:', error);
-      showDialog('Error', 'Failed to load patient data');
+      showDialog('Error', 'Failed to load patient data. Please try refreshing the page.');
+      // Show default values for feedback and messages
+      displayFeedback([]);
+      displayMessages([]);
     });
 }
 
 // Display patient information
 function displayPatientInfo(info) {
-  document.getElementById('patientNameInfo').textContent = info.name || 'N/A';
-  document.getElementById('patientAgeInfo').textContent = info.age || 'N/A';
-  document.getElementById('patientGenderInfo').textContent = info.gender || 'N/A';
-  document.getElementById('patientContactInfo').textContent = info.contact || 'N/A';
-  document.getElementById('patientAddressInfo').textContent = info.address || 'NULL';
-  document.getElementById('patientMedicalHistoryInfo').textContent = info.medical_history || 'NULL';
-  document.getElementById('registrationDateInfo').textContent = info.register_date || 'N/A';
-  document.getElementById('totalFeedbackInfo').textContent = info.total_feedback || '0';
-  document.getElementById('totalMessagesInfo').textContent = info.total_messages || '0';
-  document.getElementById('lastVisitInfo').textContent = info.last_visit || 'N/A';
+  const elements = {
+    'patientNameInfo': info.name || 'N/A',
+    'patientAgeInfo': info.age || 'N/A',
+    'patientGenderInfo': info.gender || 'N/A',
+    'patientContactInfo': info.contact || 'N/A',
+    'patientAddressInfo': info.address || 'N/A',
+    'registrationDateInfo': info.register_date || 'N/A',
+    'totalFeedbackInfo': info.total_feedback || '0',
+    'totalMessagesInfo': info.total_messages || '0',
+    'lastVisitInfo': info.last_visit || 'N/A'
+  };
+
+  for (const [id, value] of Object.entries(elements)) {
+    const element = document.getElementById(id);
+    if (element) {
+      element.textContent = value;
+    } else {
+      console.warn(`Element with id '${id}' not found`);
+    }
+  }
 }
 
 // Display feedback
 function displayFeedback(feedback) {
   const container = document.getElementById('feedbackList');
+  if (!container) {
+    console.warn('feedbackList element not found');
+    return;
+  }
+  
   if (!feedback || feedback.length === 0) {
-    container.innerHTML = '<p class="text-gray-500 text-center py-8">NULL</p>';
+    container.innerHTML = '<p class="text-gray-500 text-center py-8">No feedback available</p>';
     return;
   }
 
@@ -80,8 +144,13 @@ function displayFeedback(feedback) {
 // Display messages
 function displayMessages(messages) {
   const container = document.getElementById('messagesList');
+  if (!container) {
+    console.warn('messagesList element not found');
+    return;
+  }
+  
   if (!messages || messages.length === 0) {
-    container.innerHTML = '<p class="text-gray-500 text-center py-8">NULL</p>';
+    container.innerHTML = '<p class="text-gray-500 text-center py-8">No messages available</p>';
     return;
   }
 
@@ -128,7 +197,10 @@ function uploadProfilePicture(input) {
   .then(response => response.json())
   .then(data => {
     if (data.success) {
-      document.getElementById('profilePicture').src = data.picture_url;
+      const profilePicture = document.getElementById('profilePicture');
+      if (profilePicture) {
+        profilePicture.src = data.picture_url;
+      }
       showDialog('Success', 'Profile picture updated successfully!');
     } else {
       showDialog('Error', data.message || 'Failed to upload profile picture');
@@ -142,14 +214,28 @@ function uploadProfilePicture(input) {
 
 // Show custom dialog
 function showDialog(title, message) {
-  document.getElementById('dialogTitle').textContent = title;
-  document.getElementById('dialogMessage').textContent = message;
-  document.getElementById('customDialog').classList.add('show');
+  const dialogTitle = document.getElementById('dialogTitle');
+  const dialogMessage = document.getElementById('dialogMessage');
+  const customDialog = document.getElementById('customDialog');
+  
+  if (dialogTitle) dialogTitle.textContent = title;
+  if (dialogMessage) dialogMessage.textContent = message;
+  if (customDialog) customDialog.classList.add('show');
 }
 
 // Hide custom dialog
 function hideDialog() {
-  document.getElementById('customDialog').classList.remove('show');
+  const customDialog = document.getElementById('customDialog');
+  if (customDialog) customDialog.classList.remove('show');
+}
+
+// Hide edit dialog
+function hideEditDialog() {
+  const editDialog = document.getElementById('editDialog');
+  const editForm = document.getElementById('editForm');
+  
+  if (editDialog) editDialog.classList.remove('show');
+  if (editForm) editForm.reset();
 }
 
 // Logout function
@@ -166,29 +252,65 @@ function logout() {
 
 // Show edit dialog
 function showEditDialog() {
-  // Populate form with current data
-  document.getElementById('editName').value = document.getElementById('patientNameInfo').textContent;
-  document.getElementById('editAge').value = document.getElementById('patientAgeInfo').textContent;
-  document.getElementById('editGender').value = document.getElementById('patientGenderInfo').textContent;
-  document.getElementById('editAddress').value = document.getElementById('patientAddressInfo').textContent;
-  document.getElementById('editMedicalHistory').value = document.getElementById('patientMedicalHistoryInfo').textContent;
+  // Get current data with null checks
+  const nameElement = document.getElementById('patientNameInfo');
+  const ageElement = document.getElementById('patientAgeInfo');
+  const genderElement = document.getElementById('patientGenderInfo');
+  const addressElement = document.getElementById('patientAddressInfo');
   
-  document.getElementById('editDialog').classList.add('show');
+  if (!nameElement || !ageElement || !genderElement || !addressElement) {
+    console.error('Required elements not found for edit dialog');
+    showDialog('Error', 'Unable to load current data. Please refresh the page.');
+    return;
+  }
+
+  // Populate form with current data
+  const editNameElement = document.getElementById('editName');
+  const editAgeElement = document.getElementById('editAge');
+  const editGenderElement = document.getElementById('editGender');
+  const editAddressElement = document.getElementById('editAddress');
+  
+  if (editNameElement) editNameElement.value = nameElement.textContent;
+  if (editAgeElement) editAgeElement.value = ageElement.textContent === 'N/A' ? '' : ageElement.textContent;
+  if (editGenderElement) editGenderElement.value = genderElement.textContent;
+  if (editAddressElement) editAddressElement.value = addressElement.textContent === 'N/A' ? '' : addressElement.textContent;
+  
+  const editDialog = document.getElementById('editDialog');
+  if (editDialog) {
+    editDialog.classList.add('show');
+  } else {
+    console.error('Edit dialog element not found');
+  }
 }
 
-// Hide edit dialog
-function hideEditDialog() {
-  document.getElementById('editDialog').classList.remove('show');
-}
+
 
 // Update patient information
 function updatePatientInfo(formData) {
+  // Show loading state
+  const submitBtn = document.querySelector('#editForm button[type="submit"]');
+  if (!submitBtn) {
+    console.error('Submit button not found');
+    showDialog('Error', 'Form submission failed. Please refresh the page.');
+    return;
+  }
+  
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Updating...';
+  submitBtn.disabled = true;
+  
   fetch('update_patient_info.php', {
     method: 'POST',
     body: formData
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok: ' + response.status);
+    }
+    return response.json();
+  })
   .then(data => {
+    console.log('Update response:', data); // Debug log
     if (data.success) {
       showDialog('Success', 'Information updated successfully!');
       hideEditDialog();
@@ -200,33 +322,54 @@ function updatePatientInfo(formData) {
   })
   .catch(error => {
     console.error('Update error:', error);
-    showDialog('Error', 'Failed to update information');
+    showDialog('Error', 'Failed to update information. Please try again.');
+  })
+  .finally(() => {
+    // Reset button state
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
   });
 }
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('dialogConfirm').addEventListener('click', hideDialog);
-  document.getElementById('customDialog').addEventListener('click', function(e) {
-    if (e.target === this) {
-      hideDialog();
-    }
-  });
+  // Check if required elements exist before adding event listeners
+  const dialogConfirm = document.getElementById('dialogConfirm');
+  const customDialog = document.getElementById('customDialog');
+  const editDialog = document.getElementById('editDialog');
+  const editForm = document.getElementById('editForm');
   
-  // Edit dialog event listeners
-  document.getElementById('editDialog').addEventListener('click', function(e) {
-    if (e.target === this) {
-      hideEditDialog();
-    }
-  });
+  if (dialogConfirm) {
+    dialogConfirm.addEventListener('click', hideDialog);
+  }
   
-  // Edit form submission
-  document.getElementById('editForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    updatePatientInfo(formData);
-  });
+  if (customDialog) {
+    customDialog.addEventListener('click', function(e) {
+      if (e.target === this) {
+        hideDialog();
+      }
+    });
+  }
   
-  // Initialize
-  checkAuth();
+  if (editDialog) {
+    editDialog.addEventListener('click', function(e) {
+      if (e.target === this) {
+        hideEditDialog();
+      }
+    });
+  }
+  
+  if (editForm) {
+    editForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      updatePatientInfo(formData);
+    });
+  }
+  
+  // Initialize after a short delay to ensure DOM is ready
+  setTimeout(() => {
+    debugElements(); // Debug elements first
+    checkAuth();
+  }, 100);
 }); 

@@ -24,6 +24,12 @@ if (!isset($_SESSION['patient_logged_in']) || $_SESSION['patient_logged_in'] !==
     exit();
 }
 
+// Enable error reporting for debugging (only if not already output)
+if (!headers_sent()) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+}
+
 $patient_mobile = $_SESSION['patient_mobile'];
 
 try {
@@ -34,12 +40,33 @@ try {
     $patient_register = $stmt->get_result()->fetch_assoc();
     $stmt->close();
 
-    // Get patient data (additional info)
+    // Check if patient_register exists
+    if (!$patient_register) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Patient registration not found'
+        ]);
+        exit();
+    }
+
+    // Get patient data (additional info) - try to match by contact or name
+    $patient_data = null;
+    
+    // First try to match by contact number
     $stmt = $conn->prepare("SELECT * FROM patient_data WHERE contact = ?");
     $stmt->bind_param("s", $patient_mobile);
     $stmt->execute();
     $patient_data = $stmt->get_result()->fetch_assoc();
     $stmt->close();
+    
+    // If not found by contact, try to match by name
+    if (!$patient_data && $patient_register['name']) {
+        $stmt = $conn->prepare("SELECT * FROM patient_data WHERE name = ?");
+        $stmt->bind_param("s", $patient_register['name']);
+        $stmt->execute();
+        $patient_data = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+    }
 
     // Get patient feedback
     $stmt = $conn->prepare("SELECT * FROM feedback WHERE number = ? ORDER BY timestamp DESC");
@@ -53,15 +80,17 @@ try {
     $stmt->close();
 
     // Get patient messages
-    $stmt = $conn->prepare("SELECT * FROM messages WHERE name = ? ORDER BY timestamp DESC");
-    $stmt->bind_param("s", $patient_register['name']);
-    $stmt->execute();
-    $messages_result = $stmt->get_result();
     $messages = [];
-    while ($row = $messages_result->fetch_assoc()) {
-        $messages[] = $row;
+    if ($patient_register && $patient_register['name']) {
+        $stmt = $conn->prepare("SELECT * FROM messages WHERE name = ? ORDER BY timestamp DESC");
+        $stmt->bind_param("s", $patient_register['name']);
+        $stmt->execute();
+        $messages_result = $stmt->get_result();
+        while ($row = $messages_result->fetch_assoc()) {
+            $messages[] = $row;
+        }
+        $stmt->close();
     }
-    $stmt->close();
 
     // Get last visit
     $stmt = $conn->prepare("SELECT CONCAT(visit_date, ' ', visit_time) as visit_datetime FROM user_visits WHERE user_ip = ? ORDER BY visit_date DESC, visit_time DESC LIMIT 1");
@@ -73,12 +102,11 @@ try {
 
     // Combine patient information
     $patient_info = [
-        'name' => $patient_register['name'] ?? $patient_data['name'] ?? 'N/A',
+        'name' => $patient_register['name'] ?? 'N/A',
         'age' => $patient_data['age'] ?? 'N/A',
-        'gender' => $patient_register['gender'] ?? $patient_data['gender'] ?? 'N/A',
+        'gender' => $patient_register['gender'] ?? 'N/A',
         'contact' => $patient_mobile,
-        'address' => $patient_data['address'] ?? 'NULL',
-        'medical_history' => $patient_data['medical_history'] ?? 'NULL',
+        'address' => $patient_data['address'] ?? 'N/A',
         'register_date' => $patient_register['register_date'] ?? 'N/A',
         'total_feedback' => count($feedback),
         'total_messages' => count($messages),

@@ -53,8 +53,10 @@
         animation: dialogSlideIn 0.3s ease-out;
       }
       .edit-dialog-box {
-        max-width: 600px;
+        max-width: 400px;
         text-align: left;
+        max-height: 80vh;
+        overflow-y: auto;
       }
       @keyframes dialogSlideIn {
         from {
@@ -272,10 +274,7 @@
           <span class="font-semibold text-gray-600">Address:</span>
           <span class="text-gray-800 text-right" id="patientAddressInfo">Loading...</span>
         </div>
-        <div class="flex justify-between items-start py-3">
-          <span class="font-semibold text-gray-600">Medical History:</span>
-          <span class="text-gray-800 text-right" id="patientMedicalHistoryInfo">Loading...</span>
-        </div>
+
       </div>
     </div>
 
@@ -377,10 +376,7 @@
         <label for="editAddress">Address</label>
         <textarea id="editAddress" name="address" placeholder="Enter your address"></textarea>
       </div>
-      <div class="form-group">
-        <label for="editMedicalHistory">Medical History</label>
-        <textarea id="editMedicalHistory" name="medical_history" placeholder="Enter your medical history (if any)"></textarea>
-      </div>
+
       <div class="dialog-buttons">
         <button type="button" class="dialog-btn secondary" onclick="hideEditDialog()">Cancel</button>
         <button type="submit" class="dialog-btn primary">Update Information</button>

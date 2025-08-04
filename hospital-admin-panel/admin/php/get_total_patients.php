@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$sql = "SELECT COUNT(*) AS total FROM patient_register";
+$sql = "SELECT COUNT(*) AS total FROM patient_data";
 $result = $conn->query($sql);
 
 $total = 0;
