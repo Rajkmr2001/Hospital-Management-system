@@ -1,375 +1,547 @@
-// Debug function to check if all required elements exist
-function debugElements() {
-  const requiredElements = [
-    'patientName', 'patientNameInfo', 'patientAgeInfo', 'patientGenderInfo',
-    'patientContactInfo', 'patientAddressInfo', 'registrationDateInfo',
-    'totalFeedbackInfo', 'totalMessagesInfo', 'lastVisitInfo',
-    'feedbackList', 'messagesList', 'profilePicture',
-    'editName', 'editAge', 'editGender', 'editAddress',
-    'editDialog', 'editForm', 'customDialog', 'dialogConfirm'
-  ];
-  
-  console.log('Checking required elements...');
-  requiredElements.forEach(id => {
-    const element = document.getElementById(id);
-    if (element) {
-      console.log(`✅ ${id} - Found`);
-    } else {
-      console.error(`❌ ${id} - Missing`);
+// Global variables
+let currentPatientData = null;
+
+// Initialize the dashboard when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Patient Dashboard initialized');
+    initializeDashboard();
+});
+
+// Initialize dashboard
+function initializeDashboard() {
+    console.log('Initializing dashboard...');
+    
+    // Set up event listeners first
+    setupEventListeners();
+    
+    // Check authentication
+    checkAuthentication();
+}
+
+// Check if user is authenticated
+function checkAuthentication() {
+    console.log('Checking authentication...');
+    
+    // Add timestamp to prevent caching
+    const url = 'check_patient_auth.php?t=' + Date.now();
+    console.log('Auth check URL:', url);
+    
+    fetch(url)
+        .then(response => {
+            console.log('Auth response status:', response.status);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(text => {
+            console.log('Auth raw response:', text);
+            try {
+                return JSON.parse(text);
+            } catch (e) {
+                console.error('Auth JSON parse error:', e);
+                throw new Error('Invalid JSON response from auth check');
+            }
+        })
+        .then(data => {
+            console.log('Auth data:', data);
+            if (data.logged_in) {
+                console.log('User authenticated:', data.name);
+                updateHeaderName(data.name);
+                loadPatientData();
+            } else {
+                console.log('User not authenticated, redirecting to login');
+                window.location.href = 'patient_login.html';
+            }
+        })
+        .catch(error => {
+            console.error('Authentication check failed:', error);
+            showAlert('Error', 'Authentication failed. Please login again.', 'error');
+            setTimeout(() => {
+                window.location.href = 'patient_login.html';
+            }, 2000);
+        });
+}
+
+// Update header with patient name
+function updateHeaderName(name) {
+    const headerElement = document.getElementById('headerPatientName');
+    if (headerElement) {
+        headerElement.textContent = name || 'Welcome';
     }
-  });
 }
 
-// Check if user is logged in
-function checkAuth() {
-  fetch('check_patient_auth.php')
-    .then(response => response.json())
-    .then(data => {
-      if (!data.logged_in) {
-        window.location.href = 'patient_login.html';
-      } else {
-        const patientNameElement = document.getElementById('patientName');
-        if (patientNameElement) {
-          patientNameElement.textContent = data.name;
-        }
-        loadPatientData();
-      }
-    })
-    .catch(error => {
-      console.error('Auth check failed:', error);
-      window.location.href = 'patient_login.html';
-    });
-}
-
-// Load patient data
+// Load patient data from backend
 function loadPatientData() {
-  // Show loading state with null checks
-  const feedbackList = document.getElementById('feedbackList');
-  const messagesList = document.getElementById('messagesList');
-  
-  if (feedbackList) {
-    feedbackList.innerHTML = '<div class="text-center py-8"><div class="loading"></div><p class="text-gray-500 mt-2">Loading feedback...</p></div>';
-  }
-  if (messagesList) {
-    messagesList.innerHTML = '<div class="text-center py-8"><div class="loading"></div><p class="text-gray-500 mt-2">Loading messages...</p></div>';
-  }
-  
-  fetch('get_patient_dashboard_data.php')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok: ' + response.status);
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (data.success) {
-        displayPatientInfo(data.patient_info);
-        displayFeedback(data.feedback);
-        displayMessages(data.messages);
-        const profilePicture = document.getElementById('profilePicture');
-        if (data.profile_picture && profilePicture) {
-          profilePicture.src = data.profile_picture;
+    console.log('Loading patient data...');
+    showLoadingStates();
+    
+    // Add timestamp to prevent caching
+    const url = 'get_patient_dashboard_data.php?t=' + Date.now();
+    console.log('Fetching from:', url);
+    
+    fetch(url)
+        .then(response => {
+            console.log('Response status:', response.status);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(text => {
+            console.log('Raw response:', text);
+            try {
+                return JSON.parse(text);
+            } catch (e) {
+                console.error('JSON parse error:', e);
+                throw new Error('Invalid JSON response from server');
+            }
+        })
+        .then(data => {
+            console.log('Patient data received:', data);
+            if (data.success) {
+                currentPatientData = data;
+                displayPatientData(data);
+                console.log('Data displayed successfully');
+            } else {
+                console.error('Data loading failed:', data.message);
+                showAlert('Error', data.message || 'Failed to load patient data', 'error');
+                displayEmptyStates();
+            }
+        })
+        .catch(error => {
+            console.error('Error loading patient data:', error);
+            showAlert('Error', 'Failed to load patient data. Please try refreshing the page.', 'error');
+            displayEmptyStates();
+        });
+}
+
+// Show loading states
+function showLoadingStates() {
+    const loadingElements = [
+        'patientName', 'patientAge', 'patientGender', 'patientContact', 'patientAddress',
+        'registrationDate', 'totalFeedback', 'totalMessages', 'lastVisit',
+        'accountCreated', 'latestFeedback', 'latestMessage'
+    ];
+    
+    loadingElements.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = 'Loading...';
         }
-      } else {
-        console.error('Data loading error:', data.message);
-        showDialog('Error', data.message || 'Failed to load patient data');
-        // Show default values for feedback and messages
-        displayFeedback([]);
-        displayMessages([]);
-      }
-    })
-    .catch(error => {
-      console.error('Error loading patient data:', error);
-      showDialog('Error', 'Failed to load patient data. Please try refreshing the page.');
-      // Show default values for feedback and messages
-      displayFeedback([]);
-      displayMessages([]);
     });
 }
 
-// Display patient information
-function displayPatientInfo(info) {
-  const elements = {
-    'patientNameInfo': info.name || 'N/A',
-    'patientAgeInfo': info.age || 'N/A',
-    'patientGenderInfo': info.gender || 'N/A',
-    'patientContactInfo': info.contact || 'N/A',
-    'patientAddressInfo': info.address || 'N/A',
-    'registrationDateInfo': info.register_date || 'N/A',
-    'totalFeedbackInfo': info.total_feedback || '0',
-    'totalMessagesInfo': info.total_messages || '0',
-    'lastVisitInfo': info.last_visit || 'N/A'
-  };
+// Display patient data
+function displayPatientData(data) {
+    console.log('Displaying patient data:', data);
+    const patientInfo = data.patient_info;
+    console.log('Patient info:', patientInfo);
+    
+    // Update personal information
+    updateElement('patientName', patientInfo.name);
+    updateElement('patientAge', patientInfo.age);
+    updateElement('patientGender', patientInfo.gender);
+    updateElement('patientContact', patientInfo.contact);
+    updateElement('patientAddress', patientInfo.address);
+    
+    // Update stats
+    updateElement('registrationDate', formatDate(patientInfo.register_date));
+    updateElement('totalFeedback', patientInfo.total_feedback);
+    updateElement('totalMessages', patientInfo.total_messages);
+    updateElement('lastVisit', formatDate(patientInfo.last_visit));
+    
+    // Update activity section
+    updateElement('accountCreated', formatDate(patientInfo.register_date));
+    updateLatestActivity(data.feedback, data.messages);
+    
+    // Display feedback and messages
+    displayFeedback(data.feedback);
+    displayMessages(data.messages);
+    
+    // Update profile picture if available
+    if (data.profile_picture) {
+        const profilePic = document.getElementById('profilePicture');
+        if (profilePic) {
+            profilePic.src = data.profile_picture;
+        }
+    }
+}
 
-  for (const [id, value] of Object.entries(elements)) {
+// Update element safely
+function updateElement(id, value) {
     const element = document.getElementById(id);
     if (element) {
-      element.textContent = value;
+        element.textContent = value || 'N/A';
+        console.log(`Updated element '${id}' with value: '${value || 'N/A'}'`);
     } else {
-      console.warn(`Element with id '${id}' not found`);
+        console.warn(`Element with id '${id}' not found`);
     }
-  }
+}
+
+// Format date
+function formatDate(dateString) {
+    if (!dateString || dateString === 'N/A') {
+        return 'N/A';
+    }
+    try {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    } catch (error) {
+        return dateString;
+    }
+}
+
+// Update latest activity
+function updateLatestActivity(feedback, messages) {
+    // Latest feedback
+    if (feedback && feedback.length > 0) {
+        const latestFeedback = feedback[0];
+        const feedbackText = latestFeedback.feedback.length > 50 
+            ? latestFeedback.feedback.substring(0, 50) + '...'
+            : latestFeedback.feedback;
+        updateElement('latestFeedback', `${formatDate(latestFeedback.timestamp)} - ${feedbackText}`);
+    } else {
+        updateElement('latestFeedback', 'No feedback yet');
+    }
+    
+    // Latest message
+    if (messages && messages.length > 0) {
+        const latestMessage = messages[0];
+        const messageText = latestMessage.subject || 'No subject';
+        updateElement('latestMessage', `${formatDate(latestMessage.timestamp)} - ${messageText}`);
+    } else {
+        updateElement('latestMessage', 'No messages yet');
+    }
 }
 
 // Display feedback
 function displayFeedback(feedback) {
-  const container = document.getElementById('feedbackList');
-  if (!container) {
-    console.warn('feedbackList element not found');
-    return;
-  }
-  
-  if (!feedback || feedback.length === 0) {
-    container.innerHTML = '<p class="text-gray-500 text-center py-8">No feedback available</p>';
-    return;
-  }
-
-  container.innerHTML = feedback.map(item => `
-    <div class="border border-gray-200 rounded-lg p-4">
-      <div class="flex justify-between items-start mb-2">
-        <span class="font-semibold text-gray-800">${item.feedback.substring(0, 50)}${item.feedback.length > 50 ? '...' : ''}</span>
-        <span class="text-sm text-gray-500">${new Date(item.timestamp).toLocaleDateString()}</span>
-      </div>
-      <p class="text-gray-600 text-sm">${item.feedback}</p>
-      <div class="flex items-center mt-2 text-sm text-gray-500">
-        <i class="ri-thumb-up-line mr-1"></i>
-        <span>${item.likes || 0}</span>
-        <i class="ri-thumb-down-line ml-3 mr-1"></i>
-        <span>${item.dislikes || 0}</span>
-      </div>
-    </div>
-  `).join('');
+    const container = document.getElementById('feedbackContainer');
+    if (!container) {
+        console.warn('Feedback container not found');
+        return;
+    }
+    
+    if (!feedback || feedback.length === 0) {
+        container.innerHTML = `
+            <div class="text-center py-8">
+                <i class="fas fa-comments text-gray-300 text-4xl mb-4"></i>
+                <p class="text-gray-500">No feedback available</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = feedback.map(item => `
+        <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-blue-500">
+            <div class="flex justify-between items-start mb-2">
+                <h4 class="font-semibold text-gray-800">${item.feedback.substring(0, 60)}${item.feedback.length > 60 ? '...' : ''}</h4>
+                <span class="text-sm text-gray-500">${formatDate(item.timestamp)}</span>
+            </div>
+            <p class="text-gray-600 text-sm mb-3">${item.feedback}</p>
+            <div class="flex items-center text-sm text-gray-500">
+                <i class="fas fa-thumbs-up mr-1"></i>
+                <span class="mr-4">${item.likes || 0}</span>
+                <i class="fas fa-thumbs-down mr-1"></i>
+                <span>${item.dislikes || 0}</span>
+            </div>
+        </div>
+    `).join('');
 }
 
 // Display messages
 function displayMessages(messages) {
-  const container = document.getElementById('messagesList');
-  if (!container) {
-    console.warn('messagesList element not found');
-    return;
-  }
-  
-  if (!messages || messages.length === 0) {
-    container.innerHTML = '<p class="text-gray-500 text-center py-8">No messages available</p>';
-    return;
-  }
+    const container = document.getElementById('messagesContainer');
+    if (!container) {
+        console.warn('Messages container not found');
+        return;
+    }
+    
+    if (!messages || messages.length === 0) {
+        container.innerHTML = `
+            <div class="text-center py-8">
+                <i class="fas fa-envelope text-gray-300 text-4xl mb-4"></i>
+                <p class="text-gray-500">No messages available</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = messages.map(item => `
+        <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-purple-500">
+            <div class="flex justify-between items-start mb-2">
+                <h4 class="font-semibold text-gray-800">${item.subject || 'No Subject'}</h4>
+                <span class="text-sm text-gray-500">${formatDate(item.timestamp)}</span>
+            </div>
+            <p class="text-gray-600 text-sm mb-3">${item.message}</p>
+            <div class="flex items-center text-sm text-gray-500">
+                <i class="fas fa-phone mr-1"></i>
+                <span>${item.phone || 'N/A'}</span>
+            </div>
+        </div>
+    `).join('');
+}
 
-  container.innerHTML = messages.map(item => `
-    <div class="border border-gray-200 rounded-lg p-4">
-      <div class="flex justify-between items-start mb-2">
-        <span class="font-semibold text-gray-800">${item.subject}</span>
-        <span class="text-sm text-gray-500">${new Date(item.timestamp).toLocaleDateString()}</span>
-      </div>
-      <p class="text-gray-600 text-sm">${item.message}</p>
-      <div class="flex items-center mt-2 text-sm text-gray-500">
-        <i class="ri-phone-line mr-1"></i>
-        <span>${item.phone || 'N/A'}</span>
-      </div>
-    </div>
-  `).join('');
+// Display empty states
+function displayEmptyStates() {
+    const emptyElements = [
+        'patientName', 'patientAge', 'patientGender', 'patientContact', 'patientAddress',
+        'registrationDate', 'totalFeedback', 'totalMessages', 'lastVisit',
+        'accountCreated', 'latestFeedback', 'latestMessage'
+    ];
+    
+    emptyElements.forEach(id => {
+        updateElement(id, 'N/A');
+    });
+    
+    // Empty feedback and messages
+    displayFeedback([]);
+    displayMessages([]);
+}
+
+// Show edit modal
+function showEditModal() {
+    console.log('showEditModal called');
+    if (!currentPatientData || !currentPatientData.patient_info) {
+        showAlert('Error', 'Patient data not available. Please refresh the page.', 'error');
+        return;
+    }
+    
+    const patientInfo = currentPatientData.patient_info;
+    
+    // Populate form fields
+    const editName = document.getElementById('editName');
+    const editAge = document.getElementById('editAge');
+    const editGender = document.getElementById('editGender');
+    const editAddress = document.getElementById('editAddress');
+    
+    if (editName) editName.value = patientInfo.name || '';
+    if (editAge) editAge.value = patientInfo.age === 'N/A' ? '' : patientInfo.age;
+    if (editGender) editGender.value = patientInfo.gender || 'Male';
+    if (editAddress) editAddress.value = patientInfo.address === 'N/A' ? '' : patientInfo.address;
+    
+    // Show modal
+    const modal = document.getElementById('editModal');
+    if (modal) {
+        modal.classList.add('show');
+    }
+}
+
+// Hide edit modal
+function hideEditModal() {
+    console.log('hideEditModal called');
+    const modal = document.getElementById('editModal');
+    if (modal) {
+        modal.classList.remove('show');
+    }
+    
+    // Reset form
+    const form = document.getElementById('editForm');
+    if (form) {
+        form.reset();
+    }
+}
+
+// Update patient information
+function updatePatientInfo(formData) {
+    const submitBtn = document.getElementById('updateButtonText');
+    const originalText = submitBtn ? submitBtn.textContent : 'Update Information';
+    
+    // Show loading state
+    if (submitBtn) {
+        submitBtn.textContent = 'Updating...';
+    }
+    
+    fetch('update_patient_info.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Update response:', data);
+        if (data.success) {
+            showAlert('Success', 'Information updated successfully!', 'success');
+            hideEditModal();
+            // Reload data to show updated information
+            loadPatientData();
+        } else {
+            showAlert('Error', data.message || 'Failed to update information', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Update error:', error);
+        showAlert('Error', 'Failed to update information. Please try again.', 'error');
+    })
+    .finally(() => {
+        // Reset button text
+        if (submitBtn) {
+            submitBtn.textContent = originalText;
+        }
+    });
 }
 
 // Upload profile picture
 function uploadProfilePicture(input) {
-  const file = input.files[0];
-  if (!file) return;
-
-  // Validate file type
-  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-  if (!allowedTypes.includes(file.type)) {
-    showDialog('Error', 'Please select a valid image file (JPG, JPEG, PNG, GIF)');
-    return;
-  }
-
-  // Validate file size (5MB)
-  if (file.size > 5 * 1024 * 1024) {
-    showDialog('Error', 'File size must be less than 5MB');
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('profile_picture', file);
-
-  fetch('upload_profile_picture.php', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      const profilePicture = document.getElementById('profilePicture');
-      if (profilePicture) {
-        profilePicture.src = data.picture_url;
-      }
-      showDialog('Success', 'Profile picture updated successfully!');
-    } else {
-      showDialog('Error', data.message || 'Failed to upload profile picture');
+    const file = input.files[0];
+    if (!file) return;
+    
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+    if (!allowedTypes.includes(file.type)) {
+        showAlert('Error', 'Please select a valid image file (JPG, JPEG, PNG, GIF)', 'error');
+        return;
     }
-  })
-  .catch(error => {
-    console.error('Upload error:', error);
-    showDialog('Error', 'Failed to upload profile picture');
-  });
+    
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+        showAlert('Error', 'File size must be less than 5MB', 'error');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('profile_picture', file);
+    
+    fetch('upload_profile_picture.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const profilePic = document.getElementById('profilePicture');
+            if (profilePic) {
+                profilePic.src = data.picture_url;
+            }
+            showAlert('Success', 'Profile picture updated successfully!', 'success');
+        } else {
+            showAlert('Error', data.message || 'Failed to upload profile picture', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Upload error:', error);
+        showAlert('Error', 'Failed to upload profile picture', 'error');
+    });
 }
 
-// Show custom dialog
-function showDialog(title, message) {
-  const dialogTitle = document.getElementById('dialogTitle');
-  const dialogMessage = document.getElementById('dialogMessage');
-  const customDialog = document.getElementById('customDialog');
-  
-  if (dialogTitle) dialogTitle.textContent = title;
-  if (dialogMessage) dialogMessage.textContent = message;
-  if (customDialog) customDialog.classList.add('show');
+// Show alert modal
+function showAlert(title, message, type = 'info') {
+    const alertModal = document.getElementById('alertModal');
+    const alertTitle = document.getElementById('alertTitle');
+    const alertMessage = document.getElementById('alertMessage');
+    const alertIcon = document.getElementById('alertIcon');
+    
+    if (alertTitle) alertTitle.textContent = title;
+    if (alertMessage) alertMessage.textContent = message;
+    
+    // Set icon and color based on type
+    if (alertIcon) {
+        let iconClass = 'fas fa-info-circle text-blue-500';
+        switch (type) {
+            case 'success':
+                iconClass = 'fas fa-check-circle text-green-500';
+                break;
+            case 'error':
+                iconClass = 'fas fa-exclamation-circle text-red-500';
+                break;
+            case 'warning':
+                iconClass = 'fas fa-exclamation-triangle text-yellow-500';
+                break;
+        }
+        alertIcon.innerHTML = `<i class="${iconClass} text-2xl"></i>`;
+    }
+    
+    if (alertModal) {
+        alertModal.classList.add('show');
+    }
 }
 
-// Hide custom dialog
-function hideDialog() {
-  const customDialog = document.getElementById('customDialog');
-  if (customDialog) customDialog.classList.remove('show');
-}
-
-// Hide edit dialog
-function hideEditDialog() {
-  const editDialog = document.getElementById('editDialog');
-  const editForm = document.getElementById('editForm');
-  
-  if (editDialog) editDialog.classList.remove('show');
-  if (editForm) editForm.reset();
+// Hide alert modal
+function hideAlertModal() {
+    const alertModal = document.getElementById('alertModal');
+    if (alertModal) {
+        alertModal.classList.remove('show');
+    }
 }
 
 // Logout function
 function logout() {
-  fetch('patient_logout.php')
-    .then(() => {
-      window.location.href = 'patient_login.html';
-    })
-    .catch(error => {
-      console.error('Logout error:', error);
-      window.location.href = 'patient_login.html';
-    });
+    fetch('patient_logout.php')
+        .then(() => {
+            window.location.href = 'patient_login.html';
+        })
+        .catch(error => {
+            console.error('Logout error:', error);
+            window.location.href = 'patient_login.html';
+        });
 }
 
-// Show edit dialog
-function showEditDialog() {
-  // Get current data with null checks
-  const nameElement = document.getElementById('patientNameInfo');
-  const ageElement = document.getElementById('patientAgeInfo');
-  const genderElement = document.getElementById('patientGenderInfo');
-  const addressElement = document.getElementById('patientAddressInfo');
-  
-  if (!nameElement || !ageElement || !genderElement || !addressElement) {
-    console.error('Required elements not found for edit dialog');
-    showDialog('Error', 'Unable to load current data. Please refresh the page.');
-    return;
-  }
-
-  // Populate form with current data
-  const editNameElement = document.getElementById('editName');
-  const editAgeElement = document.getElementById('editAge');
-  const editGenderElement = document.getElementById('editGender');
-  const editAddressElement = document.getElementById('editAddress');
-  
-  if (editNameElement) editNameElement.value = nameElement.textContent;
-  if (editAgeElement) editAgeElement.value = ageElement.textContent === 'N/A' ? '' : ageElement.textContent;
-  if (editGenderElement) editGenderElement.value = genderElement.textContent;
-  if (editAddressElement) editAddressElement.value = addressElement.textContent === 'N/A' ? '' : addressElement.textContent;
-  
-  const editDialog = document.getElementById('editDialog');
-  if (editDialog) {
-    editDialog.classList.add('show');
-  } else {
-    console.error('Edit dialog element not found');
-  }
-}
-
-
-
-// Update patient information
-function updatePatientInfo(formData) {
-  // Show loading state
-  const submitBtn = document.querySelector('#editForm button[type="submit"]');
-  if (!submitBtn) {
-    console.error('Submit button not found');
-    showDialog('Error', 'Form submission failed. Please refresh the page.');
-    return;
-  }
-  
-  const originalText = submitBtn.textContent;
-  submitBtn.textContent = 'Updating...';
-  submitBtn.disabled = true;
-  
-  fetch('update_patient_info.php', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok: ' + response.status);
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Update response:', data); // Debug log
-    if (data.success) {
-      showDialog('Success', 'Information updated successfully!');
-      hideEditDialog();
-      // Reload patient data to show updated information
-      loadPatientData();
+// Setup event listeners
+function setupEventListeners() {
+    console.log('Setting up event listeners...');
+    
+    // Edit form submission
+    const editForm = document.getElementById('editForm');
+    if (editForm) {
+        console.log('Edit form found, adding event listener');
+        editForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            updatePatientInfo(formData);
+        });
     } else {
-      showDialog('Error', data.message || 'Failed to update information');
+        console.warn('Edit form not found');
     }
-  })
-  .catch(error => {
-    console.error('Update error:', error);
-    showDialog('Error', 'Failed to update information. Please try again.');
-  })
-  .finally(() => {
-    // Reset button state
-    submitBtn.textContent = originalText;
-    submitBtn.disabled = false;
-  });
+    
+    // Modal close on backdrop click
+    const modals = document.querySelectorAll('.modal');
+    if (modals.length > 0) {
+        console.log('Found', modals.length, 'modals');
+        modals.forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+        });
+    } else {
+        console.warn('No modals found');
+    }
+    
+    // Close modals with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            hideEditModal();
+            hideAlertModal();
+        }
+    });
+    
+    console.log('Event listeners setup completed');
 }
 
-// Event listeners
-document.addEventListener('DOMContentLoaded', function() {
-  // Check if required elements exist before adding event listeners
-  const dialogConfirm = document.getElementById('dialogConfirm');
-  const customDialog = document.getElementById('customDialog');
-  const editDialog = document.getElementById('editDialog');
-  const editForm = document.getElementById('editForm');
-  
-  if (dialogConfirm) {
-    dialogConfirm.addEventListener('click', hideDialog);
-  }
-  
-  if (customDialog) {
-    customDialog.addEventListener('click', function(e) {
-      if (e.target === this) {
-        hideDialog();
-      }
-    });
-  }
-  
-  if (editDialog) {
-    editDialog.addEventListener('click', function(e) {
-      if (e.target === this) {
-        hideEditDialog();
-      }
-    });
-  }
-  
-  if (editForm) {
-    editForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      updatePatientInfo(formData);
-    });
-  }
-  
-  // Initialize after a short delay to ensure DOM is ready
-  setTimeout(() => {
-    debugElements(); // Debug elements first
-    checkAuth();
-  }, 100);
-}); 
+// Export functions for global access - DO THIS IMMEDIATELY
+window.showEditModal = showEditModal;
+window.hideEditModal = hideEditModal;
+window.hideAlertModal = hideAlertModal;
+window.logout = logout;
+window.uploadProfilePicture = uploadProfilePicture;
+
+// Debug function to check if functions are available
+console.log('Patient Dashboard functions loaded:', {
+    showEditModal: typeof showEditModal,
+    hideEditModal: typeof hideEditModal,
+    hideAlertModal: typeof hideAlertModal,
+    logout: typeof logout,
+    uploadProfilePicture: typeof uploadProfilePicture
+});
+
+console.log('Patient Dashboard JavaScript loaded successfully!'); 
