@@ -393,59 +393,6 @@
         </div>
     </div>
 
-    <script src="patient_dashboard.js"></script>
-    <script>
-        // Wait for the main script to load and then check functions
-        setTimeout(function() {
-            console.log('Checking global functions after script load...');
-            
-            // Ensure functions are available globally
-            if (typeof window.showEditModal === 'undefined') {
-                console.error('showEditModal function not found!');
-                window.showEditModal = function() {
-                    console.log('showEditModal called (fallback)');
-                    alert('Edit modal function not loaded properly. Please refresh the page.');
-                };
-            } else {
-                console.log('showEditModal function is available');
-            }
-            
-            if (typeof window.hideEditModal === 'undefined') {
-                window.hideEditModal = function() {
-                    console.log('hideEditModal called (fallback)');
-                };
-            } else {
-                console.log('hideEditModal function is available');
-            }
-            
-            if (typeof window.hideAlertModal === 'undefined') {
-                window.hideAlertModal = function() {
-                    console.log('hideAlertModal called (fallback)');
-                };
-            } else {
-                console.log('hideAlertModal function is available');
-            }
-            
-            if (typeof window.logout === 'undefined') {
-                window.logout = function() {
-                    console.log('logout called (fallback)');
-                    window.location.href = 'patient_login.html';
-                };
-            } else {
-                console.log('logout function is available');
-            }
-            
-            if (typeof window.uploadProfilePicture === 'undefined') {
-                window.uploadProfilePicture = function(input) {
-                    console.log('uploadProfilePicture called (fallback)');
-                    alert('Upload function not loaded properly. Please refresh the page.');
-                };
-            } else {
-                console.log('uploadProfilePicture function is available');
-            }
-            
-            console.log('Global functions check completed');
-        }, 100);
-    </script>
+    <script src="patient_dashboard.js?v=1.0.1"></script>
 </body>
 </html> 

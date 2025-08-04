@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Dashboard JavaScript</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>Dashboard JavaScript Test</h1>
+    
+    <div id="results">
+        <div class="test-result info">Testing JavaScript loading...</div>
+    </div>
+    
+    <button onclick="testFunctions()">Test Functions</button>
+    <button onclick="testAPI()">Test API</button>
+    <button onclick="testAuth()">Test Auth</button>
+    
+    <script>
+        // Test if JavaScript file loads
+        console.log('Main script loaded');
+        
+        function updateResult(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.innerHTML = message;
+            results.appendChild(div);
+        }
+        
+        function testFunctions() {
+            updateResult('Testing functions...', 'info');
+            
+            setTimeout(() => {
+                if (typeof showEditModal !== 'undefined') {
+                    updateResult('✅ showEditModal function available', 'success');
+                } else {
+                    updateResult('❌ showEditModal function NOT available', 'error');
+                }
+                
+                if (typeof loadPatientData !== 'undefined') {
+                    updateResult('✅ loadPatientData function available', 'success');
+                } else {
+                    updateResult('❌ loadPatientData function NOT available', 'error');
+                }
+                
+                if (typeof checkAuthentication !== 'undefined') {
+                    updateResult('✅ checkAuthentication function available', 'success');
+                } else {
+                    updateResult('❌ checkAuthentication function NOT available', 'error');
+                }
+            }, 1000);
+        }
+        
+        function testAPI() {
+            updateResult('Testing API...', 'info');
+            
+            fetch('get_patient_dashboard_data.php')
+                .then(response => response.text())
+                .then(text => {
+                    console.log('API Response:', text);
+                    try {
+                        const data = JSON.parse(text);
+                        if (data.success) {
+                            updateResult('✅ API working - Data received', 'success');
+                        } else {
+                            updateResult(`❌ API error: ${data.message}`, 'error');
+                        }
+                    } catch (e) {
+                        updateResult(`❌ Invalid JSON: ${text.substring(0, 100)}...`, 'error');
+                    }
+                })
+                .catch(error => {
+                    updateResult(`❌ API Error: ${error.message}`, 'error');
+                });
+        }
+        
+        function testAuth() {
+            updateResult('Testing authentication...', 'info');
+            
+            fetch('check_patient_auth.php')
+                .then(response => response.text())
+                .then(text => {
+                    console.log('Auth Response:', text);
+                    try {
+                        const data = JSON.parse(text);
+                        if (data.logged_in) {
+                            updateResult('✅ Authenticated', 'success');
+                        } else {
+                            updateResult('❌ Not authenticated', 'error');
+                        }
+                    } catch (e) {
+                        updateResult(`❌ Invalid JSON: ${text}`, 'error');
+                    }
+                })
+                .catch(error => {
+                    updateResult(`❌ Auth Error: ${error.message}`, 'error');
+                });
+        }
+        
+        // Initial test
+        setTimeout(() => {
+            updateResult('✅ Main script loaded successfully', 'success');
+            testFunctions();
+        }, 500);
+    </script>
+    
+    <script src="patient_dashboard.js"></script>
+</body>
+</html> 

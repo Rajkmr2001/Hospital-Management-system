@@ -1,24 +1,108 @@
 // Global variables
 let currentPatientData = null;
 
-// Initialize the dashboard when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Patient Dashboard initialized');
-    initializeDashboard();
-});
-
-// Initialize dashboard
-function initializeDashboard() {
-    console.log('Initializing dashboard...');
+// Define all functions first, before DOMContentLoaded
+function showEditModal() {
+    console.log('showEditModal called');
+    if (!currentPatientData || !currentPatientData.patient_info) {
+        showAlert('Error', 'Patient data not available. Please refresh the page.', 'error');
+        return;
+    }
     
-    // Set up event listeners first
-    setupEventListeners();
+    const patientInfo = currentPatientData.patient_info;
     
-    // Check authentication
-    checkAuthentication();
+    // Populate form fields
+    const editName = document.getElementById('editName');
+    const editAge = document.getElementById('editAge');
+    const editGender = document.getElementById('editGender');
+    const editAddress = document.getElementById('editAddress');
+    
+    if (editName) editName.value = patientInfo.name || '';
+    if (editAge) editAge.value = patientInfo.age === 'N/A' ? '' : patientInfo.age;
+    if (editGender) editGender.value = patientInfo.gender || 'Male';
+    if (editAddress) editAddress.value = patientInfo.address === 'N/A' ? '' : patientInfo.address;
+    
+    // Show modal
+    const modal = document.getElementById('editModal');
+    if (modal) {
+        modal.classList.add('show');
+    }
 }
 
-// Check if user is authenticated
+function hideEditModal() {
+    console.log('hideEditModal called');
+    const modal = document.getElementById('editModal');
+    if (modal) {
+        modal.classList.remove('show');
+    }
+    
+    // Reset form
+    const form = document.getElementById('editForm');
+    if (form) {
+        form.reset();
+    }
+}
+
+function hideAlertModal() {
+    const alertModal = document.getElementById('alertModal');
+    if (alertModal) {
+        alertModal.classList.remove('show');
+    }
+}
+
+function logout() {
+    fetch('patient_logout.php')
+        .then(() => {
+            window.location.href = 'patient_login.html';
+        })
+        .catch(error => {
+            console.error('Logout error:', error);
+            window.location.href = 'patient_login.html';
+        });
+}
+
+function uploadProfilePicture(input) {
+    const file = input.files[0];
+    if (!file) return;
+    
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+    if (!allowedTypes.includes(file.type)) {
+        showAlert('Error', 'Please select a valid image file (JPG, JPEG, PNG, GIF)', 'error');
+        return;
+    }
+    
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+        showAlert('Error', 'File size must be less than 5MB', 'error');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('profile_picture', file);
+    
+    fetch('upload_profile_picture.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const profilePic = document.getElementById('profilePicture');
+            if (profilePic) {
+                profilePic.src = data.picture_url;
+            }
+            showAlert('Success', 'Profile picture updated successfully!', 'success');
+        } else {
+            showAlert('Error', data.message || 'Failed to upload profile picture', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Upload error:', error);
+        showAlert('Error', 'Failed to upload profile picture', 'error');
+    });
+}
+
 function checkAuthentication() {
     console.log('Checking authentication...');
     
@@ -63,15 +147,6 @@ function checkAuthentication() {
         });
 }
 
-// Update header with patient name
-function updateHeaderName(name) {
-    const headerElement = document.getElementById('headerPatientName');
-    if (headerElement) {
-        headerElement.textContent = name || 'Welcome';
-    }
-}
-
-// Load patient data from backend
 function loadPatientData() {
     console.log('Loading patient data...');
     showLoadingStates();
@@ -114,6 +189,63 @@ function loadPatientData() {
             showAlert('Error', 'Failed to load patient data. Please try refreshing the page.', 'error');
             displayEmptyStates();
         });
+}
+
+// Export functions to global scope IMMEDIATELY
+window.showEditModal = showEditModal;
+window.hideEditModal = hideEditModal;
+window.hideAlertModal = hideAlertModal;
+window.logout = logout;
+window.uploadProfilePicture = uploadProfilePicture;
+window.loadPatientData = loadPatientData;
+window.checkAuthentication = checkAuthentication;
+
+console.log('Functions exported to window immediately:', {
+    showEditModal: typeof window.showEditModal,
+    hideEditModal: typeof window.hideEditModal,
+    hideAlertModal: typeof window.hideAlertModal,
+    logout: typeof window.logout,
+    uploadProfilePicture: typeof window.uploadProfilePicture,
+    loadPatientData: typeof window.loadPatientData,
+    checkAuthentication: typeof window.checkAuthentication
+});
+
+// Initialize the dashboard when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Patient Dashboard initialized');
+    console.log('DOM ready, checking for elements...');
+    
+    // Debug: Check if key elements exist
+    const editForm = document.getElementById('editForm');
+    const modals = document.querySelectorAll('.modal');
+    const patientName = document.getElementById('patientName');
+    
+    console.log('Element check:', {
+        editForm: editForm ? 'Found' : 'Not found',
+        modals: modals.length,
+        patientName: patientName ? 'Found' : 'Not found'
+    });
+    
+    initializeDashboard();
+});
+
+// Initialize dashboard
+function initializeDashboard() {
+    console.log('Initializing dashboard...');
+    
+    // Set up event listeners first
+    setupEventListeners();
+    
+    // Check authentication
+    checkAuthentication();
+}
+
+// Update header with patient name
+function updateHeaderName(name) {
+    const headerElement = document.getElementById('headerPatientName');
+    if (headerElement) {
+        headerElement.textContent = name || 'Welcome';
+    }
 }
 
 // Show loading states
@@ -304,49 +436,6 @@ function displayEmptyStates() {
     displayMessages([]);
 }
 
-// Show edit modal
-function showEditModal() {
-    console.log('showEditModal called');
-    if (!currentPatientData || !currentPatientData.patient_info) {
-        showAlert('Error', 'Patient data not available. Please refresh the page.', 'error');
-        return;
-    }
-    
-    const patientInfo = currentPatientData.patient_info;
-    
-    // Populate form fields
-    const editName = document.getElementById('editName');
-    const editAge = document.getElementById('editAge');
-    const editGender = document.getElementById('editGender');
-    const editAddress = document.getElementById('editAddress');
-    
-    if (editName) editName.value = patientInfo.name || '';
-    if (editAge) editAge.value = patientInfo.age === 'N/A' ? '' : patientInfo.age;
-    if (editGender) editGender.value = patientInfo.gender || 'Male';
-    if (editAddress) editAddress.value = patientInfo.address === 'N/A' ? '' : patientInfo.address;
-    
-    // Show modal
-    const modal = document.getElementById('editModal');
-    if (modal) {
-        modal.classList.add('show');
-    }
-}
-
-// Hide edit modal
-function hideEditModal() {
-    console.log('hideEditModal called');
-    const modal = document.getElementById('editModal');
-    if (modal) {
-        modal.classList.remove('show');
-    }
-    
-    // Reset form
-    const form = document.getElementById('editForm');
-    if (form) {
-        form.reset();
-    }
-}
-
 // Update patient information
 function updatePatientInfo(formData) {
     const submitBtn = document.getElementById('updateButtonText');
@@ -390,49 +479,6 @@ function updatePatientInfo(formData) {
     });
 }
 
-// Upload profile picture
-function uploadProfilePicture(input) {
-    const file = input.files[0];
-    if (!file) return;
-    
-    // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-    if (!allowedTypes.includes(file.type)) {
-        showAlert('Error', 'Please select a valid image file (JPG, JPEG, PNG, GIF)', 'error');
-        return;
-    }
-    
-    // Validate file size (5MB)
-    if (file.size > 5 * 1024 * 1024) {
-        showAlert('Error', 'File size must be less than 5MB', 'error');
-        return;
-    }
-    
-    const formData = new FormData();
-    formData.append('profile_picture', file);
-    
-    fetch('upload_profile_picture.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            const profilePic = document.getElementById('profilePicture');
-            if (profilePic) {
-                profilePic.src = data.picture_url;
-            }
-            showAlert('Success', 'Profile picture updated successfully!', 'success');
-        } else {
-            showAlert('Error', data.message || 'Failed to upload profile picture', 'error');
-        }
-    })
-    .catch(error => {
-        console.error('Upload error:', error);
-        showAlert('Error', 'Failed to upload profile picture', 'error');
-    });
-}
-
 // Show alert modal
 function showAlert(title, message, type = 'info') {
     const alertModal = document.getElementById('alertModal');
@@ -465,26 +511,6 @@ function showAlert(title, message, type = 'info') {
     }
 }
 
-// Hide alert modal
-function hideAlertModal() {
-    const alertModal = document.getElementById('alertModal');
-    if (alertModal) {
-        alertModal.classList.remove('show');
-    }
-}
-
-// Logout function
-function logout() {
-    fetch('patient_logout.php')
-        .then(() => {
-            window.location.href = 'patient_login.html';
-        })
-        .catch(error => {
-            console.error('Logout error:', error);
-            window.location.href = 'patient_login.html';
-        });
-}
-
 // Setup event listeners
 function setupEventListeners() {
     console.log('Setting up event listeners...');
@@ -499,7 +525,21 @@ function setupEventListeners() {
             updatePatientInfo(formData);
         });
     } else {
-        console.warn('Edit form not found');
+        console.warn('Edit form not found - will retry later');
+        // Retry after a short delay
+        setTimeout(() => {
+            const retryForm = document.getElementById('editForm');
+            if (retryForm) {
+                console.log('Edit form found on retry, adding event listener');
+                retryForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+                    updatePatientInfo(formData);
+                });
+            } else {
+                console.error('Edit form still not found after retry');
+            }
+        }, 100);
     }
     
     // Modal close on backdrop click
@@ -514,7 +554,23 @@ function setupEventListeners() {
             });
         });
     } else {
-        console.warn('No modals found');
+        console.warn('No modals found - will retry later');
+        // Retry after a short delay
+        setTimeout(() => {
+            const retryModals = document.querySelectorAll('.modal');
+            if (retryModals.length > 0) {
+                console.log('Found', retryModals.length, 'modals on retry');
+                retryModals.forEach(modal => {
+                    modal.addEventListener('click', function(e) {
+                        if (e.target === this) {
+                            this.classList.remove('show');
+                        }
+                    });
+                });
+            } else {
+                console.error('No modals found after retry');
+            }
+        }, 100);
     }
     
     // Close modals with Escape key
@@ -527,21 +583,5 @@ function setupEventListeners() {
     
     console.log('Event listeners setup completed');
 }
-
-// Export functions for global access - DO THIS IMMEDIATELY
-window.showEditModal = showEditModal;
-window.hideEditModal = hideEditModal;
-window.hideAlertModal = hideAlertModal;
-window.logout = logout;
-window.uploadProfilePicture = uploadProfilePicture;
-
-// Debug function to check if functions are available
-console.log('Patient Dashboard functions loaded:', {
-    showEditModal: typeof showEditModal,
-    hideEditModal: typeof hideEditModal,
-    hideAlertModal: typeof hideAlertModal,
-    logout: typeof logout,
-    uploadProfilePicture: typeof uploadProfilePicture
-});
 
 console.log('Patient Dashboard JavaScript loaded successfully!'); 

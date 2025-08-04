@@ -1,5 +1,5 @@
 <?php
-// submit_message.php - Fixed version
+// submit_message_fixed.php - Version without phone column requirement
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -72,4 +72,4 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
-?>
+?> 

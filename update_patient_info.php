@@ -112,7 +112,7 @@ try {
             if (!$stmt) {
                 throw new Exception('Failed to prepare INSERT statement: ' . $conn->error);
             }
-            $stmt->bind_param("ssisss", $patient_mobile, $name, $age, $gender, $address);
+            $stmt->bind_param("ssiss", $patient_mobile, $name, $age, $gender, $address);
         }
     }
     
