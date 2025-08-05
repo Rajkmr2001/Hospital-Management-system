@@ -9,10 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Database connection
-$host = 'sql306.infinityfree.com';
-$user = 'if0_39629043';
-$password = '715020Rajkmr';
-$dbname = 'if0_39629043_hospital_management';
+$host = 'localhost';
+$user = 'root';
+$password = '';
+$dbname = 'hospital_management';
 $port = 3306; // MySQL default port
 
 $conn = new mysqli($host, $user, $password, $dbname, $port);

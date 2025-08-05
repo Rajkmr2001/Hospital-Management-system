@@ -1,1 +1,4 @@
 back 2 step from now for getting run with xampp in browser.
+recreating again for xampp after facing some error in infinity free. 
+ wants to arrange file structure. wants to keep all image in one folder also edit code so that all images gets proper directory from folder.
+ 

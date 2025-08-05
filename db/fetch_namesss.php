@@ -1,9 +1,9 @@
 <?php
 // Database credentials
-$servername = "sql306.infinityfree.com";
-$username = "if0_39629043";
-$password = "715020Rajkmr";
-$dbname = "if0_39629043_hospital_management"; // Ensure this matches your actual database name
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hospital_management"; // Ensure this matches your actual database name
 $port = 3306; // MySQL default port
 
 // Create connection

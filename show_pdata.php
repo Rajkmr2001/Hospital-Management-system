@@ -1,9 +1,9 @@
 <?php
 // Database credentials
-$servername = "sql306.infinityfree.com";  // InfinityFree MySQL host
-$username = "if0_39629043";         // Database username
-$password = "715020Rajkmr";             // Database password
-$dbname = "if0_39629043_hospital_management";  // Your database name
+$servername = "localhost";  // XAMPP MySQL host
+$username = "root";         // Database username
+$password = "";             // Database password
+$dbname = "hospital_management";  // Your database name
 $port = 3306; // MySQL default port
 
 // Create connection

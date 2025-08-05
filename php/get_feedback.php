@@ -1,10 +1,10 @@
 <?php
 // get_feedback.php
 // Database credentials
-$servername = "sql306.infinityfree.com";
-$username = "if0_39629043";
-$password = "715020Rajkmr";
-$dbname = "if0_39629043_hospital_management";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hospital_management";
 $port = 3306;
 
 // Create connection
