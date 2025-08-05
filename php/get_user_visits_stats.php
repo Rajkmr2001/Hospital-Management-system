@@ -1,10 +1,10 @@
 <?php
 // get_user_visits_stats.php
 // Database credentials
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hospital_management";
+$servername = "sql306.infinityfree.com";
+$username = "if0_39629043";
+$password = "715020Rajkmr";
+$dbname = "if0_39629043_hospital_management";
 $port = 3306;
 
 // Create connection

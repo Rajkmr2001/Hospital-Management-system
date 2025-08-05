@@ -1,9 +1,9 @@
 <?php
 // Database credentials
-$servername = "localhost";  // Change to your server name if different
-$username = "root";         // Database username
-$password = "";             // Database password (if any)
-$dbname = "hospital_management";  // Your database name
+$servername = "sql306.infinityfree.com";  // InfinityFree MySQL host
+$username = "if0_39629043";         // Database username
+$password = "715020Rajkmr";             // Database password
+$dbname = "if0_39629043_hospital_management";  // Your database name
 $port = 3306; // MySQL default port
 
 // Set the default timezone

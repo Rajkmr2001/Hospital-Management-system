@@ -39,21 +39,6 @@ CREATE INDEX IF NOT EXISTS idx_patient_data_contact ON patient_data(contact);
 -- Note: This assumes your existing tables have proper structure
 -- If you get errors, you may need to adjust the foreign key relationships
 
--- 6. Create a view for patient dashboard data (optional)
-CREATE OR REPLACE VIEW patient_dashboard_view AS
-SELECT 
-    pr.mobile_no,
-    pr.name,
-    pr.gender,
-    pr.register_date,
-    pr.register_time,
-    pd.age,
-    pd.address,
-    pd.medical_history,
-    COUNT(DISTINCT f.id) as total_feedback,
-    COUNT(DISTINCT m.id) as total_messages
-FROM patient_register pr
-LEFT JOIN patient_data pd ON pr.mobile_no = pd.contact
-LEFT JOIN feedback f ON pr.mobile_no = f.number
-LEFT JOIN messages m ON pr.name = m.name
-GROUP BY pr.mobile_no, pr.name, pr.gender, pr.register_date, pr.register_time, pd.age, pd.address, pd.medical_history; 
+-- 6. Patient dashboard data is now handled directly in PHP code
+-- The view creation has been removed for InfinityFree compatibility
+-- See get_patient_dashboard_data.php for the implementation 
