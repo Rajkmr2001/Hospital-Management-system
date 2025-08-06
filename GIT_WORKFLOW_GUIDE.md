@@ -172,3 +172,9 @@ If you get stuck:
 ---
 
 **Happy coding! 🚀** 
+...................................
+git status
+git add .
+git status
+git commit -m"message"
+git push origin staging

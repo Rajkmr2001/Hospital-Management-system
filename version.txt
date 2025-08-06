@@ -21,4 +21,15 @@ Added debugging logs to the chart functionality so any future issues can be easi
 The Patient Visits & Feedback section now shows real data from the database including total visits count and total feedback count. Users can switch between weekly and monthly views.
 
 All changes have been committed and pushed to GitHub staging branch. The project is now more organized and the chart functionality is working properly.
- 
+ /////////////////////////
+
+$host = "sql306.infinityfree.com"; // InfinityFree MySQL host
+$db = "if0_39629043_hospital_management";
+$user = "if0_39629043";
+$pass = "715020Rajkmr"; 
+// Database configuration for XAMPP local development
+$host = "localhost";
+$db = "hospital_management";
+$user = "root";
+$pass = "";
+
