@@ -1,9 +1,9 @@
 <?php
 header('Content-Type: application/json');
-require_once '../db/config.php';
+require_once __DIR__ . '/../db/config.php';
 
 // Clean up old data (older than 2 months)
-$conn->query("DELETE FROM user_visits WHERE visit_time < DATE_SUB(NOW(), INTERVAL 2 MONTH)");
+$conn->query("DELETE FROM user_visits WHERE visit_date < DATE_SUB(NOW(), INTERVAL 2 MONTH)");
 
 $range = $_GET['range'] ?? 'week';
 if ($range === 'week') {
@@ -15,7 +15,7 @@ if ($range === 'week') {
 }
 
 // Get counts per day
-$sql = "SELECT DATE(visit_time) as day, COUNT(*) as count FROM user_visits WHERE visit_time BETWEEN '$start 00:00:00' AND '$end 23:59:59' GROUP BY day ORDER BY day ASC";
+$sql = "SELECT visit_date as day, COUNT(*) as count FROM user_visits WHERE visit_date BETWEEN '$start' AND '$end' GROUP BY day ORDER BY day ASC";
 $res = $conn->query($sql);
 $days = [];
 while ($row = $res->fetch_assoc()) {

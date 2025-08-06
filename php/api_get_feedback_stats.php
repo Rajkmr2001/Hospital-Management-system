@@ -1,9 +1,9 @@
 <?php
 header('Content-Type: application/json');
-require_once '../db/config.php';
+require_once __DIR__ . '/../db/config.php';
 
 // Clean up old data (older than 2 months)
-$conn->query("DELETE FROM feedback WHERE created_at < DATE_SUB(NOW(), INTERVAL 2 MONTH)");
+$conn->query("DELETE FROM feedback WHERE timestamp < DATE_SUB(NOW(), INTERVAL 2 MONTH)");
 
 $range = $_GET['range'] ?? 'week';
 if ($range === 'week') {
@@ -15,7 +15,7 @@ if ($range === 'week') {
 }
 
 // Get counts per day
-$sql = "SELECT DATE(created_at) as day, COUNT(*) as count FROM feedback WHERE created_at BETWEEN '$start 00:00:00' AND '$end 23:59:59' GROUP BY day ORDER BY day ASC";
+$sql = "SELECT DATE(timestamp) as day, COUNT(*) as count FROM feedback WHERE timestamp BETWEEN '$start 00:00:00' AND '$end 23:59:59' GROUP BY day ORDER BY day ASC";
 $res = $conn->query($sql);
 $days = [];
 while ($row = $res->fetch_assoc()) {

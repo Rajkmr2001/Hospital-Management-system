@@ -373,17 +373,24 @@
       
       async function fetchStats(range = 'week') {
         try {
+          console.log('Fetching stats for range:', range);
           const [visitsRes, feedbackRes] = await Promise.all([
             fetch(`php/api_get_user_visits_stats.php?range=${range}`),
             fetch(`php/api_get_feedback_stats.php?range=${range}`)
           ]);
           
+          console.log('Visits response status:', visitsRes.status);
+          console.log('Feedback response status:', feedbackRes.status);
+          
           if (!visitsRes.ok || !feedbackRes.ok) {
-            throw new Error('Failed to fetch data');
+            throw new Error(`Failed to fetch data: visits=${visitsRes.status}, feedback=${feedbackRes.status}`);
           }
           
           const visits = await visitsRes.json();
           const feedback = await feedbackRes.json();
+          
+          console.log('Visits data:', visits);
+          console.log('Feedback data:', feedback);
           
           return { visits, feedback };
         } catch (error) {
@@ -393,6 +400,7 @@
       }
 
       function renderStatsChart(labels, visitsData, feedbackData) {
+        console.log('Rendering chart with:', { labels, visitsData, feedbackData });
         const ctx = document.getElementById('statsChart').getContext('2d');
         
         if (statsChart) {
@@ -440,7 +448,10 @@
       }
 
       async function updateChart(range = 'week') {
+        console.log('Updating chart for range:', range);
         const { visits, feedback } = await fetchStats(range);
+        
+        console.log('Chart data received:', { visits, feedback });
         
         // Update totals
         document.getElementById('totalVisits').textContent = visits.total_visits || 0;

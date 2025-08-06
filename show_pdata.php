@@ -134,7 +134,7 @@ $appointment_time = "$hour:$minute"; // Combine to get the time in HH:MM format
 </head>
 <body>
     <div class="receipt-container" id="receipt">
-        <img src="logo.webp" alt="Hospital Logo" class="background-logo">
+        <img src="Images/logo.webp" alt="Hospital Logo" class="background-logo">
         <div class="header">MAA KALAWATI HOSPITAL</div>
         <div class="sub-header">Medical Receipt</div>
 
