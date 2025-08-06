@@ -1,4 +1,24 @@
 back 2 step from now for getting run with xampp in browser.
 recreating again for xampp after facing some error in infinity free. 
  wants to arrange file structure. wants to keep all image in one folder also edit code so that all images gets proper directory from folder.
+
+LATEST UPDATES - 6 Aug 2025:
+
+Fixed Patient Visits & Feedback chart in About Us page that was not showing any data. The problem was with database column names in the API files. The code was looking for wrong column names like visit_datetime and created_at, but the actual database had visit_date and timestamp columns.
+
+Updated the API files to use correct database column names. Also fixed the file path issues by using absolute paths with __DIR__ so the config files can be found properly.
+
+Organized all project images into one central Images folder. Moved all scattered images from root directory and other locations into the Images folder. Updated all HTML and PHP files to use the correct image paths.
+
+Removed 26 unused images from the project to make it cleaner and smaller. These were images that were not being used anywhere in the code.
+
+Fixed case sensitivity issues in image file names. Some HTML files were referencing images with wrong case like neurology.jpg instead of Neurology.jpg.
+
+Renamed hospital-admin-panel/index.html to admin-portal.html to avoid conflicts with the main index.html file. Updated all navigation links within the admin panel to point to the new file name.
+
+Added debugging logs to the chart functionality so any future issues can be easily identified. The console will now show detailed information about data fetching and chart rendering.
+
+The Patient Visits & Feedback section now shows real data from the database including total visits count and total feedback count. Users can switch between weekly and monthly views.
+
+All changes have been committed and pushed to GitHub staging branch. The project is now more organized and the chart functionality is working properly.
  
