@@ -1,12 +1,10 @@
 <?php
-// delete_patient.php
-
+include '../../php/auth_check.php';
 include '../../db/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $patient_id = $_POST['patient_id'];
+    $patient_id = intval($_POST['patient_id'] ?? 0);
 
-    // Prepare the SQL statement to prevent SQL injection
     $stmt = $conn->prepare("DELETE FROM patient_data WHERE id = ?");
     $stmt->bind_param("i", $patient_id);
 
