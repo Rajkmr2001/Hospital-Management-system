@@ -60,6 +60,6 @@ echo "<li><strong>Mobile Number:</strong> 9876543210</li>";
 echo "<li><strong>Password:</strong> admin123</li>";
 echo "</ul>";
 echo "<p>You can now login using your mobile number instead of username.</p>";
-echo "<p><a href='hospital-admin-panel/admin/login.html' target='_blank'>Go to Admin Login</a></p>";
+echo "<p><a href='hospital-admin-panel/admin/login.php' target='_blank'>Go to Admin Login</a></p>";
 echo "<p><a href='index.html'>← Back to Home</a></p>";
 ?> 

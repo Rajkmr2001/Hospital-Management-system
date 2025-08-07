@@ -1,5 +1,12 @@
 <?php
-include '../../php/auth_check.php';
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_username'])) {
+    echo json_encode(['success' => false, 'message' => 'Authentication required']);
+    exit();
+}
+
 include '../../db/config.php';
 header('Content-Type: application/json');
 

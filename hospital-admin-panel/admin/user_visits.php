@@ -1,3 +1,606 @@
 <?php
-include __DIR__ . '/php/auth_check.php';
-include('user_visits.html');
+include('php/auth_check.php');
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Visits Analytics - Maa Kalawati Hospital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; font-family: 'Poppins', Arial, sans-serif; background: #f8fafc; color: #222; min-height: 100vh; width: 100vw; box-sizing: border-box; overflow-x: hidden; }
+    *, *::before, *::after { box-sizing: inherit; }
+    :root { --primary: #2563eb; --primary-light: #60a5fa; --accent: #10b981; --bg: #f8fafc; --card-bg: #fff; --navbar-bg: #fff; --navbar-shadow: 0 2px 12px rgba(37,99,235,0.07); --text: #222; --muted: #64748b; --radius: 18px; --shadow: 0 4px 24px rgba(37,99,235,0.10); }
+    .navbar {
+      width: 100%;
+      background: var(--navbar-bg);
+      box-shadow: var(--navbar-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      position: relative;
+    }
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .navbar nav {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      align-items: center;
+      transition: max-height 0.3s;
+    }
+    .navbar nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 1.08rem;
+      padding: 8px 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .navbar nav a.active,
+    .navbar nav a:hover {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+    }
+    .navbar .back-btn {
+      display: flex;
+      align-items: center;
+      background: #e0e7ef;
+      color: var(--primary);
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      padding: 8px 16px;
+      margin-left: 18px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      font-size: 1rem;
+      gap: 6px;
+    }
+    .navbar .back-btn:hover {
+      background: #dbeafe;
+      color: #1746a2;
+    }
+    .navbar .hamburger {
+      display: none;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      margin-left: 18px;
+    }
+    .navbar .profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+      margin-left: 18px;
+    }
+    .navbar .profile .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .navbar .profile .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 52px;
+      background: #fff;
+      box-shadow: 0 4px 24px rgba(37,99,235,0.10);
+      border-radius: 10px;
+      min-width: 140px;
+      z-index: 10;
+    }
+    .navbar .profile.open .dropdown {
+      display: block;
+    }
+    .navbar .profile .dropdown a {
+      display: block;
+      padding: 12px 18px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      border-radius: 10px;
+      transition: background 0.2s;
+    }
+    .navbar .profile .dropdown a:hover {
+      background: var(--bg);
+    }
+    .welcome-banner { width: 100%; max-width: 1200px; margin: 32px auto 0 auto; background: linear-gradient(90deg, var(--primary-light) 0%, var(--primary) 100%); color: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 36px 40px 32px 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .welcome-banner .text { font-size: 2.1rem; font-weight: 700; line-height: 1.2; }
+    .welcome-banner .desc { font-size: 1.1rem; font-weight: 400; margin-top: 10px; color: #e0e7ef; }
+    .welcome-banner .banner-img { width: 120px; height: 120px; background: rgba(255,255,255,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; box-shadow: 0 2px 12px rgba(16,185,129,0.10); }
+    .analytics-section { width: 100%; max-width: 1200px; margin: 36px auto 0 auto; background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px 24px; }
+    .stats-row { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 32px; }
+    .stat-card { background: #f3f4f6; border-radius: 14px; box-shadow: 0 2px 12px rgba(16,185,129,0.07); padding: 24px 32px; min-width: 220px; flex: 1 1 220px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 0; }
+    .stat-card .label { color: #888; font-size: 1.02rem; font-weight: 500; }
+    .stat-card .value { font-size: 2.1rem; font-weight: 700; color: var(--primary); }
+    .stat-card .icon { font-size: 2rem; color: #1976d2; margin-bottom: 8px; }
+    .chart-container { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(16,185,129,0.07); padding: 24px 24px 12px 24px; margin-bottom: 0; width: 100%; max-width: 900px; margin: 0 auto; }
+    .chart-type-section {
+      margin-top: 24px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(16,185,129,0.07);
+      padding: 24px 18px 18px 18px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .chart-type-title {
+      font-weight: 600;
+      color: #1976d2;
+      margin-bottom: 12px;
+    }
+    .chart-type-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .chart-type-btn {
+      background: #fff;
+      color: #2563eb;
+      border: 2px solid #2563eb;
+      border-radius: 6px;
+      padding: 8px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      outline: none;
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(37,99,235,0.08);
+    }
+    .chart-type-btn.active,
+    .chart-type-btn:hover {
+      background: #2563eb;
+      color: #fff;
+      border-color: #1746a2;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.15);
+    }
+    .ip-table-section {
+      margin-top: 32px;
+      width: 100%;
+      max-width: 1200px;
+      overflow-x: auto;
+    }
+    table.ip-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(16,185,129,0.07);
+    }
+    table.ip-table th, table.ip-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f3f4f6;
+      text-align: left;
+      font-size: 1rem;
+    }
+    table.ip-table th {
+      background: #2563eb;
+      color: #fff;
+      font-weight: 600;
+    }
+    table.ip-table tr:last-child td {
+      border-bottom: none;
+    }
+    @media (max-width: 900px) { .analytics-section { padding: 16px 2vw; } .welcome-banner { padding: 24px 12px 18px 12px; } .stats-row { flex-direction: column; gap: 16px; } }
+    @media (max-width: 600px) { .chart-container { padding: 12px 2px; } .stat-card, .chart-container { max-width: 100vw; min-width: 0; } .stat-card .label, .stat-card .value { font-size: 1rem; } }
+    @media (max-width: 900px) {
+      .navbar {
+        padding: 0 10px;
+        height: 56px;
+        flex-wrap: wrap;
+      }
+      .navbar .logo {
+        font-size: 1.1rem;
+      }
+      .navbar nav {
+        position: absolute;
+        top: 56px;
+        left: 0;
+        width: 100vw;
+        background: var(--navbar-bg);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(37,99,235,0.10);
+        z-index: 200;
+      }
+      .navbar nav.open {
+        max-height: 300px;
+        padding: 12px 0 12px 0;
+        gap: 0;
+        overflow: visible;
+      }
+      .navbar nav a {
+        padding: 14px 24px;
+        width: 100%;
+        border-bottom: none;
+        border-left: 4px solid transparent;
+        font-size: 1.08rem;
+      }
+      .navbar nav a.active,
+      .navbar nav a:hover {
+        background: #f1f5f9;
+        border-left: 4px solid var(--primary);
+        color: var(--primary);
+      }
+      .navbar .hamburger {
+        display: block;
+      }
+      .navbar .back-btn {
+        margin-left: 0;
+        margin-right: 8px;
+        font-size: 0.98rem;
+        padding: 8px 12px;
+        order: 2;
+      }
+      .navbar .profile {
+        margin-left: 0;
+        order: 3;
+      }
+      .navbar {
+        flex-wrap: wrap;
+      }
+    }
+    @media (max-width: 600px) {
+      .chart-type-section { padding: 8px 2vw 4px 2vw; }
+      table.ip-table th, table.ip-table td { padding: 8px 6px; font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo"><i class="ri-hospital-line"></i> <span>Maa Kalawati Admin</span></div>
+    <button class="hamburger" id="hamburger" aria-label="Open navigation">&#9776;</button>
+    <nav id="mainNav">
+      <a href="dashboard_auth.php">Dashboard</a>
+      <a href="manage_patients.php">Patients</a>
+      <a href="user_visits.php" class="active">Visits</a>
+      <a href="manage_feedback.php">Feedback</a>
+      <a href="manage_messages.php">Messages</a>
+      <a href="manage_registered_persons.php">REG_PERSON</a>
+    </nav>
+    <a href="../../index.html" class="back-btn"><i class="ri-arrow-left-line"></i> Back to Home</a>
+    <div class="profile" id="profileMenu">
+      <div class="avatar"><i class="ri-user-3-line"></i></div>
+      <span>Admin</span>
+      <div class="dropdown">
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+  <section class="welcome-banner">
+    <div>
+      <div class="text">User Visits Analytics</div>
+      <div class="desc">Track unique and total user visits, trends, and more. Data updates in real time.</div>
+    </div>
+    <div class="banner-img"><i class="ri-bar-chart-line"></i></div>
+  </section>
+  <section class="analytics-section">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="icon"><i class="ri-bar-chart-line"></i></div>
+        <div class="label">Total Unique Visitors</div>
+        <div class="value" id="total-unique">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="icon"><i class="ri-calendar-line"></i></div>
+        <div class="label">Today's Total Visits</div>
+        <div class="value" id="daily-total">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="icon"><i class="ri-calendar-event-line"></i></div>
+        <div class="label">This Week's Total Visits</div>
+        <div class="value" id="weekly-total">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="icon"><i class="ri-calendar-2-line"></i></div>
+        <div class="label">This Month's Total Visits</div>
+        <div class="value" id="monthly-total">0</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;justify-content:space-between;width:100%;max-width:1200px;margin:0 auto 32px auto;">
+      <div style="flex:1 1 320px;min-width:260px;max-width:340px;background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(16,185,129,0.07);padding:24px 18px 18px 18px;">
+        <div style="font-weight:600;color:#1976d2;margin-bottom:8px;">Calendar</div>
+        <input id="calendar" type="text" style="width:100%;padding:10px;border-radius:6px;border:1px solid #27ec08;" readonly>
+        <div class="calendar-side-panel" id="calendarSidePanel" style="margin-top:18px;background:#f3f4f6;border-radius:8px;padding:12px 16px;width:100%;">
+          <div><strong>Today:</strong> <span id="calendarToday"></span></div>
+          <div id="calendarVisitInfo"></div>
+        </div>
+      </div>
+      <div class="chart-container" style="flex:2 1 500px;min-width:320px;">
+        <div class="label" style="font-weight:600;color:#1976d2;margin-bottom:8px;">Total Visits Trend (Last 60 Days)</div>
+        <canvas id="trendChart" height="80"></canvas>
+      </div>
+    </div>
+    <div class="chart-type-section" style="margin-top:24px;background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(16,185,129,0.07);padding:24px 18px 18px 18px;max-width:900px;margin-left:auto;margin-right:auto;">
+      <div class="chart-type-title" style="font-weight:600;color:#1976d2;margin-bottom:12px;">Visits Analytics</div>
+      <div class="chart-type-buttons" style="display:flex;gap:10px;margin-bottom:18px;">
+        <button class="chart-type-btn active" data-type="pie">Pie</button>
+        <button class="chart-type-btn" data-type="doughnut">Doughnut</button>
+        <button class="chart-type-btn" data-type="polarArea">Polar</button>
+      </div>
+      <div style="width:100%;max-width:600px;margin:0 auto;">
+        <canvas id="visitsTypeChart" height="120"></canvas>
+      </div>
+      <div id="chartNoData" style="text-align:center;color:#888;margin-top:12px;display:none;">No data available for this chart.</div>
+      
+      <!-- Chart Descriptions -->
+      <div id="pieDescription" class="chart-description" style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #1976d2;display:block;">
+        <strong>Pie Chart:</strong> This chart displays the distribution of user visits across different time periods. Each slice represents a specific time range (Today, This Week, This Month, etc.), showing the proportion of visits for each period relative to the total visits. The larger the slice, the higher the number of visits for that time period.
+      </div>
+      
+      <div id="doughnutDescription" class="chart-description" style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #1976d2;display:none;">
+        <strong>Doughnut Chart:</strong> Similar to the pie chart, this doughnut visualization shows the distribution of user visits across different time periods. The center space allows for better focus on the data segments and can accommodate additional information if needed. Each ring segment represents visits for a specific time range.
+      </div>
+      
+      <div id="polarDescription" class="chart-description" style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #1976d2;display:none;">
+        <strong>Polar Area Chart:</strong> This chart represents user visits using both area and radius to display data. The distance from the center represents the number of visits, while the area of each segment also reflects the visit count. This dual representation makes it easy to compare visit patterns across different time periods at a glance.
+      </div>
+    </div>
+    <div class="ip-table-section" style="margin-top:32px;width:100%;max-width:1200px;">
+      <div class="ip-table-title" style="font-size:1.1rem;font-weight:600;color:#1976d2;margin-bottom:12px;">All Unique Visitors</div>
+      <table class="ip-table" style="width:100%;border-collapse:collapse;background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(16,185,129,0.07);">
+        <thead>
+          <tr><th>IP Address</th><th>Visit Time</th></tr>
+        </thead>
+        <tbody id="ipTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    // Navbar hamburger menu logic
+    const hamburger = document.getElementById('hamburger');
+    const mainNav = document.getElementById('mainNav');
+    hamburger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      mainNav.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (window.innerWidth <= 900 && mainNav.classList.contains('open') && !mainNav.contains(e.target) && e.target !== hamburger) {
+        mainNav.classList.remove('open');
+      }
+    });
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 900) mainNav.classList.remove('open');
+    });
+    // Profile dropdown logic
+    const profileMenu = document.getElementById('profileMenu');
+    profileMenu.addEventListener('click', function(e) { e.stopPropagation(); this.classList.toggle('open'); });
+    document.addEventListener('click', function() { profileMenu.classList.remove('open'); });
+    // Fetch and render analytics
+    fetch('../../php/get_user_visits_stats.php')
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('total-unique').textContent = data.ips.length;
+        let today = new Date();
+        let todayStr = today.toISOString().slice(0,10);
+        let weekStart = new Date(today); weekStart.setDate(today.getDate() - today.getDay());
+        let weekStartStr = weekStart.toISOString().slice(0,10);
+        let monthStr = today.toISOString().slice(0,7);
+        let dailyTotal = 0, weeklyTotal = 0, monthlyTotal = 0;
+        let trendLabels = [], trendCounts = [];
+        let dayOfWeekCounts = [0,0,0,0,0,0,0]; // Sun-Sat
+        if (data.all_visits) {
+          data.all_visits.forEach(row => {
+            trendLabels.push(row.day);
+            trendCounts.push(Number(row.count));
+            if (row.day === todayStr) dailyTotal = Number(row.count);
+            if (row.day >= weekStartStr) weeklyTotal += Number(row.count);
+            if (row.day.startsWith(monthStr)) monthlyTotal += Number(row.count);
+            // Pie chart: count by day of week
+            const d = new Date(row.day);
+            if (!isNaN(d)) dayOfWeekCounts[d.getDay()] += Number(row.count);
+          });
+        }
+        document.getElementById('daily-total').textContent = dailyTotal;
+        document.getElementById('weekly-total').textContent = weeklyTotal;
+        document.getElementById('monthly-total').textContent = monthlyTotal;
+        new Chart(document.getElementById('trendChart').getContext('2d'), {
+          type: 'line',
+          data: { labels: trendLabels, datasets: [{ label: 'Total Visits', data: trendCounts, borderColor: '#1976d2', backgroundColor: 'rgba(25,118,210,0.10)', fill: true, tension: 0.3 }] },
+          options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+        // --- Chart Section ---
+        const chartTypeBtns = document.querySelectorAll('.chart-type-btn');
+        let visitsTypeChart;
+        function renderVisitsTypeChart(type) {
+          if (visitsTypeChart) visitsTypeChart.destroy();
+          let chartData = {labels: [], datasets: []};
+          let chartOptions = {plugins:{legend:{display:true,position:'bottom'}},responsive:true,maintainAspectRatio:true};
+          let showNoData = false;
+          if (type === 'pie') {
+            // Pie: Today's visits by hour
+            let today = new Date();
+            let todayStr = today.toISOString().slice(0,10);
+            let hourCounts = Array(24).fill(0);
+            if (data.visits_by_hour) {
+              data.visits_by_hour.forEach(row => {
+                if (row.day === todayStr) hourCounts[parseInt(row.hour)] = Number(row.count);
+              });
+            } else if (data.all_visits_by_time) {
+              data.all_visits_by_time.forEach(row => {
+                if (row.day === todayStr) hourCounts[parseInt(row.hour)] = Number(row.count);
+              });
+            }
+            chartData.labels = Array.from({length:24},(_,i)=>i+':00');
+            chartData.datasets = [{
+              data: hourCounts,
+              backgroundColor: Array.from({length:24},(_,i)=>`rgba(${37+i*8},99,235,0.45)`)
+            }];
+            showNoData = hourCounts.reduce((a,b)=>a+b,0) === 0;
+          } else if (type === 'doughnut') {
+            // Doughnut: Current week, daily stats
+            let weekDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+            let weekCounts = Array(7).fill(0);
+            let today = new Date();
+            let weekStart = new Date(today); weekStart.setDate(today.getDate() - today.getDay());
+            let weekStartStr = weekStart.toISOString().slice(0,10);
+            if (data.all_visits) {
+              data.all_visits.forEach(row => {
+                let d = new Date(row.day);
+                if (!isNaN(d) && row.day >= weekStartStr) weekCounts[d.getDay()] += Number(row.count);
+              });
+            }
+            chartData.labels = weekDays;
+            chartData.datasets = [{
+              data: weekCounts,
+              backgroundColor: [
+                'rgba(96,165,250,0.45)','rgba(37,99,235,0.45)','rgba(16,185,129,0.45)','rgba(245,158,66,0.45)','rgba(239,68,68,0.45)','rgba(99,102,241,0.45)','rgba(251,191,36,0.45)'
+              ]
+            }];
+            showNoData = weekCounts.reduce((a,b)=>a+b,0) === 0;
+          } else if (type === 'polarArea') {
+            // Polar: Current month, weekly stats
+            let today = new Date();
+            let monthStr = today.toISOString().slice(0,7);
+            let weekStats = [];
+            if (data.all_visits) {
+              let weeks = {};
+              data.all_visits.forEach(row => {
+                if (row.day.startsWith(monthStr)) {
+                  let d = new Date(row.day);
+                  let weekNum = Math.floor((d.getDate()-1)/7);
+                  if (!weeks[weekNum]) weeks[weekNum]=0;
+                  weeks[weekNum] += Number(row.count);
+                }
+              });
+              weekStats = Object.values(weeks);
+            }
+            chartData.labels = weekStats.map((_,i)=>'Week '+(i+1));
+            chartData.datasets = [{
+              data: weekStats,
+              backgroundColor: [
+                'rgba(96,165,250,0.45)','rgba(37,99,235,0.45)','rgba(16,185,129,0.45)','rgba(245,158,66,0.45)'
+              ]
+            }];
+            showNoData = weekStats.length === 0 || weekStats.reduce((a,b)=>a+b,0) === 0;
+          }
+          document.getElementById('chartNoData').style.display = showNoData ? 'block' : 'none';
+          visitsTypeChart = new Chart(document.getElementById('visitsTypeChart').getContext('2d'), {
+            type: type,
+            data: chartData,
+            options: chartOptions
+          });
+        }
+        // Ensure Pie is shown and active by default
+        renderVisitsTypeChart('pie');
+        chartTypeBtns.forEach(btn => {
+          btn.addEventListener('click', function() {
+            chartTypeBtns.forEach(b=>b.classList.remove('active'));
+            btn.classList.add('active');
+            const chartType = btn.getAttribute('data-type');
+            renderVisitsTypeChart(chartType);
+            
+            // Show/hide appropriate chart description
+            document.querySelectorAll('.chart-description').forEach(desc => desc.style.display = 'none');
+            if (chartType === 'pie') {
+              document.getElementById('pieDescription').style.display = 'block';
+            } else if (chartType === 'doughnut') {
+              document.getElementById('doughnutDescription').style.display = 'block';
+            } else if (chartType === 'polarArea') {
+              document.getElementById('polarDescription').style.display = 'block';
+            }
+          });
+        });
+        // Calendar logic
+        flatpickr('#calendar', {
+          defaultDate: today,
+          onChange: function(selectedDates, dateStr) {
+            let selected = dateStr;
+            let dayCount = 0, dayUnique = 0;
+            if (data.all_visits) {
+              let found = data.all_visits.find(row => row.day === selected);
+              if (found) dayCount = Number(found.count);
+            }
+            if (data.daily) {
+              let found = data.daily.find(row => row.day === selected);
+              if (found) dayUnique = Number(found.count);
+            }
+            document.getElementById('calendarSidePanel').innerHTML =
+              `<div><strong>Selected:</strong> ${selected}</div>`+
+              `<div><strong>Total Visits:</strong> ${dayCount}</div>`+
+              `<div><strong>Unique Visits:</strong> ${dayUnique}</div>`;
+          }
+        });
+        // Show today's date and time in calendar side panel
+        function updateCalendarToday() {
+          const calendarTodayElement = document.getElementById('calendarToday');
+          if (calendarTodayElement) {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            let timeStr = hours + ':' + (minutes<10?'0':'') + minutes + ' ' + ampm;
+            calendarTodayElement.textContent = now.toLocaleDateString() + ' ' + timeStr;
+          }
+        }
+        updateCalendarToday();
+        setInterval(updateCalendarToday, 1000*30);
+        // Show today's stats in side panel by default
+        let todayCount = 0, todayUnique = 0;
+        if (data.all_visits) {
+          let found = data.all_visits.find(row => row.day === todayStr);
+          if (found) todayCount = Number(found.count);
+        }
+        if (data.daily) {
+          let found = data.daily.find(row => row.day === todayStr);
+          if (found) todayUnique = Number(found.count);
+        }
+        document.getElementById('calendarVisitInfo').innerHTML =
+          `<div><strong>Today's Visits:</strong> ${todayCount}</div>`+
+          `<div><strong>Today's Unique:</strong> ${todayUnique}</div>`;
+        // IP Table
+        const ipTableBody = document.getElementById('ipTableBody');
+        ipTableBody.innerHTML = '';
+        if (Array.isArray(data.ips) && data.ips.length > 0) {
+          data.ips.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${row.user_ip}</td><td>${row.visit_time || ''}</td>`;
+            ipTableBody.appendChild(tr);
+          });
+        } else {
+          ipTableBody.innerHTML = '<tr><td colspan="2" style="text-align:center;color:#888;">No IP data found.</td></tr>';
+        }
+      });
+  </script>
+</body>
+</html> 

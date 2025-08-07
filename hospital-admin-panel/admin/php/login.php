@@ -90,13 +90,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo json_encode([
                 'success' => false,
-                'message' => 'Invalid password. Please try again.'
+                'message' => 'Invalid credentials. Please try again.'
             ]);
         }
     } else {
         echo json_encode([
             'success' => false,
-            'message' => 'No admin found with that mobile number.'
+            'message' => 'Invalid credentials. Please try again.'
         ]);
     }
 

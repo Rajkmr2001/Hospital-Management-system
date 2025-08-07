@@ -9,7 +9,7 @@ session_start();
 
 // Check if admin is logged in
 if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: ../login.html');
+    header('Location: ../login.php');
     exit();
 }
 
@@ -55,7 +55,7 @@ $conn->close();
         <?php else: ?>
             <p>No patient found with the provided ID.</p>
         <?php endif; ?>
-        <a href="manage_patients.html">Back to Manage Patients</a>
+        <a href="manage_patients.php">Back to Manage Patients</a>
     </div>
 </body>
 </html>

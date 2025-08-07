@@ -78,7 +78,7 @@ echo "<hr>";
 echo "<h3>Setup Complete!</h3>";
 echo "<p>Your admin authentication system is now ready. You can:</p>";
 echo "<ol>";
-echo "<li>Go to <a href='hospital-admin-panel/admin/login.html' target='_blank'>Admin Login</a></li>";
+echo "<li>Go to <a href='hospital-admin-panel/admin/login.php' target='_blank'>Admin Login</a></li>";
 echo "<li>Use the credentials: <strong>9876543210</strong> / <strong>admin123</strong></li>";
 echo "<li>Access the protected dashboard</li>";
 echo "</ol>";

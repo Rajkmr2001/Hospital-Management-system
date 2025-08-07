@@ -110,7 +110,7 @@ if (file_exists($test_url)) {
 echo "<h2>Setup Complete!</h2>";
 echo "<p>Your patient management system should now be working. You can:</p>";
 echo "<ul>";
-echo "<li><a href='admin/manage_patients.html' target='_blank'>Access the Patient Management Panel</a></li>";
+echo "<li><a href='admin/manage_patients.php' target='_blank'>Access the Patient Management Panel</a></li>";
 echo "<li>Add new patients</li>";
 echo "<li>Edit existing patients</li>";
 echo "<li>Delete patients</li>";
