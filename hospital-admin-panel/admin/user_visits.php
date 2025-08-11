@@ -141,7 +141,8 @@ include('php/auth_check.php');
     .welcome-banner .banner-img { width: 120px; height: 120px; background: rgba(255,255,255,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; box-shadow: 0 2px 12px rgba(16,185,129,0.10); }
     .analytics-section { width: 100%; max-width: 1200px; margin: 36px auto 0 auto; background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px 24px; }
     .stats-row { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 32px; }
-    .stat-card { background: #f3f4f6; border-radius: 14px; box-shadow: 0 2px 12px rgba(16,185,129,0.07); padding: 24px 32px; min-width: 220px; flex: 1 1 220px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 0; }
+    .stat-card { background: #f3f4f6; border-radius: 14px; box-shadow: 0 2px 12px rgba(16,185,129,0.07); padding: 24px 32px; min-width: 220px; flex: 1 1 220px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 0; transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.2s ease; }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,99,235,0.18); background: #eef2ff; }
     .stat-card .label { color: #888; font-size: 1.02rem; font-weight: 500; }
     .stat-card .value { font-size: 2.1rem; font-weight: 700; color: var(--primary); }
     .stat-card .icon { font-size: 2rem; color: #1976d2; margin-bottom: 8px; }
@@ -315,7 +316,7 @@ include('php/auth_check.php');
     <div class="stats-row">
       <div class="stat-card">
         <div class="icon"><i class="ri-bar-chart-line"></i></div>
-        <div class="label">Total Unique Visitors</div>
+        <div class="label">Total Unique Visitors (index.html, Current Month)</div>
         <div class="value" id="total-unique">0</div>
       </div>
       <div class="stat-card">
@@ -351,33 +352,27 @@ include('php/auth_check.php');
     <div class="chart-type-section" style="margin-top:24px;background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(16,185,129,0.07);padding:24px 18px 18px 18px;max-width:900px;margin-left:auto;margin-right:auto;">
       <div class="chart-type-title" style="font-weight:600;color:#1976d2;margin-bottom:12px;">Visits Analytics</div>
       <div class="chart-type-buttons" style="display:flex;gap:10px;margin-bottom:18px;">
-        <button class="chart-type-btn active" data-type="pie">Pie</button>
-        <button class="chart-type-btn" data-type="doughnut">Doughnut</button>
-        <button class="chart-type-btn" data-type="polarArea">Polar</button>
+        <button class="chart-type-btn active" data-type="doughnut">Doughnut (Weekly Unique)</button>
+        <button class="chart-type-btn" data-type="bar-monthly">Monthly (Unique)</button>
       </div>
-      <div style="width:100%;max-width:600px;margin:0 auto;">
-        <canvas id="visitsTypeChart" height="120"></canvas>
+      <div style="width:100%;max-width:900px;margin:0 auto;">
+        <canvas id="visitsTypeChart" height="140"></canvas>
       </div>
       <div id="chartNoData" style="text-align:center;color:#888;margin-top:12px;display:none;">No data available for this chart.</div>
       
       <!-- Chart Descriptions -->
-      <div id="pieDescription" class="chart-description" style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #1976d2;display:block;">
-        <strong>Pie Chart:</strong> This chart displays the distribution of user visits across different time periods. Each slice represents a specific time range (Today, This Week, This Month, etc.), showing the proportion of visits for each period relative to the total visits. The larger the slice, the higher the number of visits for that time period.
+      <div id="doughnutDescription" class="chart-description" style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #1976d2;display:block;">
+        <strong>Doughnut Chart:</strong> Weekly unique visits by weekday (Sun-Sat) using last 7 days of unique counts.
       </div>
-      
-      <div id="doughnutDescription" class="chart-description" style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #1976d2;display:none;">
-        <strong>Doughnut Chart:</strong> Similar to the pie chart, this doughnut visualization shows the distribution of user visits across different time periods. The center space allows for better focus on the data segments and can accommodate additional information if needed. Each ring segment represents visits for a specific time range.
-      </div>
-      
-      <div id="polarDescription" class="chart-description" style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #1976d2;display:none;">
-        <strong>Polar Area Chart:</strong> This chart represents user visits using both area and radius to display data. The distance from the center represents the number of visits, while the area of each segment also reflects the visit count. This dual representation makes it easy to compare visit patterns across different time periods at a glance.
+      <div id="monthlyBarDescription" class="chart-description" style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #1976d2;display:none;">
+        <strong>Monthly Chart:</strong> Unique visits per month for the last 6 months.
       </div>
     </div>
     <div class="ip-table-section" style="margin-top:32px;width:100%;max-width:1200px;">
       <div class="ip-table-title" style="font-size:1.1rem;font-weight:600;color:#1976d2;margin-bottom:12px;">All Unique Visitors</div>
       <table class="ip-table" style="width:100%;border-collapse:collapse;background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(16,185,129,0.07);">
         <thead>
-          <tr><th>IP Address</th><th>Visit Time</th></tr>
+          <tr><th>IP Address</th><th>First Visit</th></tr>
         </thead>
         <tbody id="ipTableBody"></tbody>
       </table>
@@ -404,187 +399,159 @@ include('php/auth_check.php');
     const profileMenu = document.getElementById('profileMenu');
     profileMenu.addEventListener('click', function(e) { e.stopPropagation(); this.classList.toggle('open'); });
     document.addEventListener('click', function() { profileMenu.classList.remove('open'); });
+    // Live date/time in Calendar side panel
+    function updateCalendarToday() {
+      const calendarTodayElement = document.getElementById('calendarToday');
+      if (!calendarTodayElement) return;
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      const timeStr = hours + ':' + (minutes<10?'0':'') + minutes + ' ' + ampm;
+      calendarTodayElement.textContent = now.toLocaleDateString() + ' ' + timeStr;
+    }
+    updateCalendarToday();
+    setInterval(updateCalendarToday, 1000);
+
     // Fetch and render analytics
     fetch('../../php/get_user_visits_stats.php')
       .then(r => r.json())
       .then(data => {
-        document.getElementById('total-unique').textContent = data.ips.length;
-        let today = new Date();
-        let todayStr = today.toISOString().slice(0,10);
-        let weekStart = new Date(today); weekStart.setDate(today.getDate() - today.getDay());
-        let weekStartStr = weekStart.toISOString().slice(0,10);
-        let monthStr = today.toISOString().slice(0,7);
-        let dailyTotal = 0, weeklyTotal = 0, monthlyTotal = 0;
-        let trendLabels = [], trendCounts = [];
-        let dayOfWeekCounts = [0,0,0,0,0,0,0]; // Sun-Sat
-        if (data.all_visits) {
-          data.all_visits.forEach(row => {
-            trendLabels.push(row.day);
-            trendCounts.push(Number(row.count));
-            if (row.day === todayStr) dailyTotal = Number(row.count);
-            if (row.day >= weekStartStr) weeklyTotal += Number(row.count);
-            if (row.day.startsWith(monthStr)) monthlyTotal += Number(row.count);
-            // Pie chart: count by day of week
-            const d = new Date(row.day);
-            if (!isNaN(d)) dayOfWeekCounts[d.getDay()] += Number(row.count);
-          });
+        // Cards
+        document.getElementById('total-unique').textContent = data.total_unique_current_month_index ?? 0;
+        document.getElementById('daily-total').textContent = data.today_unique ?? 0;
+        document.getElementById('weekly-total').textContent = data.this_week_unique ?? 0;
+        document.getElementById('monthly-total').textContent = data.this_month_unique ?? 0;
+
+        // Trend chart: total visits for last 60 days (fill missing days with 0)
+        const allVisits = Array.isArray(data.all_visits) ? data.all_visits : [];
+        const countByDay = {};
+        allVisits.forEach(r => { countByDay[r.day] = Number(r.count); });
+        const todayDate = new Date();
+        const days = [];
+        for (let i = 59; i >= 0; i--) {
+          const d = new Date(todayDate);
+          d.setDate(d.getDate() - i);
+          const iso = d.toISOString().slice(0,10);
+          days.push(iso);
         }
-        document.getElementById('daily-total').textContent = dailyTotal;
-        document.getElementById('weekly-total').textContent = weeklyTotal;
-        document.getElementById('monthly-total').textContent = monthlyTotal;
-        new Chart(document.getElementById('trendChart').getContext('2d'), {
+        const trendLabels = days.map(d => new Date(d).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }));
+        const trendCounts = days.map(d => countByDay[d] ?? 0);
+        const ctxTrend = document.getElementById('trendChart').getContext('2d');
+        const gradient = ctxTrend.createLinearGradient(0, 0, 0, 200);
+        gradient.addColorStop(0, 'rgba(25,118,210,0.30)');
+        gradient.addColorStop(1, 'rgba(25,118,210,0.04)');
+        new Chart(ctxTrend, {
           type: 'line',
-          data: { labels: trendLabels, datasets: [{ label: 'Total Visits', data: trendCounts, borderColor: '#1976d2', backgroundColor: 'rgba(25,118,210,0.10)', fill: true, tension: 0.3 }] },
-          options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+          data: { labels: trendLabels, datasets: [{ label: 'Total Visits', data: trendCounts, borderColor: '#1976d2', backgroundColor: gradient, fill: true, tension: 0.35, pointRadius: 2.5, pointHoverRadius: 5, pointBackgroundColor: '#1976d2' }] },
+          options: { plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } }, hover: { mode: 'nearest', intersect: false }, scales: { y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.06)' } }, x: { grid: { display: false } } } }
         });
-        // --- Chart Section ---
+        // Doughnut chart: weekly unique visits by weekday using backend daily unique
         const chartTypeBtns = document.querySelectorAll('.chart-type-btn');
         let visitsTypeChart;
-        function renderVisitsTypeChart(type) {
+        function renderWeeklyDoughnut() {
           if (visitsTypeChart) visitsTypeChart.destroy();
-          let chartData = {labels: [], datasets: []};
-          let chartOptions = {plugins:{legend:{display:true,position:'bottom'}},responsive:true,maintainAspectRatio:true};
-          let showNoData = false;
-          if (type === 'pie') {
-            // Pie: Today's visits by hour
-            let today = new Date();
-            let todayStr = today.toISOString().slice(0,10);
-            let hourCounts = Array(24).fill(0);
-            if (data.visits_by_hour) {
-              data.visits_by_hour.forEach(row => {
-                if (row.day === todayStr) hourCounts[parseInt(row.hour)] = Number(row.count);
-              });
-            } else if (data.all_visits_by_time) {
-              data.all_visits_by_time.forEach(row => {
-                if (row.day === todayStr) hourCounts[parseInt(row.hour)] = Number(row.count);
-              });
+          const weekDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+          const weekCounts = Array(7).fill(0);
+          const today = new Date();
+          const weekStart = new Date(today); weekStart.setDate(today.getDate() - today.getDay());
+          const weekEnd = today;
+          (data.daily ?? []).forEach(row => {
+            const d = new Date(row.day);
+            if (!isNaN(d) && d >= weekStart && d <= weekEnd) {
+              weekCounts[d.getDay()] = Number(row.count);
             }
-            chartData.labels = Array.from({length:24},(_,i)=>i+':00');
-            chartData.datasets = [{
-              data: hourCounts,
-              backgroundColor: Array.from({length:24},(_,i)=>`rgba(${37+i*8},99,235,0.45)`)
-            }];
-            showNoData = hourCounts.reduce((a,b)=>a+b,0) === 0;
-          } else if (type === 'doughnut') {
-            // Doughnut: Current week, daily stats
-            let weekDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-            let weekCounts = Array(7).fill(0);
-            let today = new Date();
-            let weekStart = new Date(today); weekStart.setDate(today.getDate() - today.getDay());
-            let weekStartStr = weekStart.toISOString().slice(0,10);
-            if (data.all_visits) {
-              data.all_visits.forEach(row => {
-                let d = new Date(row.day);
-                if (!isNaN(d) && row.day >= weekStartStr) weekCounts[d.getDay()] += Number(row.count);
-              });
-            }
-            chartData.labels = weekDays;
-            chartData.datasets = [{
+          });
+          const chartData = {
+            labels: weekDays,
+            datasets: [{
               data: weekCounts,
               backgroundColor: [
-                'rgba(96,165,250,0.45)','rgba(37,99,235,0.45)','rgba(16,185,129,0.45)','rgba(245,158,66,0.45)','rgba(239,68,68,0.45)','rgba(99,102,241,0.45)','rgba(251,191,36,0.45)'
+                'rgba(96,165,250,0.85)','rgba(37,99,235,0.85)','rgba(16,185,129,0.85)','rgba(245,158,66,0.85)','rgba(239,68,68,0.85)','rgba(99,102,241,0.85)','rgba(251,191,36,0.85)'
               ]
-            }];
-            showNoData = weekCounts.reduce((a,b)=>a+b,0) === 0;
-          } else if (type === 'polarArea') {
-            // Polar: Current month, weekly stats
-            let today = new Date();
-            let monthStr = today.toISOString().slice(0,7);
-            let weekStats = [];
-            if (data.all_visits) {
-              let weeks = {};
-              data.all_visits.forEach(row => {
-                if (row.day.startsWith(monthStr)) {
-                  let d = new Date(row.day);
-                  let weekNum = Math.floor((d.getDate()-1)/7);
-                  if (!weeks[weekNum]) weeks[weekNum]=0;
-                  weeks[weekNum] += Number(row.count);
-                }
-              });
-              weekStats = Object.values(weeks);
-            }
-            chartData.labels = weekStats.map((_,i)=>'Week '+(i+1));
-            chartData.datasets = [{
-              data: weekStats,
-              backgroundColor: [
-                'rgba(96,165,250,0.45)','rgba(37,99,235,0.45)','rgba(16,185,129,0.45)','rgba(245,158,66,0.45)'
-              ]
-            }];
-            showNoData = weekStats.length === 0 || weekStats.reduce((a,b)=>a+b,0) === 0;
-          }
-          document.getElementById('chartNoData').style.display = showNoData ? 'block' : 'none';
+            }]
+          };
+          document.getElementById('chartNoData').style.display = weekCounts.reduce((a,b)=>a+b,0) === 0 ? 'block' : 'none';
           visitsTypeChart = new Chart(document.getElementById('visitsTypeChart').getContext('2d'), {
-            type: type,
+            type: 'doughnut',
             data: chartData,
-            options: chartOptions
+            options: { plugins:{ legend:{ display:true, position:'bottom' } }, responsive:true, maintainAspectRatio:false }
           });
         }
-        // Ensure Pie is shown and active by default
-        renderVisitsTypeChart('pie');
+        function renderMonthlyBar() {
+          if (visitsTypeChart) visitsTypeChart.destroy();
+          // Aggregate daily unique into month buckets for last 6 months
+          const monthlyMap = new Map(); // key: YYYY-MM, value: count
+          const now = new Date();
+          const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 5, 1);
+          (data.daily ?? []).forEach(row => {
+            const d = new Date(row.day);
+            if (isNaN(d)) return;
+            if (d < sixMonthsAgo) return;
+            const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+            monthlyMap.set(key, (monthlyMap.get(key) ?? 0) + Number(row.count));
+          });
+          // Ensure all months exist even if zero
+          const labels = [];
+          const values = [];
+          for (let i = 5; i >= 0; i--) {
+            const dt = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            const key = `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`;
+            labels.push(dt.toLocaleString(undefined, { month: 'short', year: '2-digit' }));
+            values.push(monthlyMap.get(key) ?? 0);
+          }
+          const ctx = document.getElementById('visitsTypeChart').getContext('2d');
+          visitsTypeChart = new Chart(ctx, {
+            type: 'bar',
+            data: { labels, datasets: [{ label: 'Unique Visits', data: values, backgroundColor: 'rgba(37,99,235,0.55)' }] },
+            options: { scales: { y: { beginAtZero: true } }, plugins: { legend: { display: false } }, responsive:true, maintainAspectRatio:false }
+          });
+          document.getElementById('chartNoData').style.display = values.reduce((a,b)=>a+b,0) === 0 ? 'block' : 'none';
+        }
+        renderWeeklyDoughnut();
         chartTypeBtns.forEach(btn => {
           btn.addEventListener('click', function() {
             chartTypeBtns.forEach(b=>b.classList.remove('active'));
             btn.classList.add('active');
-            const chartType = btn.getAttribute('data-type');
-            renderVisitsTypeChart(chartType);
-            
-            // Show/hide appropriate chart description
+            const t = btn.getAttribute('data-type');
+            if (t === 'bar-monthly') {
+              renderMonthlyBar();
+            } else {
+              renderWeeklyDoughnut();
+            }
             document.querySelectorAll('.chart-description').forEach(desc => desc.style.display = 'none');
-            if (chartType === 'pie') {
-              document.getElementById('pieDescription').style.display = 'block';
-            } else if (chartType === 'doughnut') {
+            if (t === 'bar-monthly') {
+              document.getElementById('monthlyBarDescription').style.display = 'block';
+            } else {
               document.getElementById('doughnutDescription').style.display = 'block';
-            } else if (chartType === 'polarArea') {
-              document.getElementById('polarDescription').style.display = 'block';
             }
           });
         });
         // Calendar logic
         flatpickr('#calendar', {
-          defaultDate: today,
+          defaultDate: new Date(),
+          dateFormat: 'Y-m-d',
           onChange: function(selectedDates, dateStr) {
             let selected = dateStr;
-            let dayCount = 0, dayUnique = 0;
-            if (data.all_visits) {
-              let found = data.all_visits.find(row => row.day === selected);
-              if (found) dayCount = Number(found.count);
-            }
-            if (data.daily) {
-              let found = data.daily.find(row => row.day === selected);
-              if (found) dayUnique = Number(found.count);
-            }
+            const totalRow = (data.all_visits ?? []).find(row => row.day === selected);
+            const uniqueRow = (data.daily ?? []).find(row => row.day === selected);
+            const dayCount = totalRow ? Number(totalRow.count) : 0;
+            const dayUnique = uniqueRow ? Number(uniqueRow.count) : 0;
             document.getElementById('calendarSidePanel').innerHTML =
               `<div><strong>Selected:</strong> ${selected}</div>`+
               `<div><strong>Total Visits:</strong> ${dayCount}</div>`+
               `<div><strong>Unique Visits:</strong> ${dayUnique}</div>`;
           }
         });
-        // Show today's date and time in calendar side panel
-        function updateCalendarToday() {
-          const calendarTodayElement = document.getElementById('calendarToday');
-          if (calendarTodayElement) {
-            const now = new Date();
-            let hours = now.getHours();
-            let minutes = now.getMinutes();
-            let ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-            let timeStr = hours + ':' + (minutes<10?'0':'') + minutes + ' ' + ampm;
-            calendarTodayElement.textContent = now.toLocaleDateString() + ' ' + timeStr;
-          }
-        }
-        updateCalendarToday();
-        setInterval(updateCalendarToday, 1000*30);
+        // Today's stats in side panel by default (after data load)
         // Show today's stats in side panel by default
-        let todayCount = 0, todayUnique = 0;
-        if (data.all_visits) {
-          let found = data.all_visits.find(row => row.day === todayStr);
-          if (found) todayCount = Number(found.count);
-        }
-        if (data.daily) {
-          let found = data.daily.find(row => row.day === todayStr);
-          if (found) todayUnique = Number(found.count);
-        }
+        const todayStr = new Date().toISOString().slice(0,10);
+        const todayTotalRow = (data.all_visits ?? []).find(r => r.day === todayStr);
+        const todayUniqueRow = (data.daily ?? []).find(r => r.day === todayStr);
+        const todayCount = todayTotalRow ? Number(todayTotalRow.count) : 0;
+        const todayUnique = todayUniqueRow ? Number(todayUniqueRow.count) : 0;
         document.getElementById('calendarVisitInfo').innerHTML =
           `<div><strong>Today's Visits:</strong> ${todayCount}</div>`+
           `<div><strong>Today's Unique:</strong> ${todayUnique}</div>`;
@@ -594,7 +561,7 @@ include('php/auth_check.php');
         if (Array.isArray(data.ips) && data.ips.length > 0) {
           data.ips.forEach(row => {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${row.user_ip}</td><td>${row.visit_time || ''}</td>`;
+            tr.innerHTML = `<td>${row.user_ip}</td><td>${row.first_visit || ''}</td>`;
             ipTableBody.appendChild(tr);
           });
         } else {
