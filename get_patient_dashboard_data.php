@@ -1,20 +1,8 @@
 <?php
 session_start();
 
-// Database credentials for InfinityFree
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hospital_management";
-$port = 3306;
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname, $port);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Use shared DB config (auto points to InfinityFree in production)
+include __DIR__ . '/db/config.php';
 
 header('Content-Type: application/json');
 
@@ -92,8 +80,18 @@ try {
         $stmt->close();
     }
 
-    // Get last visit
-    $stmt = $conn->prepare("SELECT CONCAT(visit_date, ' ', visit_time) as visit_datetime FROM user_visits WHERE user_ip = ? ORDER BY visit_date DESC, visit_time DESC LIMIT 1");
+    // Get last visit (support ip_address or user_ip, and visit_datetime fallback)
+    $ipCol = 'user_ip';
+    if ($res = $conn->query("SELECT 1 FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = 'user_visits' AND column_name = 'user_ip' LIMIT 1")) {
+        if ($res->num_rows === 0) { $ipCol = 'ip_address'; }
+        $res->close();
+    }
+    $tsExpr = "CONCAT(visit_date, ' ', visit_time)";
+    if ($res = $conn->query("SELECT 1 FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = 'user_visits' AND column_name = 'visit_datetime' LIMIT 1")) {
+        if ($res->num_rows > 0) { $tsExpr = 'visit_datetime'; }
+        $res->close();
+    }
+    $stmt = $conn->prepare("SELECT $tsExpr as visit_datetime FROM user_visits WHERE `$ipCol` = ? ORDER BY $tsExpr DESC LIMIT 1");
     $stmt->bind_param("s", $_SERVER['REMOTE_ADDR']);
     $stmt->execute();
     $visit_result = $stmt->get_result();
