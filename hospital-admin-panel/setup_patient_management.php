@@ -119,7 +119,7 @@ echo "</ul>";
 echo "<h3>If you still have issues:</h3>";
 echo "<ol>";
 echo "<li>Make sure your XAMPP Apache and MySQL services are running</li>";
-echo "<li>Check that the database 'hospital_management' exists</li>";
+echo "<li>Check that the database 'hospit27_hospital_management' exists</li>";
 echo "<li>Verify the database credentials in db/config.php</li>";
 echo "<li>Check the browser console for JavaScript errors</li>";
 echo "</ol>";

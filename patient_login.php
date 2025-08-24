@@ -3,9 +3,9 @@ session_start();
 
 // Database credentials
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hospital_management";
+$username = "hospit27_admin_raj";
+$password = "Rajkmr@9572";
+$dbname = "hospit27_hospital_management";
 $port = 3306;
 
 // Create connection

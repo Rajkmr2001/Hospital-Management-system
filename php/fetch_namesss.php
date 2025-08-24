@@ -1,9 +1,9 @@
 <?php
 // Database credentials
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hospital_management"; // Ensure this matches your actual database name
+$username = "hospit27_admin_raj";
+$password = "Rajkmr@9572";
+$dbname = "hospit27_hospital_management"; // Ensure this matches your actual database name
 $port = 3306; // MySQL default port
 
 // Create connection

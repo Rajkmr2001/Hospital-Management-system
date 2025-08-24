@@ -1,9 +1,9 @@
 <?php
-// Database configuration for InfinityFree hosting
-$host = "sql306.infinityfree.com"; // InfinityFree MySQL host
-$db = "if0_39629043_hospital_management";
-$user = "if0_39629043";
-$pass = "715020Rajkmr";
+// Database configuration for GoogieHost
+$host = "localhost";
+$db = "hospit27_hospital_management";
+$user = "hospit27_admin_raj";
+$pass = "Rajkmr@9572";
 
 // Create connection
 $conn = new mysqli($host, $user, $pass, $db);
