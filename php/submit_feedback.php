@@ -2,7 +2,7 @@
 // Database credentials
 $servername = "localhost";
 $username = "hospit27_admin_raj";
-$password = "Rajkmr@9572";
+$password = "Rajftp9572";
 $dbname = "hospit27_hospital_management";
 $port = 3306;
 
