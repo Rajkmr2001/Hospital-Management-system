@@ -2,8 +2,8 @@
 // Database configuration for GoogieHost
 $host = "localhost";
 $db = "hospital_management";
-$user = "hospit27_admin_raj";
-$pass = "Rajftp957294";
+$user = "hospit27__PZjn81Jvd6McFpdoV7B4JC04nuao4p2c";
+$pass = "Rajftp620";
 
 // Create connection
 $conn = new mysqli($host, $user, $pass, $db);

@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Database connection
 $host = 'localhost';
-$user = 'hospit27_admin_raj';
+$user = 'hospit27__PZjn81Jvd6McFpdoV7B4JC04nuao4p2c';
 $password = '';
 $dbname = 'hospital_management';
 $port = 3306; // MySQL default port
