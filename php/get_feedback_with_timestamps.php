@@ -2,9 +2,9 @@
 // get_feedback_with_timestamps.php
 // Database credentials
 $servername = "localhost";
-$username = "hospit27_admin_raj";
-$password = "Rajftp957294";
-$dbname = "hospit27_hospital_management";
+$username = "root";
+$password = "";
+$dbname = "hospital_management";
 $port = 3306;
 
 // Create connection

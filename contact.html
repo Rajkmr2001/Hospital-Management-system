@@ -238,18 +238,21 @@
   </section>
 
   <!-- Footer (copied from index.html) -->
-  <footer class="bg-gray-800 text-white pt-12 pb-6 mt-16">
+  <footer class="bg-gray-800 text-white pt-12 pb-6">
     <div class="container mx-auto px-4">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <!-- About -->
         <div>
           <h3 class="text-xl font-semibold mb-4">About Us</h3>
-          <p class="text-gray-300 mb-4">We are a leading healthcare provider committed to delivering exceptional medical
-            services with compassion and care.</p>
+          <p class="text-gray-300 mb-4">
+            We are a leading healthcare provider committed to delivering
+            exceptional medical services with compassion and care.
+          </p>
           <div class="flex space-x-4">
-            <a href="#" class="text-gray-300 hover:text-white"><i class="ri-facebook-fill ri-lg"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=100040365782052" class="text-gray-300 hover:text-white"><i
+                class="ri-facebook-fill ri-lg"></i></a>
             <a href="#" class="text-gray-300 hover:text-white"><i class="ri-twitter-fill ri-lg"></i></a>
-            <a href="#" class="text-gray-300 hover:text-white"><i class="ri-instagram-fill ri-lg"></i></a>
+            <a href="https://www.instagram.com/iam_rajkumarpandit?igsh=YzljYTk1ODg3Zg==" class="text-gray-300 hover:text-white"><i class="ri-instagram-fill ri-lg"></i></a>
             <a href="#" class="text-gray-300 hover:text-white"><i class="ri-linkedin-fill ri-lg"></i></a>
           </div>
         </div>
@@ -257,25 +260,48 @@
         <div>
           <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
           <ul class="space-y-2">
-            <li><a href="index.html" class="text-gray-300 hover:text-white">Home</a></li>
-            <li><a href="About Us.html" class="text-gray-300 hover:text-white">About Us</a></li>
-            <li><a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Services</a></li>
-            <li><a href="doctors.html" class="text-gray-300 hover:text-white">Doctors</a></li>
-            <li><a href="contact.html" class="text-gray-300 hover:text-white">Contact</a></li>
-            <li><a href="faqs.html" class="text-gray-300 hover:text-white">FAQs</a></li>
+            <li>
+              <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
+            </li>
+            <li>
+              <a href="About Us.html" class="text-gray-300 hover:text-white">About Us</a>
+            </li>
+            <li>
+              <a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Services</a>
+            </li>
+            <li>
+              <a href="doctors.html" class="text-gray-300 hover:text-white">Doctors</a>
+            </li>
+            <li>
+              <a href="contact.html" class="text-gray-300 hover:text-white">Contact</a>
+            </li>
+            <li>
+              <a href="faqs.html" class="text-gray-300 hover:text-white">FAQs</a>
+            </li>
           </ul>
         </div>
         <!-- Services -->
         <div>
           <h3 class="text-xl font-semibold mb-4">Our Services</h3>
           <ul class="space-y-2">
-            <li><a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Emergency services</a></li>
-            <li><a href="Laboratory_Diagnostics.html" class="text-gray-300 hover:text-white">Laboratory Services</a>
+            <li>
+              <a href="Emergency_Services.html" class="text-gray-300 hover:text-white">Emergency Care</a>
             </li>
-            <li><a href="Pharmacy_Services.html" class="text-gray-300 hover:text-white">Pharmacy</a></li>
-            <li><a href="Dermatology.html" class="text-gray-300 hover:text-white">Dermatology</a></li>
-            <li><a href="ENT.html" class="text-gray-300 hover:text-white">ENT</a></li>
-            <li><a href="Radiology.html" class="text-gray-300 hover:text-white">Radiology</a></li>
+            <li>
+              <a href="Laboratory_Diagnostics.html" class="text-gray-300 hover:text-white">Laboratory Services</a>
+            </li>
+            <li>
+              <a href="Dental_Science.html" class="text-gray-300 hover:text-white">Dental</a>
+            </li>
+            <li>
+              <a href="Pharmacy_Services.html" class="text-gray-300 hover:text-white">Pharmacy</a>
+            </li>
+            <li>
+              <a href="Radiology.html" class="text-gray-300 hover:text-white">Radiology</a>
+            </li>
+            <li>
+              <a href="Cardiac_Sciences.html" class="text-gray-300 hover:text-white">Cardiac Sciences </a>
+            </li>
           </ul>
         </div>
         <!-- Contact -->
@@ -301,9 +327,14 @@
           </ul>
         </div>
       </div>
-      <hr class="border-gray-700 my-8">
+      <hr class="border-gray-700 my-8" />
       <div class="flex flex-col md:flex-row justify-between items-center">
-        <p class="text-gray-400 text-sm">&copy; 2025 Hospital Management System. All rights reserved.</p>
+        <p class="text-gray-400 text-sm">
+          &copy; 2025 Hospital Management System. All rights reserved.
+        </p>
+        <a href="creator.html" class="text-blue-600 underline text-sm mx-4 md:mx-8 my-2 md:my-0" id="creator-link">
+          Created and managed by Raj Kumar.
+        </a>
         <div class="mt-4 md:mt-0 flex space-x-4">
           <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
           <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
@@ -312,7 +343,6 @@
       </div>
     </div>
   </footer>
-
   <!-- Custom Message Dialog -->
   <div id="messageDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" onclick="hideMessageDialog()">
     <div id="messageDialogContent" class="bg-white rounded-lg p-8 max-w-md w-full mx-4 transform scale-95 opacity-0 transition-all duration-300" onclick="event.stopPropagation()">
