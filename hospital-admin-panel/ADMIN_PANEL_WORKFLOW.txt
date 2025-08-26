@@ -99,7 +99,7 @@
 
 # Security Analysis of Additional Files
 
-## login.html (root)
+## login.html (hospit27_admin_raj)
 - **Language:** HTML, JS
 - **Role:** Patient login form (not admin)
 - **Backend Auth:** Submits credentials to backend PHP (likely patient_login.php)

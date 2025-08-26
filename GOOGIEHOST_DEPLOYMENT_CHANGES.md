@@ -8,7 +8,7 @@ This document outlines all the changes made to prepare the hospital management s
 
 - **Host**: localhost
 - **Database Name**: hospital_management
-- **Username**: root
+- **Username**: hospit27_admin_raj
 - **Password**: Rajkmr@9572
 
 ### Files Updated
@@ -48,14 +48,14 @@ This document outlines all the changes made to prepare the hospital management s
 
 For each file, the following updates were performed:
 - Database name changed from `hospital_management` to `hospital_management`
-- Username changed from `root` to `root`
+- Username changed from `hospit27_admin_raj` to `hospit27_admin_raj`
 - Password changed from empty string to `Rajkmr@9572`
 - Host remains `localhost` (standard for GoogieHost)
 
 ### Deployment Notes
 
 1. **Database Setup**: Ensure the database `hospital_management` exists on your GoogieHost MySQL server
-2. **User Permissions**: Verify that the user `root` has proper permissions for the database
+2. **User Permissions**: Verify that the user `hospit27_admin_raj` has proper permissions for the database
 3. **File Upload**: Upload all updated PHP files to your GoogieHost hosting directory
 4. **Testing**: Test the connection after deployment to ensure all database operations work correctly
 
@@ -74,7 +74,7 @@ After deployment, test the following functionality:
 If issues arise, you can temporarily revert to localhost credentials by:
 1. Changing host back to your local MySQL server
 2. Updating database name to `hospital_management`
-3. Using local credentials (`root` with no password)
+3. Using local credentials (`hospit27_admin_raj` with no password)
 
 ---
 

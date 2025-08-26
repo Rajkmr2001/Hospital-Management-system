@@ -8,7 +8,7 @@ Fixed Patient Visits & Feedback chart in About Us page that was not showing any 
 
 Updated the API files to use correct database column names. Also fixed the file path issues by using absolute paths with __DIR__ so the config files can be found properly.
 
-Organized all project images into one central Images folder. Moved all scattered images from root directory and other locations into the Images folder. Updated all HTML and PHP files to use the correct image paths.
+Organized all project images into one central Images folder. Moved all scattered images from hospit27_admin_raj directory and other locations into the Images folder. Updated all HTML and PHP files to use the correct image paths.
 
 Removed 26 unused images from the project to make it cleaner and smaller. These were images that were not being used anywhere in the code.
 
@@ -19,17 +19,3 @@ Renamed hospital-admin-panel/index.html to admin-portal.html to avoid conflicts 
 Added debugging logs to the chart functionality so any future issues can be easily identified. The console will now show detailed information about data fetching and chart rendering.
 
 The Patient Visits & Feedback section now shows real data from the database including total visits count and total feedback count. Users can switch between weekly and monthly views.
-
-All changes have been committed and pushed to GitHub staging branch. The project is now more organized and the chart functionality is working properly.
- /////////////////////////
-
-$host = "sql306.infinityfree.com"; // InfinityFree MySQL host
-$db = "if0_39629043_hospital_management";
-$user = "if0_39629043";
-$pass = "715020Rajkmr"; 
-// Database configuration for XAMPP local development
-$host = "localhost";
-$db = "hospital_management";
-$user = "root";
-$pass = "";
-

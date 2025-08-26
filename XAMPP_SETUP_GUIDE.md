@@ -91,8 +91,8 @@ After import, you should see these tables:
 ### 🗄️ **Database Credentials (XAMPP):**
 ```php
 $host = "localhost";
-$username = "root";
-$password = "";
+$username = "hospit27_admin_raj";
+$password = "Rajftp957294";
 $dbname = "hospital_management";
 $port = 3306;
 ```

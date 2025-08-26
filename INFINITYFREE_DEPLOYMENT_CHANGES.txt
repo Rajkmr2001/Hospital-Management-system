@@ -9,13 +9,13 @@ DATABASE CONFIGURATION FILES TO UPDATE:
 1. db/config.php
    - Change $host from "localhost" to "sql306.infinityfree.com"
    - Change $db from "hospital_management" to "if0_39629043_hospital_management"
-   - Change $user from "root" to "if0_39629043"
+   - Change $user from "hospit27_admin_raj" to "if0_39629043"
    - Change $pass from "" to "715020Rajkmr"
 
 2. hospital-admin-panel/db/config.php
    - Change $host from "localhost" to "sql306.infinityfree.com"
    - Change $db from "hospital_management" to "if0_39629043_hospital_management"
-   - Change $user from "root" to "if0_39629043"
+   - Change $user from "hospit27_admin_raj" to "if0_39629043"
    - Change $pass from "" to "715020Rajkmr"
 
 FILES WITH DIRECT DATABASE CONNECTIONS TO UPDATE:
@@ -23,109 +23,109 @@ FILES WITH DIRECT DATABASE CONNECTIONS TO UPDATE:
 
 3. db/fetch_namesss.php
    - Change $servername from "localhost" to "sql306.infinityfree.com"
-   - Change $username from "root" to "if0_39629043"
+   - Change $username from "hospit27_admin_raj" to "if0_39629043"
    - Change $password from "" to "715020Rajkmr"
    - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 4. download_receipt.php
    - Change $servername from "localhost" to "sql306.infinityfree.com"
-   - Change $username from "root" to "if0_39629043"
+   - Change $username from "hospit27_admin_raj" to "if0_39629043"
    - Change $password from "" to "715020Rajkmr"
    - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 5. fetch_name.php
    - Change $servername from "localhost" to "sql306.infinityfree.com"
-   - Change $username from "root" to "if0_39629043"
+   - Change $username from "hospit27_admin_raj" to "if0_39629043"
    - Change $password from "" to "715020Rajkmr"
    - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 6. messages.php
    - Change $host from "localhost" to "sql306.infinityfree.com"
-   - Change $user from "root" to "if0_39629043"
+   - Change $user from "hospit27_admin_raj" to "if0_39629043"
    - Change $password from "" to "715020Rajkmr"
    - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 7. patient_login.php
    - Change $servername from "localhost" to "sql306.infinityfree.com"
-   - Change $username from "root" to "if0_39629043"
+   - Change $username from "hospit27_admin_raj" to "if0_39629043"
    - Change $password from "" to "715020Rajkmr"
    - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 8. register.php
    - Change $servername from "localhost" to "sql306.infinityfree.com"
-   - Change $username from "root" to "if0_39629043"
+   - Change $username from "hospit27_admin_raj" to "if0_39629043"
    - Change $password from "" to "715020Rajkmr"
    - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 9. show_pdata.php
    - Change $servername from "localhost" to "sql306.infinityfree.com"
-   - Change $username from "root" to "if0_39629043"
+   - Change $username from "hospit27_admin_raj" to "if0_39629043"
    - Change $password from "" to "715020Rajkmr"
    - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 10. submit_message.php
     - Change $host from "localhost" to "sql306.infinityfree.com"
-    - Change $user from "root" to "if0_39629043"
+    - Change $user from "hospit27_admin_raj" to "if0_39629043"
     - Change $password from "" to "715020Rajkmr"
     - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 11. submit_form.php
     - Change $servername from "localhost" to "sql306.infinityfree.com"
-    - Change $username from "root" to "if0_39629043"
+    - Change $username from "hospit27_admin_raj" to "if0_39629043"
     - Change $password from "" to "715020Rajkmr"
     - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 12. submit_message_fixed.php
     - Change $host from "localhost" to "sql306.infinityfree.com"
-    - Change $user from "root" to "if0_39629043"
+    - Change $user from "hospit27_admin_raj" to "if0_39629043"
     - Change $password from "" to "715020Rajkmr"
     - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 13. php/delete_feedback.php
     - Change $servername from "localhost" to "sql306.infinityfree.com"
-    - Change $username from "root" to "if0_39629043"
+    - Change $username from "hospit27_admin_raj" to "if0_39629043"
     - Change $password from "" to "715020Rajkmr"
     - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 14. update_patient_info.php
     - Change $servername from "localhost" to "sql306.infinityfree.com"
-    - Change $username from "root" to "if0_39629043"
+    - Change $username from "hospit27_admin_raj" to "if0_39629043"
     - Change $password from "" to "715020Rajkmr"
     - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 15. php/get_feedback.php
     - Change $servername from "localhost" to "sql306.infinityfree.com"
-    - Change $username from "root" to "if0_39629043"
+    - Change $username from "hospit27_admin_raj" to "if0_39629043"
     - Change $password from "" to "715020Rajkmr"
     - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 16. php/fetch_namesss.php
     - Change $servername from "localhost" to "sql306.infinityfree.com"
-    - Change $username from "root" to "if0_39629043"
+    - Change $username from "hospit27_admin_raj" to "if0_39629043"
     - Change $password from "" to "715020Rajkmr"
     - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 17. php/submit_feedback.php
     - Change $servername from "localhost" to "sql306.infinityfree.com"
-    - Change $username from "root" to "if0_39629043"
+    - Change $username from "hospit27_admin_raj" to "if0_39629043"
     - Change $password from "" to "715020Rajkmr"
     - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 18. php/like_feedback.php
     - Change $servername from "localhost" to "sql306.infinityfree.com"
-    - Change $username from "root" to "if0_39629043"
+    - Change $username from "hospit27_admin_raj" to "if0_39629043"
     - Change $password from "" to "715020Rajkmr"
     - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 19. php/get_feedback_with_timestamps.php
     - Change $servername from "localhost" to "sql306.infinityfree.com"
-    - Change $username from "root" to "if0_39629043"
+    - Change $username from "hospit27_admin_raj" to "if0_39629043"
     - Change $password from "" to "715020Rajkmr"
     - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
 20. hospital-admin-panel/admin/php/login.php
     - Change $servername from "localhost" to "sql306.infinityfree.com"
-    - Change $username from "root" to "if0_39629043"
+    - Change $username from "hospit27_admin_raj" to "if0_39629043"
     - Change $password from "" to "715020Rajkmr"
     - Change $dbname from "hospital_management" to "if0_39629043_hospital_management"
 
@@ -140,7 +140,7 @@ LOCALHOST DATABASE CREDENTIALS (for reference):
 ==============================================
 Host: localhost
 Database: hospital_management
-Username: root
+Username: hospit27_admin_raj
 Password: (empty)
 
 IMPORTANT NOTES:
