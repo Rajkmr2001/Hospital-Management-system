@@ -4,7 +4,7 @@ session_start();
 // Database credentials
 $servername = "localhost";
 $username = "hospit27_admin_raj";
-$password = "Rajftp9572";
+$password = "Rajftp957294";
 $dbname = "hospit27_hospital_management";
 $port = 3306;
 

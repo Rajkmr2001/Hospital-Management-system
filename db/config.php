@@ -3,7 +3,7 @@
 $host = "localhost";
 $db = "hospit27_hospital_management";
 $user = "hospit27_admin_raj";
-$pass = "Rajftp9572";
+$pass = "Rajftp957294";
 
 // Create connection
 $conn = new mysqli($host, $user, $pass, $db);
