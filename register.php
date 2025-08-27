@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
-$username = "hospit27__PZjn81Jvd6McFpdoV7B4JC04nuao4p2c";
-$password = "Rajftp620";
+$username = "root";
+$password = "";
 $dbname = "hospital_management";
 $port = 3306; // MySQL default port
 
